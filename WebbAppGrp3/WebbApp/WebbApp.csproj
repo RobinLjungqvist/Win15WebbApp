@@ -124,6 +124,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Mockup\Interfaces\MockupInterfaces.cs" />
+    <Compile Include="Mockup\Models\MockupConversation.cs" />
+    <Compile Include="Mockup\Models\MockupItem.cs" />
+    <Compile Include="Mockup\Models\MockupMessage.cs" />
+    <Compile Include="Mockup\Models\MockupUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -165,8 +170,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Images\" />
-    <Folder Include="Mockup\Interfaces\" />
-    <Folder Include="Mockup\Models\" />
     <Folder Include="Mockup\Repo\" />
     <Folder Include="ViewModels\" />
   </ItemGroup>
