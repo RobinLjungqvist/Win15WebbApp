@@ -125,6 +125,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Mockup\Interfaces\MockupInterfaces.cs" />
+    <Compile Include="Mockup\Models\MockupCategory.cs" />
     <Compile Include="Mockup\Models\MockupCity.cs" />
     <Compile Include="Mockup\Models\MockupCondition.cs" />
     <Compile Include="Mockup\Models\MockupConversation.cs" />
