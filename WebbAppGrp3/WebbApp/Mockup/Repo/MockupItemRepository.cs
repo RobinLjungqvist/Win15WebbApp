@@ -33,5 +33,10 @@ namespace WebbApp.Mockup.Repo
         {
             throw new NotImplementedException();
         }
+
+        public List<MockupItem> SearchItem(MockupItem item)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
