@@ -135,7 +135,7 @@
     <Compile Include="Mockup\Models\MockupMessage.cs" />
     <Compile Include="Mockup\Models\MockupRegion.cs" />
     <Compile Include="Mockup\Models\MockupUser.cs" />
-    <Compile Include="Mockup\Repo\ItemRepo.cs" />
+    <Compile Include="Mockup\Repo\MockupItemRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
