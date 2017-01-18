@@ -5,10 +5,9 @@ using System.Web;
 
 namespace WebbApp.Mockup.Models
 {
-    public class MockupRegion
+    public class MockupCondition
     {
-        public Guid RegionID { get; set; }
-        public string RegionName { get; set; }
-
+        public Guid ConditionID { get; set; }
+        public string ConditionStatus { get; set; }
     }
 }

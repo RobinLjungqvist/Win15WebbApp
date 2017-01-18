@@ -17,6 +17,7 @@ namespace WebbApp.Mockup.Models
         public Guid ConditionID { get; set; }
         public Guid RegionID { get; set; }
         public Guid CategoryID { get; set; }
+        public Guid ImageID { get; set; }
 
 
 
