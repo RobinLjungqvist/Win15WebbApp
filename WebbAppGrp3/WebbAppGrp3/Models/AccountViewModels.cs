@@ -13,6 +13,7 @@ namespace WebbAppGrp3.Models
     public class ExternalLoginListViewModel
     {
         public string ReturnUrl { get; set; }
+        //test
     }
 
     public class SendCodeViewModel
