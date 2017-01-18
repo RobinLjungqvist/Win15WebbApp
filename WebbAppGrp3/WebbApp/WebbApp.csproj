@@ -135,6 +135,7 @@
     <Compile Include="Mockup\Models\MockupMessage.cs" />
     <Compile Include="Mockup\Models\MockupRegion.cs" />
     <Compile Include="Mockup\Models\MockupUser.cs" />
+    <Compile Include="Mockup\Repo\ItemRepo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -177,7 +178,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Images\" />
-    <Folder Include="Mockup\Repo\" />
     <Folder Include="ViewModels\" />
     <Folder Include="Views\Item\" />
   </ItemGroup>
