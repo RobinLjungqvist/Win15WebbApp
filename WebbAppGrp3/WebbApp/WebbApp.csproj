@@ -125,9 +125,11 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Mockup\Interfaces\MockupInterfaces.cs" />
+    <Compile Include="Mockup\Models\MockupCity.cs" />
     <Compile Include="Mockup\Models\MockupConversation.cs" />
     <Compile Include="Mockup\Models\MockupItem.cs" />
     <Compile Include="Mockup\Models\MockupMessage.cs" />
+    <Compile Include="Mockup\Models\MockupRegion.cs" />
     <Compile Include="Mockup\Models\MockupUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

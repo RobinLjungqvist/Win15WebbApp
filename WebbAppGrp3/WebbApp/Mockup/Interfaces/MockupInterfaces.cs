@@ -8,6 +8,7 @@ namespace WebbApp.Mockup.Interfaces
 {
     public interface IUserRepository
     {
+        List<MockupUser> GetAllUsers();
         MockupUser GetUserByID(Guid id);
         void RemoveUserByID(Guid id);
         void CreateOrUpdateUser(MockupUser user);
@@ -16,6 +17,7 @@ namespace WebbApp.Mockup.Interfaces
 
     public interface IItemRepository
     {
+        List<MockupItem> GetAllItems();
         MockupItem GetItemByID(Guid id);
 
         void RemoveItemByID(Guid id);
@@ -37,6 +39,23 @@ namespace WebbApp.Mockup.Interfaces
 
     public interface IConversationRepository
     {
+        List<MockupConversation> GetConversationsByUserID(Guid id);
+        MockupConversation GetConversationByID(Guid id);
 
+        void RemoveConversationByID(Guid id);
+
+        void CreateOrUpdateConversation(MockupConversation conversation);
     }
+
+    public interface IRegionRepository
+    {
+        List<MockupRegion> GetAllRegions();
+
+        MockupRegion GetRegionByID(Guid id);
+
+        void RemoveRegionByID(Guid id);
+
+        void CreateOrUpdateRegion(MockupRegion region);
+    }
+
 }
