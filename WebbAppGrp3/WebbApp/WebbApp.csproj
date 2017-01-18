@@ -164,7 +164,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
+    <Folder Include="Mockup\Interfaces\" />
+    <Folder Include="Mockup\Models\" />
+    <Folder Include="Mockup\Repo\" />
+    <Folder Include="ViewModels\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
