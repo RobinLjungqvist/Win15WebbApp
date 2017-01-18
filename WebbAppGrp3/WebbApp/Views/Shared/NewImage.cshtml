@@ -1,15 +1,13 @@
 ﻿@using (Html.BeginForm("NewImage", "ItemController", FormMethod.Post,
-                                        new { enctype = "multipart/form-data" }))
+                                                    new { enctype = "multipart/form-data" }))
 {
-    <label for="file">Upload Image:</label>
-    <input type="file" name="file" id="file" style="width: 100%;" />
-    <label for="file">Förnamn:</label>
-    <input type="text" name="fName" id="fName" value="Anders" />
-    <label for="file">Efternamn:</label>
-    <input type="text" name="lName" id="lName" value="Andersson" />
-    <label for="file">Förnamn:</label>
-    <input type="text" name="fName" id="fName" value="Anders" />
-
-
-    <input type="submit" value="Upload" class="submit" />
+    <div class="col-md-4" id="newImage">
+        <label for="file">Upload Image:</label>
+        <input type="file" name="file" id="file" style="width: 100%;" />
+        <label for="description">Description:</label>
+        <textarea rows="4" cols="50" name="description">
+         Describe the item you want to give away here
+        </textarea>
+        <input type="submit" value="Upload" class="submit" />
+    </div>
 }

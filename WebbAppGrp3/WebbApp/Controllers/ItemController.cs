@@ -29,6 +29,10 @@ namespace WebbApp.Controllers
             // after successfully uploading redirect the user
             return RedirectToAction("actionname", "controller name");
         }
+        public ActionResult DisplaySingleItem()
+        {
+            return View();
+        }
     
     }
 }
