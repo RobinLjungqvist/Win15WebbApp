@@ -38,12 +38,12 @@ namespace WebbApp.Controllers
                 var identity = new ClaimsIdentity(new[]
                 {
                     new Claim(ClaimTypes.Email, model.Email),
-                    new Claim("UserID", user.)
+                    new Claim("UserID", user.UserID.ToString())
                 }, "ApplicationCookie");
 
             }
 
-            
+            return View();
         }
 
         public string GetIdFromClaims()
