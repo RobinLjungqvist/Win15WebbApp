@@ -27,6 +27,11 @@ namespace WebbApp.Mockup.Repo
         public MockupUser LoginUser(string Email, string password)
         {
             var user = new MockupUser();
+
+            if (Email == "admin" && password == "password")
+            {
+                user.UserID = Guid.NewGuid();
+            }
             return user;
         }
 
