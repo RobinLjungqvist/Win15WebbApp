@@ -23,9 +23,9 @@ namespace WebbApp.Controllers
         [HttpGet]
         public ActionResult Login()
         {
-           
-            var User = new UserViewModel();
-            return View(User);
+            var x = GetIdFromClaims();
+            var UserModel = new UserViewModel();
+            return View(UserModel);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -35,7 +35,6 @@ namespace WebbApp.Controllers
             {
                 return View();
             }
-
             var user = userRepo.LoginUser(model.Email, model.Password);
 
 
@@ -52,7 +51,7 @@ namespace WebbApp.Controllers
                 var authManager = ctx.Authentication;
 
                 authManager.SignIn(identity);
-
+                
             }
 
             model.id = user.UserID;
@@ -73,7 +72,7 @@ namespace WebbApp.Controllers
         {
             var ctx = Request.GetOwinContext();
             var authM = ctx.Authentication;
-            authM.SignOut("AuthenticationCookie");
+            authM.SignOut("ApplicationCookie");
 
             return RedirectToAction("Login", "Account");
         }
