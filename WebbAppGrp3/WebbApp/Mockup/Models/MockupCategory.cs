@@ -8,6 +8,6 @@ namespace WebbApp.Mockup.Models
     public class MockupCategory
     {
         public Guid CategoryID { get; set; }
-        public string CategortName { get; set; }
+        public string CategoryName { get; set; }
     }
 }
