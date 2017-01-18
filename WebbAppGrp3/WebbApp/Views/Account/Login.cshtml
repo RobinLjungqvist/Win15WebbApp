@@ -1,0 +1,15 @@
+﻿@model WebbApp.ViewModels.UserViewModel
+@{
+    ViewBag.Title = "Login";
+}
+
+<h2>Login</h2>
+<div>
+    @using(Html.BeginForm("Login", "Account", FormMethod.Post))
+    {
+    @Html.AntiForgeryToken()
+    @Html.EditorForModel()
+    <input type="submit" value="Submit" />
+    }
+</div>
+

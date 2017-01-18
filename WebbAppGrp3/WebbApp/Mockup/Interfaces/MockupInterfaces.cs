@@ -13,6 +13,8 @@ namespace WebbApp.Mockup.Interfaces
         void RemoveUserByID(Guid id);
         void CreateOrUpdateUser(MockupUser user);
 
+        MockupUser LoginUser(string Email, string password);
+
     }
 
     public interface IItemRepository
@@ -24,7 +26,7 @@ namespace WebbApp.Mockup.Interfaces
 
         void CreateOrUpdateItem(MockupItem item);
 
-        MockupItem GetItemByRegion(string Region); 
+        List<MockupItem> SearchItem(MockupItem item);
     }
 
     public interface IMessageRepository
@@ -56,6 +58,28 @@ namespace WebbApp.Mockup.Interfaces
         void RemoveRegionByID(Guid id);
 
         void CreateOrUpdateRegion(MockupRegion region);
+    }
+
+    public interface ICityRepository
+    {
+        List<MockupCity> GetAllCity();
+
+        MockupCity GetCityByID(Guid id);
+
+        void RemoveCityByID(Guid id);
+
+        void CreateOrUpdateCity(MockupCity city);
+    }
+
+    public interface IitemConditionRepository
+    {
+        List<MockupItemCondition> GetAllItemConditions();
+
+        MockupItemCondition GetItemConditionByID(Guid id);
+
+        void RemoveItemConditionByID(Guid id);
+
+        void CreateOrUpdateItemCondition(MockupCity city);
     }
 
 }
