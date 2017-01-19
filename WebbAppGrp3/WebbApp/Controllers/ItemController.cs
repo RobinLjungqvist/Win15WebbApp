@@ -75,7 +75,7 @@ namespace WebbApp.Controllers
 
             var newViewModel = new ItemViewModel(repoItem.ItemID, repoItem.Title, repoItem.Description, repoItem.CreateDate, repoItem.ExpirationDate, repoItem.City, repoItem.Condition, repoItem.Region, repoItem.Category, repoItem.Image);
 
-            return View(newViewModel);
+            return PartialView(newViewModel);
         }
 
         public ActionResult ListAllItems()
