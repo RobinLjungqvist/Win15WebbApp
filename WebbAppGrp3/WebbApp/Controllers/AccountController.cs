@@ -5,7 +5,6 @@ using System.Security.Claims;
 using System.Web;
 using System.Web.Mvc;
 using WebbApp.ViewModels;
-using System.Security.Claims;
 using WebbApp.Mockup.Repo;
 
 namespace WebbApp.Controllers   
