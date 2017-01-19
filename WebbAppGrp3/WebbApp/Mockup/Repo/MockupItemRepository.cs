@@ -9,6 +9,7 @@ namespace WebbApp.Mockup.Repo
 {
     public class MockupItemRepository : IItemRepository
     {
+        static List<MockupItem> ListOfItem = new List<MockupItem>();
         public void CreateOrUpdateItem(MockupItem item)
         {
             throw new NotImplementedException();
@@ -16,12 +17,13 @@ namespace WebbApp.Mockup.Repo
 
         public List<MockupItem> GetAllItems()
         {
-            throw new NotImplementedException();
+            return ListOfItem;
         }
 
         public MockupItem GetItemByID(Guid id)
         {
-            throw new NotImplementedException();
+            var showItem = ListOfItem.First(x => x.ItemID == id);
+            return showItem;
         }
 
         public MockupItem GetItemByRegion(string Region)
@@ -31,7 +33,8 @@ namespace WebbApp.Mockup.Repo
 
         public void RemoveItemByID(Guid id)
         {
-            throw new NotImplementedException();
+            var deleteItem = ListOfItem.First(x => x.ItemID == id);
+            ListOfItem.Remove(deleteItem);
         }
 
         public List<MockupItem> SearchItem(MockupItem item)
