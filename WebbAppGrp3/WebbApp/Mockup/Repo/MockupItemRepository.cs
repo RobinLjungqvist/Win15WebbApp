@@ -10,6 +10,18 @@ namespace WebbApp.Mockup.Repo
     public class MockupItemRepository : IItemRepository
     {
         static List<MockupItem> ListOfItem = new List<MockupItem>();
+        public MockupItemRepository()
+        {
+            ListOfItem.Add(new MockupItem(Guid.NewGuid(), "Titlestring", "decriptionstring", DateTime.Now, DateTime.Now.AddDays(7),
+                "CityMalmö", "ConditionNormal", "RegionSkåne", "CategoryBed", "ImageString"));
+            ListOfItem.Add(new MockupItem(Guid.NewGuid(), "Titlestring", "decriptionstring", DateTime.Now, DateTime.Now.AddDays(7),
+                "CityHalmstad", "ConditionNormal", "RegionSkåne", "CategoryBed", "ImageString"));
+            ListOfItem.Add(new MockupItem(Guid.NewGuid(), "Titlestring", "decriptionstring", DateTime.Now, DateTime.Now.AddDays(7),
+                "CityHelsingborg", "ConditionNormal", "RegionSkåne", "CategoryBed", "ImageString"));
+            ListOfItem.Add(new MockupItem(Guid.NewGuid(), "Titlestring", "decriptionstring", DateTime.Now, DateTime.Now.AddDays(7),
+                "CityLund", "ConditionNormal", "RegionSkåne", "CategoryBed", "ImageString"));
+        }
+           
         public void CreateOrUpdateItem(MockupItem item)
         {
             throw new NotImplementedException();
