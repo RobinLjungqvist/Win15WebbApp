@@ -69,5 +69,11 @@ namespace WebbApp.Controllers
 
             return PartialView(ViewModelItems);
         }
-    }
+
+        public ActionResult EditItem()
+        {
+
+            return PartialView();
+        }
+    }     
 }
