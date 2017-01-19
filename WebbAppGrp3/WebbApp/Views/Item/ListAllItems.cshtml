@@ -1,0 +1,12 @@
+﻿@model IEnumerable<WebbApp.ViewModels.ItemViewModel>
+
+ 
+<H2>Items</H2>
+<div class="container-fluid">
+    
+        @foreach (var item in Model)
+        {
+            @Html.Partial("ListViewItem.cshtml", item);
+        }
+ 
+</div>
