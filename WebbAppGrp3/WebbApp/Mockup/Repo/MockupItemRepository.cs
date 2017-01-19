@@ -59,9 +59,10 @@ namespace WebbApp.Mockup.Repo
             return showItem;
         }
 
-        public MockupItem GetItemByRegion(string Region)
+        public List<MockupItem> GetItemByRegion(string Region)
         {
-            throw new NotImplementedException();
+            var itemRegion = ListOfItem.Where(x => x.Region == Region).ToList();
+            return itemRegion;
         }
 
         public void RemoveItemByID(Guid id)
