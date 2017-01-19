@@ -97,10 +97,16 @@ namespace WebbApp.Controllers
             }
             return PartialView(ViewModelItems);
         }
-
-        public ActionResult EditItem()
+        public ActionResult RemoveItem(Guid itemID)
         {
+            itemRepository.RemoveItemByID(itemID);
 
+            return RedirectToAction("Index", "Home");
+        }
+
+        public ActionResult EditItem(MockupItem mockupitem)
+        {
+            
             return PartialView();
         }
     }     
