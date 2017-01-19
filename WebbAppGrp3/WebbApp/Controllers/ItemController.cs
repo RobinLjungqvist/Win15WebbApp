@@ -83,6 +83,10 @@ namespace WebbApp.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        
+        public ActionResult EditItem(MockupItem mockupitem)
+        {
+            
+            return PartialView();
+        }
     }     
 }
