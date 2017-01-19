@@ -103,11 +103,19 @@ namespace WebbApp.Controllers
 
             return RedirectToAction("Index", "Home");
         }
-
-        public ActionResult EditItem(MockupItem mockupitem)
+        public ActionResult EditItem(ItemViewModel viewitem)
         {
-            
-            return PartialView();
+            var edit = new MockupItem(viewitem.ItemID, viewitem.Title, viewitem.Description, viewitem.CreateDate, viewitem.ExpirationDate, viewitem.City, viewitem.Condition, viewitem.Region, viewitem.Category, viewitem.Image);
+
+            return PartialView("EditItem");
+        }
+        [HttpPost]
+        public ActionResult EditItem(ItemViewModel viewitem,FormCollection collection)
+        {
+            var edit = new MockupItem(viewitem.ItemID, viewitem.Title, viewitem.Description, viewitem.CreateDate, viewitem.ExpirationDate, viewitem.City, viewitem.Condition, viewitem.Region, viewitem.Category, viewitem.Image);
+            itemRepository.CreateOrUpdateItem(edit);
+
+            return PartialView("EditItem");
         }
 
     }     
