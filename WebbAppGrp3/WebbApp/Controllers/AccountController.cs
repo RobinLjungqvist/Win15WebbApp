@@ -13,13 +13,19 @@ namespace WebbApp.Controllers
     [AllowAnonymous]
     public class AccountController : Controller
     {
-        public MockupUserRepo userRepo;
+        public MockupUserRepository userRepo;
+
+        public AccountController()
+        {
+            this.userRepo = new MockupUserRepository();
+        }
         // GET: Account
         [HttpGet]
         public ActionResult Login()
         {
-            var User = new UserViewModel();
-            return View(User);
+            //var x = GetIdFromClaims();
+            var UserModel = new UserViewModel();
+            return View(UserModel);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -29,30 +35,46 @@ namespace WebbApp.Controllers
             {
                 return View();
             }
-
             var user = userRepo.LoginUser(model.Email, model.Password);
 
 
-            if (user != null)
+            if (user.UserID != null)
             {
                 var identity = new ClaimsIdentity(new[]
                 {
+                    new Claim(ClaimTypes.NameIdentifier, user.UserID.ToString()),
                     new Claim(ClaimTypes.Email, model.Email),
                     new Claim("UserID", user.UserID.ToString())
                 }, "ApplicationCookie");
 
+                var ctx = Request.GetOwinContext();
+                var authManager = ctx.Authentication;
+
+                authManager.SignIn(identity);
+                
             }
 
-            return View();
+            model.id = user.UserID;
+
+            return View(model);
         }
 
-        public string GetIdFromClaims()
+        //public string GetIdFromClaims()
+        //{
+        //    var identity = (ClaimsIdentity)User.Identity;
+
+        //    var id = identity.FindFirst("UserID");
+
+        //    return id.ToString();
+        //}
+
+        public ActionResult Logout()
         {
-            var identity = (ClaimsIdentity)User.Identity;
+            var ctx = Request.GetOwinContext();
+            var authM = ctx.Authentication;
+            authM.SignOut("ApplicationCookie");
 
-            var id = identity.FindFirst("UserID");
-
-            return id.ToString();
+            return RedirectToAction("Login", "Account");
         }
     }
 

@@ -3,24 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace WebbApp.Mockup.Models
+namespace WebbApp.ViewModels
 {
-    public class MockupItem
+    public class ItemViewModel
     {
+
         public Guid ItemID { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime ExpirationDate { get; set; }
-       
+
         public string City { get; set; }
         public string Condition { get; set; }
         public string Region { get; set; }
         public string Category { get; set; }
         public string Image { get; set; }
 
-        public MockupItem(Guid id,string title, string description, DateTime createdate,DateTime expirationdate,
-            string city, string condition, string region, string category,string image)
+        public ItemViewModel(Guid id, string title, string description, DateTime createdate, DateTime expirationdate,
+            string city, string condition, string region, string category, string image)
         {
             this.ItemID = id;
             this.Title = title;
@@ -33,6 +34,5 @@ namespace WebbApp.Mockup.Models
             this.Category = category;
             this.Image = image;
         }
-      
     }
 }

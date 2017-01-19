@@ -9,29 +9,68 @@ namespace WebbApp.Mockup.Repo
 {
     public class MockupItemRepository : IItemRepository
     {
+        static List<MockupItem> ListOfItem = new List<MockupItem>();
+        public MockupItemRepository()
+        {
+            if (!ListOfItem.Any()) { 
+            ListOfItem.Add(new MockupItem(Guid.NewGuid(), "Titlestring", "decriptionstring", DateTime.Now, DateTime.Now.AddDays(7),
+                "CityMalmö", "ConditionNormal", "RegionSkåne", "CategoryBed", "../Images/PlaceholderImage.png"));
+            ListOfItem.Add(new MockupItem(Guid.NewGuid(), "Titlestring", "decriptionstring", DateTime.Now, DateTime.Now.AddDays(7),
+                "CityHalmstad", "ConditionNormal", "RegionSkåne", "CategoryBed", "../Images/PlaceholderImage.png"));
+            ListOfItem.Add(new MockupItem(Guid.NewGuid(), "Titlestring", "decriptionstring", DateTime.Now, DateTime.Now.AddDays(7),
+                "CityHelsingborg", "ConditionNormal", "RegionSkåne", "CategoryBed", "../Images/PlaceholderImage.png"));
+            ListOfItem.Add(new MockupItem(Guid.NewGuid(), "Titlestring", "decriptionstring", DateTime.Now, DateTime.Now.AddDays(7),
+                "CityLund", "ConditionNormal", "RegionSkåne", "CategoryBed", "../Images/PlaceholderImage.png"));
+            }
+        }
+           
         public void CreateOrUpdateItem(MockupItem item)
         {
-            throw new NotImplementedException();
+            var itemToCreateOrUpdate = ListOfItem.Find(x => x.ItemID == item.ItemID);
+            if (itemToCreateOrUpdate != null)
+            {
+                itemToCreateOrUpdate.Title = item.Title;
+                itemToCreateOrUpdate.Description = item.Description;
+                itemToCreateOrUpdate.CreateDate = DateTime.Today;
+                itemToCreateOrUpdate.ExpirationDate = DateTime.Now.AddDays(7);
+                itemToCreateOrUpdate.City = item.City;
+                itemToCreateOrUpdate.Condition = item.Condition;
+                itemToCreateOrUpdate.Region = item.Region;
+                itemToCreateOrUpdate.Category = item.Category;
+                itemToCreateOrUpdate.Image = item.Image;
+            }
+            else
+            {
+                MockupItem mockupItem = new MockupItem(Guid.NewGuid(), item.Title, item.Description, DateTime.Today,
+                    DateTime.Now.AddDays(7), item.City, item.Condition, item.Region, item.Category,
+                    item.Image);
+                ListOfItem.Add(mockupItem);
+                
+            }
+
         }
 
         public List<MockupItem> GetAllItems()
         {
-            throw new NotImplementedException();
+            return ListOfItem;
         }
 
         public MockupItem GetItemByID(Guid id)
         {
-            throw new NotImplementedException();
+            var showItem = ListOfItem.First(x => x.ItemID == id);
+            return showItem;
         }
 
-        public MockupItem GetItemByRegion(string Region)
+        public List<MockupItem> GetItemByRegion(string Region)
         {
-            throw new NotImplementedException();
+            var itemRegion = ListOfItem.Where(x => x.Region == Region).ToList();
+            return itemRegion;
         }
 
         public void RemoveItemByID(Guid id)
         {
-            throw new NotImplementedException();
+            var deleteItem = ListOfItem.First(x => x.ItemID == id);
+            ListOfItem.Remove(deleteItem);
         }
 
         public List<MockupItem> SearchItem(MockupItem item)

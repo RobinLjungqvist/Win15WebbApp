@@ -1,0 +1,22 @@
+﻿ @model WebbApp.ViewModels.ItemViewModel
+     
+<div class="row listItem">
+    <div class="col-md-4">
+        <img src="@Model.Image" class="ListItemImage" />
+    </div>
+    <div class="col-md-4">
+        <h2>@Model.Title</h2>
+        @Html.DisplayFor(model => model.City)
+        @Html.DisplayFor(model => model.Region)
+        @Html.DisplayFor(model => model.ExpirationDate)
+    </div>
+    <div class="col-md-4">
+        <h3>Description</h3>
+        <p>
+            @Model.Description
+        </p>
+
+    </div>
+
+
+    </div>
