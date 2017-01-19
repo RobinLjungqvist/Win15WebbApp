@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WebbApp.Mockup.Interfaces;
+using WebbApp.Mockup.Models;
 using WebbApp.Mockup.Repo;
 using WebbApp.ViewModels;
 
@@ -44,9 +45,12 @@ namespace WebbApp.Controllers
             return RedirectToAction("actionname", "controller name");
         }
 
-        public ActionResult DisplaySingleItem(Guid ItemID)
+        public ActionResult DisplaySingleItem()
         {
-            var repoItem = itemRepository.GetItemByID(ItemID);
+            
+            var repoItem = new MockupItem(Guid.NewGuid(), "Titlestring", "decriptionstring", DateTime.Now, DateTime.Now.AddDays(7),
+                "CityMalmö", "ConditionNormal", "RegionSkåne", "CategoryBed", "../Images/PlaceholderImage.png");
+          
 
             var newViewModel = new ItemViewModel(repoItem.ItemID, repoItem.Title, repoItem.Description, repoItem.CreateDate, repoItem.ExpirationDate, repoItem.City, repoItem.Condition, repoItem.Region, repoItem.Category, repoItem.Image);
 
@@ -66,7 +70,10 @@ namespace WebbApp.Controllers
                 ViewModelItems.Add(newViewModel);
             }
 
-
+            if (Request.IsAjaxRequest())
+            {
+                return PartialView("ListAllItems", ViewModelItems);
+            }
             return PartialView(ViewModelItems);
         }
 
