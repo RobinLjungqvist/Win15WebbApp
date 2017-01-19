@@ -24,7 +24,28 @@ namespace WebbApp.Mockup.Repo
            
         public void CreateOrUpdateItem(MockupItem item)
         {
-            throw new NotImplementedException();
+            var itemToCreateOrUpdate = ListOfItem.Find(x => x.ItemID == item.ItemID);
+            if (itemToCreateOrUpdate != null)
+            {
+                itemToCreateOrUpdate.Title = item.Title;
+                itemToCreateOrUpdate.Description = item.Description;
+                itemToCreateOrUpdate.CreateDate = DateTime.Today;
+                itemToCreateOrUpdate.ExpirationDate = DateTime.Now.AddDays(7);
+                itemToCreateOrUpdate.City = item.City;
+                itemToCreateOrUpdate.Condition = item.Condition;
+                itemToCreateOrUpdate.Region = item.Region;
+                itemToCreateOrUpdate.Category = item.Category;
+                itemToCreateOrUpdate.Image = item.Image;
+            }
+            else
+            {
+                MockupItem mockupItem = new MockupItem(Guid.NewGuid(), item.Title, item.Description, DateTime.Today,
+                    DateTime.Now.AddDays(7), item.City, item.Condition, item.Region, item.Category,
+                    item.Image);
+                ListOfItem.Add(mockupItem);
+                
+            }
+
         }
 
         public List<MockupItem> GetAllItems()
