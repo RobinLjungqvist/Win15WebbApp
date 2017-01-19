@@ -1,0 +1,14 @@
+﻿@model WebbApp.ViewModels.ItemViewModel
+
+@using (Html.BeginForm())
+{
+    @Html.EditorFor(x=>x.Title)
+    @Html.EditorFor(x=>x.Description)
+    @Html.EditorFor(x=>x.CreateDate)
+    @Html.EditorFor(x=>x.ExpirationDate)
+    @Html.EditorFor(x=>x.City)
+    @Html.EditorFor(x=>x.Condition)
+    @Html.EditorFor(x=>x.Region)
+    @Html.EditorFor(x=>x.Category)
+    
+}

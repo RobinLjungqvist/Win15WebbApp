@@ -17,6 +17,7 @@
                 <p>
                     @Model.Description
                 </p>
+                @Html.ActionLink("Remove Item","RemoveItem", new {itemID = Model.ItemID })
 
             </div>
 
