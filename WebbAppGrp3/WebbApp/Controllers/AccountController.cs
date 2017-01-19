@@ -13,11 +13,11 @@ namespace WebbApp.Controllers
     [AllowAnonymous]
     public class AccountController : Controller
     {
-        public MockupUserRepo userRepo;
+        public MockupUserRepository userRepo;
 
         public AccountController()
         {
-            this.userRepo = new MockupUserRepo();
+            this.userRepo = new MockupUserRepository();
         }
         // GET: Account
         [HttpGet]

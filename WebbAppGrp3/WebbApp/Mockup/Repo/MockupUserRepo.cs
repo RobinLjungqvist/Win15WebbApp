@@ -7,21 +7,32 @@ using WebbApp.Mockup.Models;
 
 namespace WebbApp.Mockup.Repo
 {
-    public class MockupUserRepo : IUserRepository
+    public class MockupUserRepository : IUserRepository
     {
+        static List<MockupUser> Users;
+
+        public MockupUserRepository()
+        {
+            Users.Add(new MockupUser(Guid.NewGuid(), "Pelle", "Svanslös", "Pelle@email.com", "Pella", "password", false, "Helsingborg", "Skåne"));
+            Users.Add(new MockupUser(Guid.NewGuid(), "Kalle", "Blomkvist", "Kalle@email.com", "KallePower", "password", false, "Stockholm", "Stockholm"));
+            Users.Add(new MockupUser(Guid.NewGuid(), "Lisa", "Sävås", "Lisa@email.com", "Lisa", "password", false, "Göteborg", "Västra Götaland"));
+            Users.Add(new MockupUser(Guid.NewGuid(), "Hanna", "Petersson", "Hanna@email.com", "Hannapy", "password", false, "Växjö", "Småland"));
+        }
         public void CreateOrUpdateUser(MockupUser user)
         {
-            throw new NotImplementedException();
+            Users.Add(user);
         }
 
         public List<MockupUser> GetAllUsers()
         {
-            throw new NotImplementedException();
+            return Users;
         }
 
         public MockupUser GetUserByID(Guid id)
         {
-            throw new NotImplementedException();
+            var user = Users.FirstOrDefault(u => u.UserID == id);
+
+            return user;
         }
 
         public MockupUser LoginUser(string Email, string password)
@@ -37,7 +48,13 @@ namespace WebbApp.Mockup.Repo
 
         public void RemoveUserByID(Guid id)
         {
-            throw new NotImplementedException();
+            var user = Users.FirstOrDefault(u => u.UserID == id);
+
+
+            if(user != null)
+            {
+                Users.Remove(user);
+            }
         }
     }
 }
