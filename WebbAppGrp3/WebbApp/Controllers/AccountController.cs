@@ -23,7 +23,7 @@ namespace WebbApp.Controllers
         [HttpGet]
         public ActionResult Login()
         {
-            var x = GetIdFromClaims();
+            //var x = GetIdFromClaims();
             var UserModel = new UserViewModel();
             return View(UserModel);
         }
@@ -59,14 +59,14 @@ namespace WebbApp.Controllers
             return View(model);
         }
 
-        public string GetIdFromClaims()
-        {
-            var identity = (ClaimsIdentity)User.Identity;
+        //public string GetIdFromClaims()
+        //{
+        //    var identity = (ClaimsIdentity)User.Identity;
 
-            var id = identity.FindFirst("UserID");
+        //    var id = identity.FindFirst("UserID");
 
-            return id.ToString();
-        }
+        //    return id.ToString();
+        //}
 
         public ActionResult Logout()
         {

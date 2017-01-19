@@ -1,0 +1,10 @@
+﻿body {
+}
+.ListItemImage {
+    width: 200px;
+    height: 100px;
+}
+.listItem {
+    margin-bottom: 10px;
+    border: 1px solid black;
+}

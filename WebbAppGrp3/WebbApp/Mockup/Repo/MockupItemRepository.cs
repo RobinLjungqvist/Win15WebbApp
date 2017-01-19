@@ -12,6 +12,7 @@ namespace WebbApp.Mockup.Repo
         static List<MockupItem> ListOfItem = new List<MockupItem>();
         public MockupItemRepository()
         {
+            if (!ListOfItem.Any()) { 
             ListOfItem.Add(new MockupItem(Guid.NewGuid(), "Titlestring", "decriptionstring", DateTime.Now, DateTime.Now.AddDays(7),
                 "CityMalmö", "ConditionNormal", "RegionSkåne", "CategoryBed", "../Images/PlaceholderImage.png"));
             ListOfItem.Add(new MockupItem(Guid.NewGuid(), "Titlestring", "decriptionstring", DateTime.Now, DateTime.Now.AddDays(7),
@@ -20,6 +21,7 @@ namespace WebbApp.Mockup.Repo
                 "CityHelsingborg", "ConditionNormal", "RegionSkåne", "CategoryBed", "../Images/PlaceholderImage.png"));
             ListOfItem.Add(new MockupItem(Guid.NewGuid(), "Titlestring", "decriptionstring", DateTime.Now, DateTime.Now.AddDays(7),
                 "CityLund", "ConditionNormal", "RegionSkåne", "CategoryBed", "../Images/PlaceholderImage.png"));
+            }
         }
            
         public void CreateOrUpdateItem(MockupItem item)

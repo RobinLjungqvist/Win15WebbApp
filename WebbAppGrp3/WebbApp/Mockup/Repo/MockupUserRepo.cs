@@ -13,6 +13,7 @@ namespace WebbApp.Mockup.Repo
 
         public MockupUserRepository()
         {
+            Users = new List<MockupUser>();
             Users.Add(new MockupUser(Guid.NewGuid(), "Pelle", "Svanslös", "Pelle@email.com", "Pella", "password", false, "Helsingborg", "Skåne"));
             Users.Add(new MockupUser(Guid.NewGuid(), "Kalle", "Blomkvist", "Kalle@email.com", "KallePower", "password", false, "Stockholm", "Stockholm"));
             Users.Add(new MockupUser(Guid.NewGuid(), "Lisa", "Sävås", "Lisa@email.com", "Lisa", "password", false, "Göteborg", "Västra Götaland"));
