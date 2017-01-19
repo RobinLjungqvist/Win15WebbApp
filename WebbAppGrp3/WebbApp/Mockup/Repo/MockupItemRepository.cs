@@ -13,13 +13,13 @@ namespace WebbApp.Mockup.Repo
         public MockupItemRepository()
         {
             ListOfItem.Add(new MockupItem(Guid.NewGuid(), "Titlestring", "decriptionstring", DateTime.Now, DateTime.Now.AddDays(7),
-                "CityMalmö", "ConditionNormal", "RegionSkåne", "CategoryBed", "PlaceholderImage.png"));
+                "CityMalmö", "ConditionNormal", "RegionSkåne", "CategoryBed", "../Images/PlaceholderImage.png"));
             ListOfItem.Add(new MockupItem(Guid.NewGuid(), "Titlestring", "decriptionstring", DateTime.Now, DateTime.Now.AddDays(7),
-                "CityHalmstad", "ConditionNormal", "RegionSkåne", "CategoryBed", "PlaceholderImage.png"));
+                "CityHalmstad", "ConditionNormal", "RegionSkåne", "CategoryBed", "../Images/PlaceholderImage.png"));
             ListOfItem.Add(new MockupItem(Guid.NewGuid(), "Titlestring", "decriptionstring", DateTime.Now, DateTime.Now.AddDays(7),
-                "CityHelsingborg", "ConditionNormal", "RegionSkåne", "CategoryBed", "PlaceholderImage.png"));
+                "CityHelsingborg", "ConditionNormal", "RegionSkåne", "CategoryBed", "../Images/PlaceholderImage.png"));
             ListOfItem.Add(new MockupItem(Guid.NewGuid(), "Titlestring", "decriptionstring", DateTime.Now, DateTime.Now.AddDays(7),
-                "CityLund", "ConditionNormal", "RegionSkåne", "CategoryBed", "PlaceholderImage.png"));
+                "CityLund", "ConditionNormal", "RegionSkåne", "CategoryBed", "../Images/PlaceholderImage.png"));
         }
            
         public void CreateOrUpdateItem(MockupItem item)
