@@ -70,7 +70,10 @@ namespace WebbApp.Controllers
                 ViewModelItems.Add(newViewModel);
             }
 
-
+            if (Request.IsAjaxRequest())
+            {
+                return PartialView("ListAllItems", ViewModelItems);
+            }
             return PartialView(ViewModelItems);
         }
     }
