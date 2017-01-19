@@ -24,25 +24,33 @@ namespace WebbApp.Controllers
         }
 
         // GET: Item
-        public ActionResult NewImage(HttpPostedFileBase file)
+        public ActionResult NewImage(HttpPostedFileBase[] file)
         {
-            if (file != null)
+            for (int i = 0; i < file.Length; i++)
             {
-                // Additional information should be added to the filename here to specify the userID, UserIdentity
-                string pic = System.IO.Path.GetFileName(file.FileName);
-                string path = System.IO.Path.Combine(
-                    Server.MapPath("~/Images/profile"), pic);
-                // file is uploaded
-                file.SaveAs(path);
+                if (file[i] != null)
+                {
+                    // Additional information should be added to the filename here to specify the userID, UserIdentity
+                    string pic = System.IO.Path.GetFileName(file[i].FileName);
+                    string path = System.IO.Path.Combine(
+                        Server.MapPath("~/Images"), pic);
+                    // file is uploaded
+                    file[i].SaveAs(path);
 
+                }
             }
+           
             // after successfully uploading redirect the user
             return RedirectToAction("actionname", "controller name");
         }
 
-        public ActionResult DisplaySingleItem()
+        public ActionResult DisplaySingleItem(Guid ItemID)
         {
-            return View();
+            var repoItem = itemRepository.GetItemByID(ItemID);
+
+            var newViewModel = new ItemViewModel(repoItem.ItemID, repoItem.Title, repoItem.Description, repoItem.CreateDate, repoItem.ExpirationDate, repoItem.City, repoItem.Condition, repoItem.Region, repoItem.Category, repoItem.Image);
+
+            return View(newViewModel);
         }
 
         public ActionResult ListAllItems()
