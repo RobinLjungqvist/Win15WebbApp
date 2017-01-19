@@ -25,22 +25,43 @@ namespace WebbApp.Controllers
         }
 
         // GET: Item
-        public ActionResult NewImage(HttpPostedFileBase[] file)
+        public ActionResult NewItem(ItemViewModel model, HttpPostedFileBase file)
         {
-            for (int i = 0; i < file.Length; i++)
-            {
-                if (file[i] != null)
+            string path = string.Empty;
+
+       
+                if (file != null)
                 {
                     // Additional information should be added to the filename here to specify the userID, UserIdentity
-                    string pic = System.IO.Path.GetFileName(file[i].FileName);
-                    string path = System.IO.Path.Combine(
+                    string pic = System.IO.Path.GetFileName(file.FileName);
+                    path = System.IO.Path.Combine(
                         Server.MapPath("~/Images"), pic);
                     // file is uploaded
-                    file[i].SaveAs(path);
+                    file.SaveAs(path);
 
                 }
+          
+
+            if(model != null)
+            {
+                var newItem = new MockupItem();
+
+                newItem.Title = model.Title;
+                newItem.Category = model.Category;
+                newItem.City = model.City;
+                newItem.Condition = model.Condition;
+                newItem.CreateDate = model.CreateDate;
+                newItem.Description = model.Description;
+                newItem.ExpirationDate = model.ExpirationDate;
+                if (path != "")
+                {
+                    newItem.Image = path;
+                }
+                newItem.Region = model.Region;
+
+                itemRepository.CreateOrUpdateItem(newItem);
             }
-           
+
             // after successfully uploading redirect the user
             return RedirectToAction("actionname", "controller name");
         }
