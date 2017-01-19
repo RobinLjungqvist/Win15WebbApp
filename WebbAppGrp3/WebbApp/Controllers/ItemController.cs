@@ -105,9 +105,9 @@ namespace WebbApp.Controllers
         }
         public ActionResult EditItem(ItemViewModel viewitem)
         {
-            var edit = new MockupItem(viewitem.ItemID, viewitem.Title, viewitem.Description, viewitem.CreateDate, viewitem.ExpirationDate, viewitem.City, viewitem.Condition, viewitem.Region, viewitem.Category, viewitem.Image);
+            //var edit = new MockupItem(viewitem.ItemID, viewitem.Title, viewitem.Description, viewitem.CreateDate, viewitem.ExpirationDate, viewitem.City, viewitem.Condition, viewitem.Region, viewitem.Category, viewitem.Image);
 
-            return PartialView("EditItem");
+            return PartialView("EditItem",viewitem);
         }
         [HttpPost]
         public ActionResult EditItem(ItemViewModel viewitem,FormCollection collection)
