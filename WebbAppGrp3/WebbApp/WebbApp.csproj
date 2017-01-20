@@ -203,6 +203,7 @@
     <Content Include="Views\Item\ListViewItem.cshtml" />
     <Content Include="Views\Item\EditItem.cshtml" />
     <Content Include="Views\Item\NewItem.cshtml" />
+    <Content Include="Views\Item\DisplaySingleItem.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
