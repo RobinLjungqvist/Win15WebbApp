@@ -201,9 +201,9 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Item\ListAllItems.cshtml" />
     <Content Include="Views\Item\ListViewItem.cshtml" />
-    <Content Include="Views\Item\EditItem.cshtml" />
     <Content Include="Views\Item\NewItem.cshtml" />
     <Content Include="Views\Item\DisplaySingleItem.cshtml" />
+    <Content Include="Views\Item\EditItem.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
