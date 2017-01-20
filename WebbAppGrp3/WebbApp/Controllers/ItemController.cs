@@ -11,6 +11,8 @@ using WebbApp.ViewModels;
 
 namespace WebbApp.Controllers
 {
+    [AllowAnonymous]
+
     public class ItemController : Controller
     {
         private IItemRepository itemRepository;
@@ -23,17 +25,23 @@ namespace WebbApp.Controllers
         {
             return PartialView();
         }
-
+        [HttpGet]
+        public ActionResult NewItem()
+        {
+            return PartialView();
+        }
         // GET: Item
+        [HttpPost]
         public ActionResult NewItem(ItemViewModel model, HttpPostedFileBase file)
         {
             string path = string.Empty;
+            string pic = string.Empty;
 
-       
+
                 if (file != null)
                 {
                     // Additional information should be added to the filename here to specify the userID, UserIdentity
-                    string pic = System.IO.Path.GetFileName(file.FileName);
+                    pic = System.IO.Path.GetFileName(file.FileName);
                     path = System.IO.Path.Combine(
                         Server.MapPath("~/Images"), pic);
                     // file is uploaded
@@ -55,7 +63,7 @@ namespace WebbApp.Controllers
                 newItem.ExpirationDate = model.ExpirationDate;
                 if (path != "")
                 {
-                    newItem.Image = path;
+                    newItem.Image = "./Images/" + pic;
                 }
                 newItem.Region = model.Region;
 
@@ -63,7 +71,7 @@ namespace WebbApp.Controllers
             }
 
             // after successfully uploading redirect the user
-            return RedirectToAction("actionname", "controller name");
+            return RedirectToAction("Index", "Home");
         }
 
         public ActionResult DisplaySingleItem()

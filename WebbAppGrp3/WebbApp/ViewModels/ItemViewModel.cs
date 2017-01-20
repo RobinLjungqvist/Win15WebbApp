@@ -19,7 +19,8 @@ namespace WebbApp.ViewModels
         public string Region { get; set; }
         public string Category { get; set; }
         public string Image { get; set; }
-
+        
+        public ItemViewModel() { }
         public ItemViewModel(Guid id, string title, string description, DateTime createdate, DateTime expirationdate,
             string city, string condition, string region, string category, string image)
         {
