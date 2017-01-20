@@ -26,6 +26,6 @@
         </p>
 
     </div>
-    @Html.ActionLink("Show Item", "DisplaySingleItem", new { itemID = Model.ItemID })
+    @Ajax.ActionLink("Show Item", "DisplaySingleItem","Item", new { itemID = Model.ItemID }, editItem)
 
 </div>
