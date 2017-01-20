@@ -1,5 +1,14 @@
 ﻿ @model WebbApp.ViewModels.ItemViewModel
      
+@{
+    var editItem = new AjaxOptions
+    {
+        UpdateTargetId = "PartialContainer",
+        InsertionMode = InsertionMode.Replace,
+        HttpMethod = "GET"
+    };
+}
+
 <div class="row listItem">
     <div class="col-md-4">
         <img src="@Model.Image" class="ListItemImage" />
@@ -17,6 +26,6 @@
         </p>
 
     </div>
-
+    @Ajax.ActionLink("Show Item", "DisplaySingleItem","Item", new { itemID = Model.ItemID }, editItem)
 
 </div>
