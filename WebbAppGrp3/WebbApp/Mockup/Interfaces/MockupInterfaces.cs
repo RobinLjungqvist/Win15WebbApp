@@ -82,4 +82,5 @@ namespace WebbApp.Mockup.Interfaces
         void CreateOrUpdateItemCondition(MockupCity city);
     }
 
+
 }

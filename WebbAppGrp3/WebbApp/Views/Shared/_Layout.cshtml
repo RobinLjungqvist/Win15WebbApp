@@ -39,8 +39,16 @@
                             InsertionMode = InsertionMode.Replace,
                             HttpMethod = "GET"
                         })
+            </li>
+                <li>
+                    @Ajax.ActionLink("New Item", "NewItem", "Item", null,
+                        new AjaxOptions
+                        {
+                            UpdateTargetId = "PartialContainer",
+                            InsertionMode = InsertionMode.Replace,
+                            HttpMethod = "GET"
+                        })
                 </li>
-                
 
             </ul>
 
