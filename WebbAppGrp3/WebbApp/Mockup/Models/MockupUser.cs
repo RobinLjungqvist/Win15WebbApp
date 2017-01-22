@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity;
+
 
 namespace WebbApp.Mockup.Models
 {
-    public class MockupUser
+    public class MockupUser 
     {
         public MockupUser() { }
         public MockupUser(Guid UserID, string Firstname, string LastName, string Email, string UserName,
