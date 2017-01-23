@@ -6,7 +6,8 @@ namespace WebbApp.DAL
 {
     public class ApplicationContext : IdentityDbContext<ApplicationUser>
     {
-        public ApplicationContext() : base("name=GiveItAwayCS")
+        //public ApplicationContext() : base("GiveAwayDB")
+        public ApplicationContext() : base("GiveItAwayDB")
         {
 
         }

@@ -12,6 +12,10 @@ namespace WebbApp.DAL.DB.Models
     [Table("Item")]
     public class Item
     {
+        public Item()
+        {
+            this.Images = new HashSet<Image>();
+        }
         [Key]
         public Guid ItemID { get; set; }
         public string Title { get; set; }
@@ -25,5 +29,6 @@ namespace WebbApp.DAL.DB.Models
         public virtual Category Category { get; set; }
         public virtual Image Image { get; set; }
         public virtual ApplicationUser ApplicationUser { get; set; }
+        public virtual ICollection<Image> Images { get; set; }
     }
 }
