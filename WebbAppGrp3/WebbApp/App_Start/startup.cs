@@ -5,11 +5,11 @@ using Microsoft.Owin.Security.Cookies;
 using WebbApp.DAL;
 using static WebbApp.App_Start.IdentityConfig;
 
-[assembly: OwinStartup(typeof(WebbApp.Startup))]
+[assembly: OwinStartup(typeof(WebbApp.startup))]
 
 namespace WebbApp
 {
-    public class Startup
+    public class startup
     {
         public void Configuration(IAppBuilder app)
         {

@@ -113,14 +113,20 @@ namespace WebbApp.Controllers
         }
         public ActionResult EditItem(ItemViewModel viewitem)
         {
-           return PartialView("EditItem",viewitem);
+            var theitem = itemRepository.GetItemByID(viewitem.ItemID);
+            var thedititem = new ItemViewModel(theitem.ItemID, theitem.Title, theitem.Description, theitem.CreateDate, theitem.ExpirationDate, theitem.City, theitem.Condition, theitem.Region, theitem.Category, theitem.Image);
+            return PartialView("EditItem", thedititem);
         }
         [HttpPost]
         public ActionResult EditItem(ItemViewModel viewitem,FormCollection collection)
         {
-            var edit = new MockupItem(viewitem.ItemID, viewitem.Title, viewitem.Description, viewitem.CreateDate, viewitem.ExpirationDate, viewitem.City, viewitem.Condition, viewitem.Region, viewitem.Category, viewitem.Image);
-            itemRepository.CreateOrUpdateItem(edit);
-
+            ModelState.Remove("Image");
+            if(ModelState.IsValid)
+            {
+                var edit = new MockupItem(viewitem.ItemID, viewitem.Title, viewitem.Description, viewitem.CreateDate, viewitem.ExpirationDate, viewitem.City, viewitem.Condition, viewitem.Region, viewitem.Category, viewitem.Image);
+                itemRepository.CreateOrUpdateItem(edit);
+            }
+           
             return PartialView("EditItem",viewitem);
         }
 
