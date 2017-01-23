@@ -40,7 +40,7 @@ namespace WebbApp.Mockup.Repo
         {
             var user = new MockupUser();
 
-            if (Email == "admin" && password == "password")
+            if (Email == "admin@email.com" && password == "password")
             {
                 user.UserID = Guid.NewGuid();
             }
