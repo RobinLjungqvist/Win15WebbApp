@@ -15,5 +15,12 @@ namespace WebbApp.DAL
         {
             return new ApplicationContext();
         }
+
+        public DbSet<Image> Images { get; set; }
+        public DbSet<City> Cities { get; set; }
+        public DbSet<Condition> Conditions { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Region> Regions { get; set; }
+        public DbSet<Item> Items { get; set; }
     }
 }
