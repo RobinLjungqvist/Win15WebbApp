@@ -1,18 +1,18 @@
 ﻿@model WebbApp.ViewModels.ItemViewModel
 
 
-    <div class="row listItem">
-        <div class="col-md-8 col-md-offset-2">
-            <img src="@Model.Image" class="ListItemImage" />
+    <div class="row">
+        <div class="col-md-6">
+            <img src="@Model.Image" class="SingleDisplayImage" />
         </div>
         <div class="row">
-            <div class="col-md-4 col-md-offset-4">
+            <div class="col-md-3">
                 <h2>@Model.Title</h2>
                 @Html.DisplayFor(model => model.City)
                 @Html.DisplayFor(model => model.Region)
                 @Html.DisplayFor(model => model.ExpirationDate)
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <h3>Description</h3>
                 <p>
                     @Model.Description

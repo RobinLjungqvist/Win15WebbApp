@@ -1,10 +1,18 @@
 ﻿body {
 }
 .ListItemImage {
-    width: 200px;
-    height: 100px;
+    margin: 5px;    
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
 }
 .listItem {
     margin-bottom: 10px;
     border: 1px solid black;
+}
+.SingleDisplayImage{
+    margin: 5px;    
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
 }
