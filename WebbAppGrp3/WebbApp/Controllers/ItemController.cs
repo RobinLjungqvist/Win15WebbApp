@@ -38,7 +38,10 @@ namespace WebbApp.Controllers
             string path = string.Empty;
             string pic = string.Empty;
 
-
+            if (!ModelState.IsValid)
+            {
+                return PartialView(model);
+            }
                 if (file != null)
                 {
                     // Additional information should be added to the filename here to specify the userID, UserIdentity
