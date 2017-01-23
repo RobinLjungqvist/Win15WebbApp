@@ -8,6 +8,7 @@ namespace WebbApp.DAL
     {
         public ApplicationContext() : base("name=GiveItAwayCS")
         {
+
         }
 
         public static ApplicationContext Create()
