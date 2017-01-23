@@ -74,12 +74,11 @@ namespace WebbApp.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public ActionResult DisplaySingleItem()
+        public ActionResult DisplaySingleItem(Guid itemID)
         {
-            
-            var repoItem = new MockupItem(Guid.NewGuid(), "Titlestring", "decriptionstring", DateTime.Now, DateTime.Now.AddDays(7),
-                "CityMalmö", "ConditionNormal", "RegionSkåne", "CategoryBed", "../Images/PlaceholderImage.png");
-          
+
+            var repoItem = itemRepository.GetItemByID(itemID);
+
 
             var newViewModel = new ItemViewModel(repoItem.ItemID, repoItem.Title, repoItem.Description, repoItem.CreateDate, repoItem.ExpirationDate, repoItem.City, repoItem.Condition, repoItem.Region, repoItem.Category, repoItem.Image);
 
