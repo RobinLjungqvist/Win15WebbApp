@@ -28,24 +28,5 @@ namespace WebbApp.Controllers
 
             return View();
         }
-
-        public string AddUser()
-        {
-            ApplicationUser user;
-            ApplicationUserStore Store = new ApplicationUserStore(new ApplicationContext());
-            ApplicationUserManager userManager = new ApplicationUserManager(Store);
-            user = new ApplicationUser
-            {
-                UserName = "TestUser",
-                Email = "TestUser@test.com"
-            };
-
-            var result = userManager.Create(user);
-            if (!result.Succeeded)
-            {
-                return result.Errors.First();
-            }
-            return "User Added";
-        }
     }
 }
