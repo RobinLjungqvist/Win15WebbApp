@@ -59,6 +59,12 @@
   <ItemGroup>
     <Compile Include="DB.Models\ApplicationUser.cs" />
     <Compile Include="ApplicationContext.cs" />
+    <Compile Include="DB.Models\Category.cs" />
+    <Compile Include="DB.Models\City.cs" />
+    <Compile Include="DB.Models\Condition.cs" />
+    <Compile Include="DB.Models\Image.cs" />
+    <Compile Include="DB.Models\Item.cs" />
+    <Compile Include="DB.Models\Region.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
