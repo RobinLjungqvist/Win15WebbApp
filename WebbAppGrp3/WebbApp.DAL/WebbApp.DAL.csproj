@@ -59,6 +59,8 @@
   <ItemGroup>
     <Compile Include="DB.Models\ApplicationUser.cs" />
     <Compile Include="ApplicationContext.cs" />
+    <Compile Include="Interfaces\IRepository.cs" />
+    <Compile Include="Interfaces\ISearchable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WebbApp.DAL.Interfaces;
 using WebbApp.Mockup.Interfaces;
 using WebbApp.Mockup.Models;
 using WebbApp.Mockup.Repo;
@@ -23,6 +24,7 @@ namespace WebbApp.Controllers
         }
         public ActionResult Index()
         {
+
             return PartialView();
         }
         [HttpGet]

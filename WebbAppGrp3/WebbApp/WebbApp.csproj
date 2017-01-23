@@ -179,8 +179,10 @@
     <Compile Include="Mockup\Models\MockupMessage.cs" />
     <Compile Include="Mockup\Models\MockupRegion.cs" />
     <Compile Include="Mockup\Models\MockupUser.cs" />
+    <Compile Include="Mockup\Models\TestModel.cs" />
     <Compile Include="Mockup\Repo\MockupItemRepository.cs" />
     <Compile Include="Mockup\Repo\MockupUserRepo.cs" />
+    <Compile Include="Mockup\Repo\TestRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\AccountViewModel.cs" />

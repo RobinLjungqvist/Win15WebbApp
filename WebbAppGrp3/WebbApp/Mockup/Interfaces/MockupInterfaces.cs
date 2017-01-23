@@ -6,17 +6,8 @@ using WebbApp.Mockup.Models;
 
 namespace WebbApp.Mockup.Interfaces
 {
-    /*
-public interface IRepository<T> where T : class
-{
-    IQueryable<T> GetAll();
-    T GetById(Guid id);
-    void Add(T entity);
-    void Update(T entity);
-    void Delete(T entity);
-    void Delete(Guid id);
-}
-    */
+
+
 
 
     public interface IUserRepository
