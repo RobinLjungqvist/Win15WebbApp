@@ -125,13 +125,15 @@ namespace WebbApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EditItem(ItemViewModel viewitem,FormCollection collection)
         {
+            MockupItem edit=null;
             ModelState.Remove("Image");
             if(ModelState.IsValid)
             {
-                var edit = new MockupItem(viewitem.ItemID, viewitem.Title, viewitem.Description, viewitem.CreateDate, viewitem.ExpirationDate, viewitem.City, viewitem.Condition, viewitem.Region, viewitem.Category, viewitem.Image);
-                itemRepository.CreateOrUpdateItem(edit);
+                edit = new MockupItem(viewitem.ItemID, viewitem.Title, viewitem.Description, viewitem.CreateDate, viewitem.ExpirationDate, viewitem.City, viewitem.Condition, viewitem.Region, viewitem.Category, viewitem.Image);
+                //itemRepository.CreateOrUpdateItem(edit);
             }
-           
+            itemRepository.CreateOrUpdateItem(edit);
+
             return PartialView("EditItem",viewitem);
         }
 

@@ -11,7 +11,7 @@ namespace WebbApp.ViewModels
 
         public Guid ItemID { get; set; }
 
-        [Required(ErrorMessage ="Must enter the title if the item")]
+        [Required(ErrorMessage ="Must enter the title of the item")]
         public string Title { get; set; }
 
         [Required(ErrorMessage ="Must enter a description for the item")]
