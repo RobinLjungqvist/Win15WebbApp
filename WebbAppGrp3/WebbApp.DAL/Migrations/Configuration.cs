@@ -12,7 +12,6 @@ namespace WebbApp.DAL.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            ContextKey = "WebbApp.DAL.ApplicationContext";
         }
 
         protected override void Seed(WebbApp.DAL.ApplicationContext context)
@@ -48,7 +47,7 @@ namespace WebbApp.DAL.Migrations
             var category2 = new Category() { CategoryId = Guid.NewGuid(), CategoryName = "Books" };
             context.Categories.AddOrUpdate(x => x.CategoryId, category1, category2);
 
-            var image1 = new Image() { ImageId = Guid.NewGuid(), Path = "sg" };
+            var image1 = new Image() { ImageId = Guid.NewGuid(), Path = "../Images/PlaceholderImage.png" };
             context.Images.AddOrUpdate(x => x.ImageId, image1);
 
             List<Region> regionList = new List<Region> {
@@ -79,5 +78,7 @@ namespace WebbApp.DAL.Migrations
                 context.Regions.AddOrUpdate(x => x.RegionId, i);
             }
         }
+
     }
 }
+
