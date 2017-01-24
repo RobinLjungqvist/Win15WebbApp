@@ -114,6 +114,7 @@ namespace WebbApp.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+        [HttpGet]
         public ActionResult EditItem(ItemViewModel viewitem)
         {
             var theitem = itemRepository.GetItemByID(viewitem.ItemID);
@@ -121,6 +122,7 @@ namespace WebbApp.Controllers
             return PartialView("EditItem", thedititem);
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult EditItem(ItemViewModel viewitem,FormCollection collection)
         {
             ModelState.Remove("Image");

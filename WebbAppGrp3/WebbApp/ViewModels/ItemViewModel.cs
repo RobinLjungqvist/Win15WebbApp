@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -9,15 +10,29 @@ namespace WebbApp.ViewModels
     {
 
         public Guid ItemID { get; set; }
+
+        [Required(ErrorMessage ="Must enter the title if the item")]
         public string Title { get; set; }
+
+        [Required(ErrorMessage ="Must enter a description for the item")]
         public string Description { get; set; }
+
         public DateTime CreateDate { get; set; }
         public DateTime ExpirationDate { get; set; }
 
+        [Required(ErrorMessage ="Must enter the city")]
         public string City { get; set; }
+
+        [Required(ErrorMessage ="Must enter the condition of the item")]
         public string Condition { get; set; }
+
+        [Required(ErrorMessage ="Must enter the region")]
         public string Region { get; set; }
+
+        [Required(ErrorMessage ="Must enter the category of the item")]
         public string Category { get; set; }
+
+        [Required(ErrorMessage ="There is no image. Please select an image")]
         public string Image { get; set; }
         
         public ItemViewModel() { }
