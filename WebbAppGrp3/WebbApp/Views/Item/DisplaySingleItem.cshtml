@@ -24,13 +24,13 @@
                    InsertionMode = InsertionMode.Replace,
                    HttpMethod = "GET"
                })
-                @Ajax.ActionLink("Edit Item", "EditItem","Item", new { itemID = Model.ItemID }, 
-               new AjaxOptions
+                @Html.ActionLink("Edit Item", "EditItem", "Item", new { itemID = Model.ItemID },null)
+               @*new AjaxOptions
            {
                UpdateTargetId = "PartialContainer",
                InsertionMode = InsertionMode.Replace,
                HttpMethod = "GET"
-           })
+           })*@
 
 
             </div>

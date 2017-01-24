@@ -15,6 +15,8 @@ namespace WebbApp.ViewModels
         public string Title { get; set; }
 
         [Required(ErrorMessage ="Must enter a description for the item")]
+
+        [StringLength(30, ErrorMessage="Must enter a description for the item", MinimumLength = 1)]
         public string Description { get; set; }
 
         public DateTime CreateDate { get; set; }
