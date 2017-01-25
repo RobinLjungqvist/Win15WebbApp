@@ -11,7 +11,8 @@ namespace WebbApp.DAL.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
+            AutomaticMigrationDataLossAllowed = true;
         }
 
         protected override void Seed(WebbApp.DAL.ApplicationContext context)

@@ -5,16 +5,15 @@ namespace WebbApp.ViewModels
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "Email")]
-        [EmailAddress]
-        public string Email { get; set; }
+        [Display(Name = "Username")]
+        public string Username { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Lösenord")]
+        [Display(Name = "Password")]
         public string Password { get; set; }
 
-        [Display(Name = "Kom ihåg?")]
+        [Display(Name = "Remember me?")]
         public bool RememberMe { get; set; }
     }
 
@@ -57,37 +56,37 @@ namespace WebbApp.ViewModels
         public string Email { get; set; }
 
         [Required]
-        [Display(Name = "Användarnamn")]
+        [Display(Name = "Username")]
         public string UserName { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Lösenord")]
+        [Display(Name = "Password")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Bekräfta lösenordet")]
+        [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
         [Required]
-        [Display(Name = "Förnamn")]
+        [Display(Name = "First name")]
         public string FirstName { get; set; }
 
         [Required]
-        [Display(Name = "Efternamn")]
+        [Display(Name = "Last name")]
         public string LastName { get; set; }
 
-        [Display(Name = "Ort")]
+        [Display(Name = "City")]
         public string City { get; set; }
 
         [Required]
-        [Display(Name = "Län")]
+        [Display(Name = "Region")]
         public Regions Region { get; set; }
 
         [Required]
-        [Display(Name = "Behörighet")]
+        [Display(Name = "Role")]
         public UserRoles UserRole { get; set; }
     }
 }
