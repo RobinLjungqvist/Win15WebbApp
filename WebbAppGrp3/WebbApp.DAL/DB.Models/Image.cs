@@ -11,16 +11,11 @@ namespace WebbApp.DAL.DB.Models
     [Table("Image")]
     public class Image
     {
-        public Image()
-        {
-            this.Items = new HashSet<Item>();
-        }
-
         [Key]
         public Guid ImageId { get; set; }
         [Required]
         public string Path { get; set; }
 
-        public virtual ICollection<Item> Items { get; set; }
+        public virtual Item Item { get; set; }
     }
 }

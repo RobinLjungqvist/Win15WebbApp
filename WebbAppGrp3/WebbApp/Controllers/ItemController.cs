@@ -114,23 +114,27 @@ namespace WebbApp.Controllers
 
             return RedirectToAction("Index", "Home");
         }
-        public ActionResult EditItem(ItemViewModel viewitem)
+        [HttpGet]
+        public ActionResult EditItem(Guid ItemID)
         {
-            var theitem = itemRepository.GetItemByID(viewitem.ItemID);
+            var theitem = itemRepository.GetItemByID(ItemID);
             var thedititem = new ItemViewModel(theitem.ItemID, theitem.Title, theitem.Description, theitem.CreateDate, theitem.ExpirationDate, theitem.City, theitem.Condition, theitem.Region, theitem.Category, theitem.Image);
-            return PartialView("EditItem", thedititem);
+            return View(thedititem);
         }
         [HttpPost]
-        public ActionResult EditItem(ItemViewModel viewitem,FormCollection collection)
+        [ValidateAntiForgeryToken]
+        public ActionResult EditItem(ItemViewModel viewitem,FormCollection formcollection)
         {
+            MockupItem edit=null;
             ModelState.Remove("Image");
             if(ModelState.IsValid)
             {
-                var edit = new MockupItem(viewitem.ItemID, viewitem.Title, viewitem.Description, viewitem.CreateDate, viewitem.ExpirationDate, viewitem.City, viewitem.Condition, viewitem.Region, viewitem.Category, viewitem.Image);
-                itemRepository.CreateOrUpdateItem(edit);
+                edit = new MockupItem(viewitem.ItemID, viewitem.Title, viewitem.Description, viewitem.CreateDate, viewitem.ExpirationDate, viewitem.City, viewitem.Condition, viewitem.Region, viewitem.Category, viewitem.Image);
+                //itemRepository.CreateOrUpdateItem(edit);
             }
-           
-            return PartialView("EditItem",viewitem);
+            itemRepository.CreateOrUpdateItem(edit);
+
+            return PartialView("ListAllItems");
         }
 
     }     
