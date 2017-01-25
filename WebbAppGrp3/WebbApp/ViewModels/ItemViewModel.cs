@@ -12,10 +12,11 @@ namespace WebbApp.ViewModels
         public Guid ItemID { get; set; }
 
         [Required(ErrorMessage ="Must enter the title of the item")]
+        [RegularExpression(@"^[a-öA-Ö''-'\s]{1,40}$", ErrorMessage = "Must be letters between a-ö or A-Ö")]
         public string Title { get; set; }
 
         [Required(ErrorMessage ="Must enter a description for the item")]
-
+        [RegularExpression(@"^[a-öA-Ö''-'\s]{1,40}$", ErrorMessage = "Must be letters between a-ö or A-Ö")]
         [StringLength(30, ErrorMessage="Must enter a description for the item", MinimumLength = 1)]
         public string Description { get; set; }
 
@@ -23,15 +24,19 @@ namespace WebbApp.ViewModels
         public DateTime ExpirationDate { get; set; }
 
         [Required(ErrorMessage ="Must enter the city")]
+        [RegularExpression(@"^[a-öA-Ö''-'\s]{1,40}$", ErrorMessage = "Must be letters between a-ö or A-Ö")]
         public string City { get; set; }
 
         [Required(ErrorMessage ="Must enter the condition of the item")]
+        [RegularExpression(@"^[a-öA-Ö''-'\s]{1,40}$", ErrorMessage = "Must be letters between a-ö or A-Ö")]
         public string Condition { get; set; }
 
         [Required(ErrorMessage ="Must enter the region")]
+        [RegularExpression(@"^[a-öA-Ö''-'\s]{1,40}$", ErrorMessage = "Must be letters between a-ö or A-Ö")]
         public string Region { get; set; }
 
         [Required(ErrorMessage ="Must enter the category of the item")]
+        [RegularExpression(@"^[a-öA-Ö''-'\s]{1,40}$", ErrorMessage = "Must be letters between a-ö or A-Ö")]
         public string Category { get; set; }
 
         [Required(ErrorMessage ="There is no image. Please select an image")]
