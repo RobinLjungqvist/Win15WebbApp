@@ -6,10 +6,7 @@ using System.Threading.Tasks;
 
 namespace WebbApp.DAL.Interfaces
 {
-    public interface ISearchable<T>
+    interface ISearchableRepository<T>: IRepository<T>, ISearchable<T> where T : class
     {
-        IQueryable<T> Search(string searchTerm);
-        IQueryable<T> FilteredSearch(T Searchable);
-
     }
 }

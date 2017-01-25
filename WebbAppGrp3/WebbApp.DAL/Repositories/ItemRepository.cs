@@ -5,10 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using WebbApp.DAL.DB.Models;
 using WebbApp.DAL.Interfaces;
+using System.IO;
 
 namespace WebbApp.DAL.Repositories
 {
-    class ItemRepository : ISearchable<Item>
+    class ItemRepository : ISearchableRepository<Item>
     {
         private ApplicationContext ctx;
 
@@ -19,6 +20,7 @@ namespace WebbApp.DAL.Repositories
 
         public void Add(Item entity)
         {
+            throw new NotImplementedException();
         }
 
         public void Delete(Guid id)
