@@ -134,7 +134,7 @@ namespace WebbApp.Controllers
             }
             itemRepository.CreateOrUpdateItem(edit);
 
-            return PartialView("ListAllItems");
+            return RedirectToAction("ListAllItems");
         }
 
     }     
