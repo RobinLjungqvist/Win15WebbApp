@@ -10,34 +10,67 @@ namespace WebbApp.DAL.Repositories
 {
     class UserRepository : IRepository<ApplicationUser>
     {
+        //TODO: kontroll
         public void Add(ApplicationUser entity)
         {
-            throw new NotImplementedException();
+            using (var context = new ApplicationContext())
+            {
+                context.Users.Add(entity);
+                context.SaveChanges();
+            }
         }
 
         public void Delete(Guid id)
         {
-            throw new NotImplementedException();
+            using (var context = new ApplicationContext())
+            {
+                context.Users.Remove(context.Users.Where<ApplicationUser>(p => p.Id == id.ToString()).FirstOrDefault());
+                context.SaveChanges();
+            }
         }
 
         public void Delete(ApplicationUser entity)
         {
-            throw new NotImplementedException();
+            using (var context = new ApplicationContext())
+            {
+                context.Users.Remove(context.Users.Where<ApplicationUser>(p => p.Id == entity.Id.ToString()).FirstOrDefault());
+                context.SaveChanges();
+            }
         }
 
         public IQueryable<ApplicationUser> GetAll()
         {
-            throw new NotImplementedException();
+            using (var context = new ApplicationContext())
+            {
+                return context.Users.Select(s => s);
+            }
         }
 
         public ApplicationUser GetById(Guid id)
         {
-            throw new NotImplementedException();
+            using (var context = new ApplicationContext())
+            {
+                var user = context.Users.Where(p => p.Id == id.ToString()).FirstOrDefault();
+                return user;
+            }
         }
 
         public void Update(ApplicationUser entity)
         {
-            throw new NotImplementedException();
+            using (var context = new ApplicationContext())
+            {
+                var user = context.Users.Where(p => p.Id == entity.Id).FirstOrDefault();
+                user.FirstName = entity.FirstName;
+                user.LastName = entity.LastName;
+                user.Email = entity.Email;
+                user.Password = entity.Password;
+                user.UserName = entity.UserName;
+                user.IsAdmin = entity.IsAdmin;
+                user.UserRole = entity.UserRole;
+                user.Region = entity.Region;
+                user.City = entity.City;
+                context.SaveChanges();
+            }
         }
     }
 }
