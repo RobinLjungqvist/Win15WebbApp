@@ -39,7 +39,7 @@ namespace WebbApp.ViewModels
         [RegularExpression(@"^[a-öA-Ö''-'\s]{1,40}$", ErrorMessage = "Must be letters between a-ö or A-Ö")]
         public string Category { get; set; }
 
-        [Required(ErrorMessage ="There is no image. Please select an image")]
+        //[Required(ErrorMessage ="There is no image. Please select an image")]
         public string Image { get; set; }
         
         public ItemViewModel() { }
