@@ -8,36 +8,74 @@ using WebbApp.DAL.Interfaces;
 
 namespace WebbApp.DAL.Repositories
 {
-    class UserRepository : IRepository<ApplicationUser>
+    public class UserRepository : IRepository<ApplicationUser>
     {
+        //TODO: kontroll
         public void Add(ApplicationUser entity)
         {
-            throw new NotImplementedException();
+            using (var context = new ApplicationContext())
+            {
+                context.Users.Add(entity);
+                context.SaveChanges();
+            }
         }
 
-        public void Delete(Guid id)
+        public bool Delete(Guid id)
         {
-            throw new NotImplementedException();
+            using (var context = new ApplicationContext())
+            {
+                var user = context.Users.Where<ApplicationUser>(p => p.Id == id.ToString()).FirstOrDefault();
+                if (user != null)
+                {
+                    context.Users.Remove(user);
+                    context.SaveChanges();
+                    return true;
+                }
+            }
+            return false;
         }
 
-        public void Delete(ApplicationUser entity)
+        public bool Delete(ApplicationUser entity)
         {
-            throw new NotImplementedException();
+            return Delete(new Guid(entity.Id));
         }
 
         public IQueryable<ApplicationUser> GetAll()
         {
-            throw new NotImplementedException();
+            using (var context = new ApplicationContext())
+            {
+                return context.Users.Select(s => s);
+            }
         }
 
         public ApplicationUser GetById(Guid id)
         {
-            throw new NotImplementedException();
+            using (var context = new ApplicationContext())
+            {
+                var user = context.Users.Where(p => p.Id == id.ToString()).FirstOrDefault();
+                return user;
+            }
         }
 
         public void Update(ApplicationUser entity)
         {
-            throw new NotImplementedException();
+            using (var context = new ApplicationContext())
+            {
+                var user = context.Users.Where(p => p.Id == entity.Id).FirstOrDefault();
+                if (user != null)
+                {
+                    user.FirstName = entity.FirstName;
+                    user.LastName = entity.LastName;
+                    user.Email = entity.Email;
+                    user.Password = entity.Password;
+                    user.UserName = entity.UserName;
+                    user.IsAdmin = entity.IsAdmin;
+                    user.UserRole = entity.UserRole;
+                    user.Region = entity.Region;
+                    user.City = entity.City;
+                    context.SaveChanges();
+                }
+            }
         }
     }
 }

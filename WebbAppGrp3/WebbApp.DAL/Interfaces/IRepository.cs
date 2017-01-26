@@ -12,7 +12,7 @@ namespace WebbApp.DAL.Interfaces
         T GetById(Guid id);
         void Add(T entity);
         void Update(T entity);
-        void Delete(T entity);
-        void Delete(Guid id);
+        bool Delete(T entity);
+        bool Delete(Guid id);
     }
 }

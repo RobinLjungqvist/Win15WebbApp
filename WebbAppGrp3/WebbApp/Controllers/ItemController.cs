@@ -42,19 +42,19 @@ namespace WebbApp.Controllers
             {
                 return PartialView(model);
             }
-                if (file != null)
-                {
-                    // Additional information should be added to the filename here to specify the userID, UserIdentity
-                    pic = System.IO.Path.GetFileName(file.FileName);
-                    path = System.IO.Path.Combine(
-                        Server.MapPath("~/Images"), pic);
-                    // file is uploaded
-                    file.SaveAs(path);
+            if (file != null)
+            {
+                // Additional information should be added to the filename here to specify the userID, UserIdentity
+                pic = System.IO.Path.GetFileName(file.FileName);
+                path = System.IO.Path.Combine(
+                    Server.MapPath("~/Images"), pic);
+                // file is uploaded
+                file.SaveAs(path);
 
-                }
-          
+            }
 
-            if(model != null)
+
+            if (model != null)
             {
                 var newItem = new MockupItem();
 
@@ -97,7 +97,7 @@ namespace WebbApp.Controllers
 
             foreach (var repoItem in ItemsFromRepo)
             {
-                var newViewModel = new ItemViewModel(repoItem.ItemID, repoItem.Title, repoItem.Description, repoItem.CreateDate, repoItem.ExpirationDate, repoItem.City, repoItem.Condition, repoItem.Region, repoItem.Category, repoItem.Image);   
+                var newViewModel = new ItemViewModel(repoItem.ItemID, repoItem.Title, repoItem.Description, repoItem.CreateDate, repoItem.ExpirationDate, repoItem.City, repoItem.Condition, repoItem.Region, repoItem.Category, repoItem.Image);
 
                 ViewModelItems.Add(newViewModel);
             }
@@ -123,11 +123,11 @@ namespace WebbApp.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditItem(ItemViewModel viewitem,FormCollection formcollection)
+        public ActionResult EditItem(ItemViewModel viewitem, FormCollection formcollection)
         {
-            MockupItem edit=null;
+            MockupItem edit = null;
             ModelState.Remove("Image");
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 edit = new MockupItem(viewitem.ItemID, viewitem.Title, viewitem.Description, viewitem.CreateDate, viewitem.ExpirationDate, viewitem.City, viewitem.Condition, viewitem.Region, viewitem.Category, viewitem.Image);
                 //itemRepository.CreateOrUpdateItem(edit);
@@ -137,5 +137,5 @@ namespace WebbApp.Controllers
             return RedirectToAction("ListAllItems");
         }
 
-    }     
+    }
 }
