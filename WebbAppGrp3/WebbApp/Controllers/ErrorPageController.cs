@@ -9,15 +9,16 @@ namespace WebbApp.Controllers
     public class ErrorPageController : Controller
     {
         // GET: ErrorPage
-        public ActionResult Index()
+        public ActionResult Error()
         {
             return View();
         }
-        public ActionResult Error404()
+        
+        public ActionResult NotFoundError()
         {
             return View();
         }
-        public ActionResult Error500()
+        public ActionResult InternalError()
         {
             return View();
         }
