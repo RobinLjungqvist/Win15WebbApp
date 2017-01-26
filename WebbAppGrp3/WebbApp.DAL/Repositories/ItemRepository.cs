@@ -5,11 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using WebbApp.DAL.DB.Models;
 using WebbApp.DAL.Interfaces;
+using System.Data.Entity;
 using System.IO;
 
 namespace WebbApp.DAL.Repositories
 {
-    class ItemRepository : ISearchableRepository<Item>
+    public class ItemRepository : ISearchableRepository<Item>
     {
         private ApplicationContext ctx;
 
@@ -18,7 +19,6 @@ namespace WebbApp.DAL.Repositories
             this.ctx = new ApplicationContext();
         }
 
-        //TODO add city, category osv
         public void Add(Item entity)
         {
             using (var context = new ApplicationContext())
@@ -33,38 +33,60 @@ namespace WebbApp.DAL.Repositories
             using (var context = new ApplicationContext())
             {
                 var item = context.Items.Where(p => p.ItemID == entity.ItemID).FirstOrDefault();
-                item.Title = entity.Title;
-                item.Region = entity.Region;
-                item.Image = entity.Image;
-                context.SaveChanges();
+                if (item != null)
+                {
+                    item.Title = entity.Title;
+                    item.Region = entity.Region;
+                    item.Image = entity.Image;
+                    item.Description = entity.Description;
+                    item.CreateDate = entity.CreateDate;
+                    item.ExpirationDate = entity.ExpirationDate;
+                    item.City = entity.City;
+                    item.Condition = entity.Condition;
+                    item.Category = entity.Category;
+                    item.Image = entity.Image;
+                    context.SaveChanges();
+                }
             }
         }
 
-        //TODO cascading delete
-        public void Delete(Guid id)
+        public bool Delete(Guid id)
         {
             using (var context = new ApplicationContext())
             {
-                context.Items.Remove(context.Items.Where<Item>(p => p.ItemID == id).FirstOrDefault());
-                context.SaveChanges();
+                var item = context.Items.Where<Item>(p => p.ItemID == id)
+                    .Include(i => i.City)
+                    .Include(i => i.Condition)
+                    .Include(i => i.Region)
+                    .Include(i => i.Category)
+                    .Include(i => i.Image)
+                    .FirstOrDefault();
+                if (item != null)
+                {
+                    context.Items.Remove(item);
+                    context.SaveChanges();
+                    return true;
+                }
+                return false;
             }
         }
 
-        //TODO cascading delete
-        public void Delete(Item entity)
+        public bool Delete(Item entity)
         {
-            using (var context = new ApplicationContext())
-            {
-                context.Items.Remove(context.Items.Where<Item>(p => p.ItemID == entity.ItemID).FirstOrDefault());
-                context.SaveChanges();
-            }
+            return Delete(entity.ItemID);
         }
 
         public IQueryable<Item> GetAll()
         {
             using (var context = new ApplicationContext())
             {
-                return context.Items.Select(s => s);
+                var items = context.Items
+                    .Include(i => i.City)
+                    .Include(i => i.Condition)
+                    .Include(i => i.Region)
+                    .Include(i => i.Category)
+                    .Include(i => i.Image);
+                return items;
             }
         }
 
@@ -72,26 +94,50 @@ namespace WebbApp.DAL.Repositories
         {
             using (var context = new ApplicationContext())
             {
-                var item = context.Items.Where(p => p.ItemID == id).FirstOrDefault();
+                var item = context.Items.Where(p => p.ItemID == id)
+                    .Include(i => i.City)
+                    .Include(i => i.Condition)
+                    .Include(i => i.Region)
+                    .Include(i => i.Category)
+                    .Include(i => i.Image)
+                    .FirstOrDefault();
                 return item;
             }
         }
 
-        public IQueryable<Item> Search(string searchTerm)
+        public IQueryable<Item> Search(string freeText)
         {
-            //sb.Append(" WHERE Quantity > 0 AND ModelName LIKE @search OR Brand LIKE @search OR ShoeType LIKE @search");
-            //sb.Append(" OR Material LIKE @search OR Category Like @search");
-            //using (var context = new ApplicationContext())
-            //{
-            //    var item = context.Items.Where(p => p);
-            //    return item;
-            //}
-            throw new NotImplementedException();
+            using (var context = new ApplicationContext())
+            {
+                var items = context.Items.Where(p => p.Category.CategoryName.Contains(freeText) || 
+                                                     p.City.CityName.Contains(freeText) || 
+                                                     p.Condition.Status.Contains(freeText) ||
+                                                     p.Region.RegionName.Contains(freeText) ||
+                                                     p.Title.Contains(freeText) ||
+                                                     p.Description.Contains(freeText))
+                    .Include(i => i.City)
+                    .Include(i => i.Condition)
+                    .Include(i => i.Region)
+                    .Include(i => i.Category)
+                    .Include(i => i.Image);
+                return items;
+            }
         }
 
+        //Region or Category
         public IQueryable<Item> FilteredSearch(Item Searchable)
         {
-            throw new NotImplementedException();
+            using (var context = new ApplicationContext())
+            {
+                //var items = context.Items.Where(p => p.Category.CategoryName.Contains(searchTerm))
+                var items = context.Items.Where(p => p.Region.RegionName.Contains(Searchable.Region.RegionName))
+                    .Include(i => i.City)
+                    .Include(i => i.Condition)
+                    .Include(i => i.Region)
+                    .Include(i => i.Category)
+                    .Include(i => i.Image);
+                return items;
+            }
         }
     }
 }

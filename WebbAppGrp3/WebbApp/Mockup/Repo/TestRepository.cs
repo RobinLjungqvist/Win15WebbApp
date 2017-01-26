@@ -21,12 +21,12 @@ namespace WebbApp.Mockup.Repo
             throw new NotImplementedException();
         }
 
-        public void Delete(Guid id)
+        public bool Delete(Guid id)
         {
             throw new NotImplementedException();
         }
 
-        public void Delete(TestModel entity)
+        public bool Delete(TestModel entity)
         {
             throw new NotImplementedException();
         }

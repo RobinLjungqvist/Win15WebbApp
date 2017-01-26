@@ -8,7 +8,7 @@ using WebbApp.DAL.Interfaces;
 
 namespace WebbApp.DAL.Repositories
 {
-    class UserRepository : IRepository<ApplicationUser>
+    public class UserRepository : IRepository<ApplicationUser>
     {
         //TODO: kontroll
         public void Add(ApplicationUser entity)
@@ -20,22 +20,24 @@ namespace WebbApp.DAL.Repositories
             }
         }
 
-        public void Delete(Guid id)
+        public bool Delete(Guid id)
         {
             using (var context = new ApplicationContext())
             {
-                context.Users.Remove(context.Users.Where<ApplicationUser>(p => p.Id == id.ToString()).FirstOrDefault());
-                context.SaveChanges();
+                var user = context.Users.Where<ApplicationUser>(p => p.Id == id.ToString()).FirstOrDefault();
+                if (user != null)
+                {
+                    context.Users.Remove(user);
+                    context.SaveChanges();
+                    return true;
+                }
             }
+            return false;
         }
 
-        public void Delete(ApplicationUser entity)
+        public bool Delete(ApplicationUser entity)
         {
-            using (var context = new ApplicationContext())
-            {
-                context.Users.Remove(context.Users.Where<ApplicationUser>(p => p.Id == entity.Id.ToString()).FirstOrDefault());
-                context.SaveChanges();
-            }
+            return Delete(new Guid(entity.Id));
         }
 
         public IQueryable<ApplicationUser> GetAll()
@@ -60,16 +62,19 @@ namespace WebbApp.DAL.Repositories
             using (var context = new ApplicationContext())
             {
                 var user = context.Users.Where(p => p.Id == entity.Id).FirstOrDefault();
-                user.FirstName = entity.FirstName;
-                user.LastName = entity.LastName;
-                user.Email = entity.Email;
-                user.Password = entity.Password;
-                user.UserName = entity.UserName;
-                user.IsAdmin = entity.IsAdmin;
-                user.UserRole = entity.UserRole;
-                user.Region = entity.Region;
-                user.City = entity.City;
-                context.SaveChanges();
+                if (user != null)
+                {
+                    user.FirstName = entity.FirstName;
+                    user.LastName = entity.LastName;
+                    user.Email = entity.Email;
+                    user.Password = entity.Password;
+                    user.UserName = entity.UserName;
+                    user.IsAdmin = entity.IsAdmin;
+                    user.UserRole = entity.UserRole;
+                    user.Region = entity.Region;
+                    user.City = entity.City;
+                    context.SaveChanges();
+                }
             }
         }
     }
