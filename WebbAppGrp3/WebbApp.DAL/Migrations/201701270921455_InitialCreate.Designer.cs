@@ -13,7 +13,7 @@ namespace WebbApp.DAL.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201701241129094_InitialCreate"; }
+            get { return "201701270921455_InitialCreate"; }
         }
         
         string IMigrationMetadata.Source

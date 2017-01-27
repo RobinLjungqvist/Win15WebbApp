@@ -15,6 +15,7 @@ namespace WebbApp.DAL.DB.Models
         public Region()
         {
             this.Items = new HashSet<Item>();
+            //this.ApplicationUsers = new HashSet<ApplicationUser>();
         }
 
         [Key]
@@ -23,5 +24,6 @@ namespace WebbApp.DAL.DB.Models
         public string RegionName { get; set; }
 
         public virtual ICollection<Item> Items { get; set; }
+        //public virtual ICollection<ApplicationUser> ApplicationUsers { get; set; }
     }
 }

@@ -4,22 +4,32 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using WebbApp.Mockup.Interfaces;
-using WebbApp.Mockup.Models;
-using WebbApp.Mockup.Repo;
 using WebbApp.ViewModels;
+using WebbApp.DAL.Repositories;
+using WebbApp.DAL.Interfaces;
+using WebbApp.DAL.DB.Models;
 
 namespace WebbApp.Controllers
 {
     [AllowAnonymous]
-
     public class ItemController : Controller
     {
-        private IItemRepository itemRepository;
+        private IRepository<Item> itemRepo;
+
+        //public static CategoryRepository categoryRepo;
+        private IRepository<Category> categoryRepo;
+        private IRepository<Region> regionRepo;
+        private IRepository<City> cityRepo;
+        private IRepository<Condition> conditionRepo;
 
         public ItemController()
         {
-            this.itemRepository = new MockupItemRepository();
+            this.itemRepo = new ItemRepository();
+            this.categoryRepo = new CategoryRepository();
+            //categoryRepo = CategoryRepository.getRepo();
+            this.regionRepo = new RegionRepository();
+            this.cityRepo = new CityRepository();
+            this.conditionRepo = new ConditionRepository();
         }
         public ActionResult Index()
         {
@@ -29,7 +39,12 @@ namespace WebbApp.Controllers
         [HttpGet]
         public ActionResult NewItem()
         {
-            return PartialView();
+            var ivm = new ItemViewModel();
+            ivm.Categories = categoryRepo.GetAll().ToList();
+            ivm.Conditions = conditionRepo.GetAll().ToList();
+            ivm.Regions = regionRepo.GetAll().ToList();
+            ivm.Cities = cityRepo.GetAll().ToList();
+            return PartialView(ivm);
         }
         // GET: Item
         [HttpPost]
@@ -38,10 +53,11 @@ namespace WebbApp.Controllers
             string path = string.Empty;
             string pic = string.Empty;
 
-            if (!ModelState.IsValid)
-            {
-                return PartialView(model);
-            }
+            //TODO: utforska varför går det in hela tiden och sätta tillbaka
+            //if (!ModelState.IsValid)
+            //{
+            //    return PartialView(model);
+            //}
             if (file != null)
             {
                 // Additional information should be added to the filename here to specify the userID, UserIdentity
@@ -50,55 +66,42 @@ namespace WebbApp.Controllers
                     Server.MapPath("~/Images"), pic);
                 // file is uploaded
                 file.SaveAs(path);
-
             }
-
-
             if (model != null)
             {
-                var newItem = new MockupItem();
-
-                newItem.Title = model.Title;
-                newItem.Category = model.Category;
-                newItem.City = model.City;
-                newItem.Condition = model.Condition;
-                newItem.CreateDate = model.CreateDate;
-                newItem.Description = model.Description;
-                newItem.ExpirationDate = model.ExpirationDate;
+                DateTime date = DateTime.Today;
+                var item = new Item() { ItemID = Guid.NewGuid(), Title = model.Title, CreateDate = date, ExpirationDate = date.AddDays(14), Description = model.Description };
+                item.CategoryId = model.Category.CategoryId;
+                item.CityId = model.City.CityId;
+                item.ConditionId = model.Condition.ConditionId;
+                item.RegionId = model.Region.RegionId;
                 if (path != "")
                 {
-                    newItem.Image = "./Images/" + pic;
+                    //TODO
+                    //item.Image.ImageId = Guid.NewGuid();
+                    //item.Image.Path = "./Images/" + pic;
                 }
-                newItem.Region = model.Region;
 
-                itemRepository.CreateOrUpdateItem(newItem);
+                itemRepo.Add(item);
             }
-
-            // after successfully uploading redirect the user
             return RedirectToAction("Index", "Home");
         }
 
         public ActionResult DisplaySingleItem(Guid itemID)
         {
-
-            var repoItem = itemRepository.GetItemByID(itemID);
-
-
-            var newViewModel = new ItemViewModel(repoItem.ItemID, repoItem.Title, repoItem.Description, repoItem.CreateDate, repoItem.ExpirationDate, repoItem.City, repoItem.Condition, repoItem.Region, repoItem.Category, repoItem.Image);
-
+            var repoItem = itemRepo.GetById(itemID);
+            var newViewModel = new ItemViewModel(repoItem.ItemID, repoItem.Title, repoItem.Description, repoItem.CreateDate, repoItem.ExpirationDate, repoItem.City, repoItem.Condition, repoItem.Region, repoItem.Category, null);
             return PartialView(newViewModel);
         }
-        //
+
         public ActionResult ListAllItems()
         {
-            var ItemsFromRepo = itemRepository.GetAllItems();
-
+            var ItemsFromRepo = itemRepo.GetAll();
             var ViewModelItems = new List<ItemViewModel>();
 
             foreach (var repoItem in ItemsFromRepo)
             {
-                var newViewModel = new ItemViewModel(repoItem.ItemID, repoItem.Title, repoItem.Description, repoItem.CreateDate, repoItem.ExpirationDate, repoItem.City, repoItem.Condition, repoItem.Region, repoItem.Category, repoItem.Image);
-
+                var newViewModel = new ItemViewModel(repoItem.ItemID, repoItem.Title, repoItem.Description, repoItem.CreateDate, repoItem.ExpirationDate, repoItem.City, repoItem.Condition, repoItem.Region, repoItem.Category, null);
                 ViewModelItems.Add(newViewModel);
             }
 
@@ -108,32 +111,55 @@ namespace WebbApp.Controllers
             }
             return PartialView(ViewModelItems);
         }
+
         public ActionResult RemoveItem(Guid itemID)
         {
-            itemRepository.RemoveItemByID(itemID);
-
+            itemRepo.Delete(itemID);
             return RedirectToAction("Index", "Home");
         }
+
         [HttpGet]
         public ActionResult EditItem(Guid ItemID)
         {
-            var theitem = itemRepository.GetItemByID(ItemID);
-            var thedititem = new ItemViewModel(theitem.ItemID, theitem.Title, theitem.Description, theitem.CreateDate, theitem.ExpirationDate, theitem.City, theitem.Condition, theitem.Region, theitem.Category, theitem.Image);
-            return View(thedititem);
+            var item = itemRepo.GetById(ItemID);
+            // var ivm = new ItemViewModel(item.ItemID, item.Title, item.Description, item.CreateDate, item.ExpirationDate, item.City, item.Condition, item.Region, item.Category, item.Image);
+            var ivm = new ItemViewModel() { ItemID = item.ItemID, Title = item.Title, Description = item.Description, };
+            ivm.Categories = categoryRepo.GetAll().ToList();
+            ivm.Conditions = conditionRepo.GetAll().ToList();
+            ivm.Regions = regionRepo.GetAll().ToList();
+            ivm.Cities = cityRepo.GetAll().ToList();
+            return View(ivm);
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditItem(ItemViewModel viewitem, FormCollection formcollection)
+        public ActionResult EditItem(ItemViewModel viewItem, FormCollection formcollection)
         {
-            MockupItem edit = null;
+            //MockupItem edit=null;
+            Item edit = null;
             ModelState.Remove("Image");
-            if (ModelState.IsValid)
-            {
-                edit = new MockupItem(viewitem.ItemID, viewitem.Title, viewitem.Description, viewitem.CreateDate, viewitem.ExpirationDate, viewitem.City, viewitem.Condition, viewitem.Region, viewitem.Category, viewitem.Image);
-                //itemRepository.CreateOrUpdateItem(edit);
-            }
-            itemRepository.CreateOrUpdateItem(edit);
-
+            //if (ModelState.IsValid)
+            //{
+                edit = new Item()
+                {
+                    ItemID = viewItem.ItemID,
+                    Title = viewItem.Title,
+                    Description = viewItem.Description,
+                    CreateDate = viewItem.CreateDate,
+                    ExpirationDate = viewItem.ExpirationDate,
+                    //Category = viewItem.Category.CategoryId,
+                    Category = categoryRepo.GetById(viewItem.Category.CategoryId),
+                    City = cityRepo.GetById(viewItem.City.CityId),
+                    Condition = conditionRepo.GetById(viewItem.Condition.ConditionId),
+                    Region = regionRepo.GetById(viewItem.Region.RegionId),
+                    //City = viewitem.City,
+                    //Condition = viewitem.Condition,
+                    //Region = viewitem.Region,
+                    //Category = viewitem.Category,
+                    //Image = viewItem.Image
+                };
+                itemRepo.Update(edit);
+            //}
             return RedirectToAction("ListAllItems");
         }
 

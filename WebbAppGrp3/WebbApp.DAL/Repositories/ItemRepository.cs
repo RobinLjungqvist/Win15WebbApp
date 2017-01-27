@@ -7,6 +7,9 @@ using WebbApp.DAL.DB.Models;
 using WebbApp.DAL.Interfaces;
 using System.Data.Entity;
 using System.IO;
+using System.Data.Entity.Validation;
+using System.Diagnostics;
+using System.Data.Entity.Infrastructure;
 
 namespace WebbApp.DAL.Repositories
 {
@@ -21,10 +24,25 @@ namespace WebbApp.DAL.Repositories
 
         public void Add(Item entity)
         {
-            using (var context = new ApplicationContext())
+            try
             {
-                context.Items.Add(entity);
-                context.SaveChanges();
+                using (var context = new ApplicationContext())
+                {
+                    context.Items.Add(entity);
+                    context.SaveChanges();
+                }
+            }
+            catch (DbUpdateException e)
+            {
+                //Add your code to inspect the inner exception and/or
+                //e.Entries here.
+                //Or just use the debugger.
+                //Added this catch (after the comments below) to make it more obvious 
+                //how this code might help this specific problem
+            }
+            catch (Exception e)
+            {
+                
             }
         }
 
@@ -37,14 +55,13 @@ namespace WebbApp.DAL.Repositories
                 {
                     item.Title = entity.Title;
                     item.Region = entity.Region;
-                    item.Image = entity.Image;
+                    item.Images = entity.Images;
                     item.Description = entity.Description;
                     item.CreateDate = entity.CreateDate;
                     item.ExpirationDate = entity.ExpirationDate;
                     item.City = entity.City;
                     item.Condition = entity.Condition;
                     item.Category = entity.Category;
-                    item.Image = entity.Image;
                     context.SaveChanges();
                 }
             }
@@ -59,7 +76,7 @@ namespace WebbApp.DAL.Repositories
                     .Include(i => i.Condition)
                     .Include(i => i.Region)
                     .Include(i => i.Category)
-                    .Include(i => i.Image)
+                    .Include(i => i.Images)
                     .FirstOrDefault();
                 if (item != null)
                 {
@@ -78,39 +95,43 @@ namespace WebbApp.DAL.Repositories
 
         public IQueryable<Item> GetAll()
         {
+            var items = new List<Item>();
             using (var context = new ApplicationContext())
             {
-                var items = context.Items
+                    items = context.Items
                     .Include(i => i.City)
                     .Include(i => i.Condition)
                     .Include(i => i.Region)
                     .Include(i => i.Category)
-                    .Include(i => i.Image);
-                return items;
+                    .Include(i => i.Images)
+                    .ToList();
             }
+            return items.AsQueryable();
         }
 
         public Item GetById(Guid id)
         {
+            Item item; ;
             using (var context = new ApplicationContext())
             {
-                var item = context.Items.Where(p => p.ItemID == id)
+                item = context.Items.Where(p => p.ItemID == id)
                     .Include(i => i.City)
                     .Include(i => i.Condition)
                     .Include(i => i.Region)
                     .Include(i => i.Category)
-                    .Include(i => i.Image)
+                    .Include(i => i.Images)
                     .FirstOrDefault();
-                return item;
             }
+            return item;
         }
 
         public IQueryable<Item> Search(string freeText)
         {
+            var items = new List<Item>();
             using (var context = new ApplicationContext())
             {
-                var items = context.Items.Where(p => p.Category.CategoryName.Contains(freeText) || 
-                                                     p.City.CityName.Contains(freeText) || 
+                items = context.Items.Where(p => p.Category.CategoryName.Contains(freeText) ||
+                                                     p.City.CityName.Contains(freeText) ||
                                                      p.Condition.Status.Contains(freeText) ||
                                                      p.Region.RegionName.Contains(freeText) ||
                                                      p.Title.Contains(freeText) ||
@@ -119,24 +140,38 @@ namespace WebbApp.DAL.Repositories
                     .Include(i => i.Condition)
                     .Include(i => i.Region)
                     .Include(i => i.Category)
-                    .Include(i => i.Image);
-                return items;
+                    .Include(i => i.Images)
+                    .ToList();
             }
+            return items.AsQueryable();
         }
 
-        //Region or Category
-        public IQueryable<Item> FilteredSearch(Item Searchable)
+        //Region or Category - inparameter is an empty Item object except searchcriterium attribute is filled.
+        public IQueryable<Item> FilteredSearch(Item searchable)
         {
             using (var context = new ApplicationContext())
             {
-                //var items = context.Items.Where(p => p.Category.CategoryName.Contains(searchTerm))
-                var items = context.Items.Where(p => p.Region.RegionName.Contains(Searchable.Region.RegionName))
-                    .Include(i => i.City)
-                    .Include(i => i.Condition)
-                    .Include(i => i.Region)
-                    .Include(i => i.Category)
-                    .Include(i => i.Image);
-                return items;
+                var items = new List<Item>();
+                if (searchable.Region != null)
+                {
+                    items = context.Items.Where(p => p.Region.RegionName.Contains(searchable.Region.RegionName))
+                        .Include(i => i.City)
+                        .Include(i => i.Condition)
+                        .Include(i => i.Region)
+                        .Include(i => i.Category)
+                        .Include(i => i.Images)
+                        .ToList();
+                } else if (searchable.Category != null)
+                {
+                    items = context.Items.Where(p => p.Category.CategoryName.Contains(searchable.Category.CategoryName))
+                        .Include(i => i.City)
+                        .Include(i => i.Condition)
+                        .Include(i => i.Region)
+                        .Include(i => i.Category)
+                        .Include(i => i.Images)
+                        .ToList();
+                }
+                return items != null ? items.AsQueryable() : null;
             }
         }
     }
