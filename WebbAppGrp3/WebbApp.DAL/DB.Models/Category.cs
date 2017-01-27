@@ -18,7 +18,7 @@ namespace WebbApp.DAL.DB.Models
 
         [Key]
         public Guid CategoryId { get; set; }
-        [Required, StringLength(25, ErrorMessage = "Max length is 25, min is 3.", MinimumLength = 3)]
+        [Required]
         public string CategoryName { get; set; }
 
         public virtual ICollection<Item> Items { get; set; }

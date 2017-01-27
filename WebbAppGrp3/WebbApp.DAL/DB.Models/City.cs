@@ -15,6 +15,7 @@ namespace WebbApp.DAL.DB.Models
         public City()
         {
             this.Items = new HashSet<Item>();
+            //this.ApplicationUsers = new HashSet<ApplicationUser>();
         }
 
         [Key]
@@ -23,5 +24,6 @@ namespace WebbApp.DAL.DB.Models
         public string CityName { get; set; }
 
         public virtual ICollection<Item> Items { get; set; }
+        //public virtual ICollection<ApplicationUser> ApplicationUsers { get; set; }
     }
 }

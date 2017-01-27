@@ -67,13 +67,14 @@
     <Compile Include="DB.Models\Region.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Interfaces\ISearchable.cs" />
-    <Compile Include="Migrations\201701241129094_InitialCreate.cs" />
-    <Compile Include="Migrations\201701241129094_InitialCreate.Designer.cs">
-      <DependentUpon>201701241129094_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\201701270921455_InitialCreate.cs" />
+    <Compile Include="Migrations\201701270921455_InitialCreate.Designer.cs">
+      <DependentUpon>201701270921455_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Interfaces\ISearchableRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\CollectionRepository.cs" />
     <Compile Include="Repositories\ItemRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
   </ItemGroup>
@@ -85,8 +86,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201701241129094_InitialCreate.resx">
-      <DependentUpon>201701241129094_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201701270921455_InitialCreate.resx">
+      <DependentUpon>201701270921455_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

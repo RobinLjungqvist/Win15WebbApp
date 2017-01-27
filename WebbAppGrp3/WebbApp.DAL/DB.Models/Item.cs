@@ -16,6 +16,7 @@ namespace WebbApp.DAL.DB.Models
         {
             this.Images = new HashSet<Image>();
         }
+
         [Key]
         public Guid ItemID { get; set; }
         public string Title { get; set; }
@@ -23,12 +24,36 @@ namespace WebbApp.DAL.DB.Models
         public DateTime CreateDate { get; set; }
         public DateTime ExpirationDate { get; set; }
 
+        [ForeignKey("City")]
+        public Guid CityId { get; set; }
+
+        [ForeignKey("Condition")]
+        public Guid ConditionId { get; set; }
+
+        [ForeignKey("Region")]
+        public Guid RegionId { get; set; }
+
+        [ForeignKey("Category")]
+        public Guid CategoryId { get; set; }
+
+        //[ForeignKey("Image")]
+        //public Guid ImageId { get; set; }
+
+        //[ForgnKey("ApplicationUser")]
+        //public ApplicationUser UserId { get; set; }
+
+        //public virtual Image Image { get; set; }
+
         public virtual City City { get; set; }
+
         public virtual Condition Condition { get; set; }
+
         public virtual Region Region { get; set; }
+
         public virtual Category Category { get; set; }
-        public virtual Image Image { get; set; }
+
         public virtual ApplicationUser ApplicationUser { get; set; }
-        public virtual ICollection<Image> Images { get; set; }
+
+       public virtual ICollection<Image> Images { get; set; }
     }
 }

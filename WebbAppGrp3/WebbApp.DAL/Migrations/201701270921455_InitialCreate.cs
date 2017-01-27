@@ -12,7 +12,7 @@ namespace WebbApp.DAL.Migrations
                 c => new
                     {
                         CategoryId = c.Guid(nullable: false),
-                        CategoryName = c.String(nullable: false, maxLength: 25),
+                        CategoryName = c.String(nullable: false),
                     })
                 .PrimaryKey(t => t.CategoryId);
             
@@ -25,26 +25,23 @@ namespace WebbApp.DAL.Migrations
                         Description = c.String(),
                         CreateDate = c.DateTime(nullable: false),
                         ExpirationDate = c.DateTime(nullable: false),
+                        CityId = c.Guid(nullable: false),
+                        ConditionId = c.Guid(nullable: false),
+                        RegionId = c.Guid(nullable: false),
+                        CategoryId = c.Guid(nullable: false),
                         ApplicationUser_Id = c.String(maxLength: 128),
-                        Category_CategoryId = c.Guid(),
-                        City_CityId = c.Guid(),
-                        Condition_ConditionId = c.Guid(),
-                        Image_ImageId = c.Guid(),
-                        Region_RegionId = c.Guid(),
                     })
                 .PrimaryKey(t => t.ItemID)
                 .ForeignKey("dbo.AspNetUsers", t => t.ApplicationUser_Id)
-                .ForeignKey("dbo.Category", t => t.Category_CategoryId)
-                .ForeignKey("dbo.City", t => t.City_CityId)
-                .ForeignKey("dbo.Condition", t => t.Condition_ConditionId)
-                .ForeignKey("dbo.Image", t => t.Image_ImageId)
-                .ForeignKey("dbo.Region", t => t.Region_RegionId)
-                .Index(t => t.ApplicationUser_Id)
-                .Index(t => t.Category_CategoryId)
-                .Index(t => t.City_CityId)
-                .Index(t => t.Condition_ConditionId)
-                .Index(t => t.Image_ImageId)
-                .Index(t => t.Region_RegionId);
+                .ForeignKey("dbo.Category", t => t.CategoryId, cascadeDelete: true)
+                .ForeignKey("dbo.City", t => t.CityId, cascadeDelete: true)
+                .ForeignKey("dbo.Condition", t => t.ConditionId, cascadeDelete: true)
+                .ForeignKey("dbo.Region", t => t.RegionId, cascadeDelete: true)
+                .Index(t => t.CityId)
+                .Index(t => t.ConditionId)
+                .Index(t => t.RegionId)
+                .Index(t => t.CategoryId)
+                .Index(t => t.ApplicationUser_Id);
             
             CreateTable(
                 "dbo.AspNetUsers",
@@ -135,14 +132,11 @@ namespace WebbApp.DAL.Migrations
                     {
                         ImageId = c.Guid(nullable: false),
                         Path = c.String(nullable: false),
-                        Item_ItemID = c.Guid(),
-                        Item_ItemID1 = c.Guid(),
+                        ItemID = c.Guid(nullable: false),
                     })
                 .PrimaryKey(t => t.ImageId)
-                .ForeignKey("dbo.Item", t => t.Item_ItemID)
-                .ForeignKey("dbo.Item", t => t.Item_ItemID1)
-                .Index(t => t.Item_ItemID)
-                .Index(t => t.Item_ItemID1);
+                .ForeignKey("dbo.Item", t => t.ItemID, cascadeDelete: true)
+                .Index(t => t.ItemID);
             
             CreateTable(
                 "dbo.Region",
@@ -168,31 +162,27 @@ namespace WebbApp.DAL.Migrations
         public override void Down()
         {
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
-            DropForeignKey("dbo.Item", "Region_RegionId", "dbo.Region");
-            DropForeignKey("dbo.Image", "Item_ItemID1", "dbo.Item");
-            DropForeignKey("dbo.Item", "Image_ImageId", "dbo.Image");
-            DropForeignKey("dbo.Image", "Item_ItemID", "dbo.Item");
-            DropForeignKey("dbo.Item", "Condition_ConditionId", "dbo.Condition");
-            DropForeignKey("dbo.Item", "City_CityId", "dbo.City");
-            DropForeignKey("dbo.Item", "Category_CategoryId", "dbo.Category");
+            DropForeignKey("dbo.Item", "RegionId", "dbo.Region");
+            DropForeignKey("dbo.Image", "ItemID", "dbo.Item");
+            DropForeignKey("dbo.Item", "ConditionId", "dbo.Condition");
+            DropForeignKey("dbo.Item", "CityId", "dbo.City");
+            DropForeignKey("dbo.Item", "CategoryId", "dbo.Category");
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.Item", "ApplicationUser_Id", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
-            DropIndex("dbo.Image", new[] { "Item_ItemID1" });
-            DropIndex("dbo.Image", new[] { "Item_ItemID" });
+            DropIndex("dbo.Image", new[] { "ItemID" });
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
-            DropIndex("dbo.Item", new[] { "Region_RegionId" });
-            DropIndex("dbo.Item", new[] { "Image_ImageId" });
-            DropIndex("dbo.Item", new[] { "Condition_ConditionId" });
-            DropIndex("dbo.Item", new[] { "City_CityId" });
-            DropIndex("dbo.Item", new[] { "Category_CategoryId" });
             DropIndex("dbo.Item", new[] { "ApplicationUser_Id" });
+            DropIndex("dbo.Item", new[] { "CategoryId" });
+            DropIndex("dbo.Item", new[] { "RegionId" });
+            DropIndex("dbo.Item", new[] { "ConditionId" });
+            DropIndex("dbo.Item", new[] { "CityId" });
             DropTable("dbo.AspNetRoles");
             DropTable("dbo.Region");
             DropTable("dbo.Image");

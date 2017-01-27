@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using WebbApp.DAL.DB.Models;
 
 namespace WebbApp.ViewModels
 {
     public class ItemViewModel
     {
-
         public Guid ItemID { get; set; }
 
         [Required(ErrorMessage ="Must enter the title of the item")]
@@ -24,27 +24,31 @@ namespace WebbApp.ViewModels
         public DateTime ExpirationDate { get; set; }
 
         [Required(ErrorMessage ="Must enter the city")]
-        [RegularExpression(@"^[a-öA-Ö''-'\s]{1,40}$", ErrorMessage = "Must be letters between a-ö or A-Ö")]
-        public string City { get; set; }
+        public City City { get; set; }
+        public int SelectedCityId { get; set; }
+        public List<City> Cities { get; set; }
 
         [Required(ErrorMessage ="Must enter the condition of the item")]
-        [RegularExpression(@"^[a-öA-Ö''-'\s]{1,40}$", ErrorMessage = "Must be letters between a-ö or A-Ö")]
-        public string Condition { get; set; }
+        public Condition Condition { get; set; }
+        public int SelectedConditionId { get; set; }
+        public List<Condition> Conditions { get; set; }
 
         [Required(ErrorMessage ="Must enter the region")]
-        [RegularExpression(@"^[a-öA-Ö''-'\s]{1,40}$", ErrorMessage = "Must be letters between a-ö or A-Ö")]
-        public string Region { get; set; }
+        public Region Region { get; set; }
+        public int SelectedRegionId { get; set; }
+        public List<Region> Regions { get; set; }
 
         [Required(ErrorMessage ="Must enter the category of the item")]
-        [RegularExpression(@"^[a-öA-Ö''-'\s]{1,40}$", ErrorMessage = "Must be letters between a-ö or A-Ö")]
-        public string Category { get; set; }
+        public Category Category { get; set; }
+        public int SelectedCategoryId { get; set; }
+        public List<Category> Categories { get; set; }
 
         //[Required(ErrorMessage ="There is no image. Please select an image")]
-        public string Image { get; set; }
+        public Image Image { get; set; }
         
         public ItemViewModel() { }
         public ItemViewModel(Guid id, string title, string description, DateTime createdate, DateTime expirationdate,
-            string city, string condition, string region, string category, string image)
+            City city, Condition condition, Region region, Category category, Image image)
         {
             this.ItemID = id;
             this.Title = title;
