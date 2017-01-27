@@ -21,6 +21,15 @@ namespace WebbApp.DAL.Repositories
         {
             this.ctx = new ApplicationContext();
         }
+        public void AddImage(Image entity)
+        {
+            using (var context = new ApplicationContext())
+            {
+                context.Images.Add(entity);
+                context.SaveChanges();
+            }
+        }
+
 
         public void Add(Item entity)
         {
@@ -174,5 +183,7 @@ namespace WebbApp.DAL.Repositories
                 return items != null ? items.AsQueryable() : null;
             }
         }
+
+       
     }
 }

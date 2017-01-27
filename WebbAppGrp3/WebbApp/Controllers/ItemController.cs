@@ -46,46 +46,80 @@ namespace WebbApp.Controllers
             ivm.Cities = cityRepo.GetAll().ToList();
             return PartialView(ivm);
         }
-        // GET: Item
         [HttpPost]
-        public ActionResult NewItem(ItemViewModel model, HttpPostedFileBase file)
+        public ActionResult NewItem(ItemViewModel model, IEnumerable<HttpPostedFileBase> files)
         {
-            string path = string.Empty;
-            string pic = string.Empty;
+            DateTime date = DateTime.Today;
+            Guid ItemID1 = Guid.NewGuid();
+            var item = new Item() { ItemID = ItemID1, Title = model.Title, CreateDate = date, ExpirationDate = date.AddDays(14), Description = model.Description };
+            item.CategoryId = model.Category.CategoryId;
+            item.CityId = model.City.CityId;
+            item.ConditionId = model.Condition.ConditionId;
+            item.RegionId = model.Region.RegionId;
 
-            //TODO: utforska varför går det in hela tiden och sätta tillbaka
-            //if (!ModelState.IsValid)
-            //{
-            //    return PartialView(model);
-            //}
-            if (file != null)
+            foreach (var file in files)
             {
-                // Additional information should be added to the filename here to specify the userID, UserIdentity
-                pic = System.IO.Path.GetFileName(file.FileName);
-                path = System.IO.Path.Combine(
-                    Server.MapPath("~/Images"), pic);
-                // file is uploaded
+                string newImg = System.IO.Path.GetFileName(file.FileName);
+                string path = System.IO.Path.Combine(Server.MapPath("~/Images"), newImg);
                 file.SaveAs(path);
-            }
-            if (model != null)
-            {
-                DateTime date = DateTime.Today;
-                var item = new Item() { ItemID = Guid.NewGuid(), Title = model.Title, CreateDate = date, ExpirationDate = date.AddDays(14), Description = model.Description };
-                item.CategoryId = model.Category.CategoryId;
-                item.CityId = model.City.CityId;
-                item.ConditionId = model.Condition.ConditionId;
-                item.RegionId = model.Region.RegionId;
-                if (path != "")
-                {
-                    //TODO
-                    //item.Image.ImageId = Guid.NewGuid();
-                    //item.Image.Path = "./Images/" + pic;
-                }
 
-                itemRepo.Add(item);
+                using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
+                {
+                    file.InputStream.CopyTo(ms);
+                    byte[] array = ms.GetBuffer();
+                }
+                Image newImage = new Image();
+                newImage.ImageId = Guid.NewGuid();
+                newImage.Path = "../Images/"+newImg;
+                newImage.ItemID = ItemID1;
+                newImage.Item = item;
+                itemRepo.AddImage(newImage);
             }
+            itemRepo.Add(item);
+
             return RedirectToAction("Index", "Home");
         }
+        // GET: Item
+        //[HttpPost]
+        //public ActionResult NewItem(ItemViewModel model, HttpPostedFileBase file)
+        //{
+        //    string path = string.Empty;
+        //    string pic = string.Empty;
+
+        //    //TODO: utforska varför går det in hela tiden och sätta tillbaka
+        //    //if (!ModelState.IsValid)
+        //    //{
+        //    //    var errors = ModelState.Select(x => x.Value.Errors).Where(y => y.Count > 0).ToList();
+        //    //    return PartialView(model);
+        //    //}
+        //    if (file != null)
+        //    {
+        //        // Additional information should be added to the filename here to specify the userID, UserIdentity
+        //        pic = System.IO.Path.GetFileName(file.FileName);
+        //        path = System.IO.Path.Combine(
+        //            Server.MapPath("~/Images"), pic);
+        //        // file is uploaded
+        //        file.SaveAs(path);
+        //    }
+        //    if (model != null)
+        //    {
+        //        DateTime date = DateTime.Today;
+        //        var item = new Item() { ItemID = Guid.NewGuid(), Title = model.Title, CreateDate = date, ExpirationDate = date.AddDays(14), Description = model.Description };
+        //        item.CategoryId = model.Category.CategoryId;
+        //        item.CityId = model.City.CityId;
+        //        item.ConditionId = model.Condition.ConditionId;
+        //        item.RegionId = model.Region.RegionId;
+        //        if (path != "")
+        //        {
+        //            //TODO
+        //            item.Image.ImageId = Guid.NewGuid();
+        //            item.Image.Path = "./Images/" + pic;
+        //        }
+
+        //        itemRepo.Add(item);
+        //    }
+        //    return RedirectToAction("Index", "Home");
+        //}
 
         public ActionResult DisplaySingleItem(Guid itemID)
         {
@@ -140,25 +174,25 @@ namespace WebbApp.Controllers
             ModelState.Remove("Image");
             //if (ModelState.IsValid)
             //{
-                edit = new Item()
-                {
-                    ItemID = viewItem.ItemID,
-                    Title = viewItem.Title,
-                    Description = viewItem.Description,
-                    CreateDate = viewItem.CreateDate,
-                    ExpirationDate = viewItem.ExpirationDate,
-                    //Category = viewItem.Category.CategoryId,
-                    Category = categoryRepo.GetById(viewItem.Category.CategoryId),
-                    City = cityRepo.GetById(viewItem.City.CityId),
-                    Condition = conditionRepo.GetById(viewItem.Condition.ConditionId),
-                    Region = regionRepo.GetById(viewItem.Region.RegionId),
-                    //City = viewitem.City,
-                    //Condition = viewitem.Condition,
-                    //Region = viewitem.Region,
-                    //Category = viewitem.Category,
-                    //Image = viewItem.Image
-                };
-                itemRepo.Update(edit);
+            edit = new Item()
+            {
+                ItemID = viewItem.ItemID,
+                Title = viewItem.Title,
+                Description = viewItem.Description,
+                CreateDate = viewItem.CreateDate,
+                ExpirationDate = viewItem.ExpirationDate,
+                //Category = viewItem.Category.CategoryId,
+                Category = categoryRepo.GetById(viewItem.Category.CategoryId),
+                City = cityRepo.GetById(viewItem.City.CityId),
+                Condition = conditionRepo.GetById(viewItem.Condition.ConditionId),
+                Region = regionRepo.GetById(viewItem.Region.RegionId),
+                //City = viewitem.City,
+                //Condition = viewitem.Condition,
+                //Region = viewitem.Region,
+                //Category = viewitem.Category,
+                //Image = viewItem.Image
+            };
+            itemRepo.Update(edit);
             //}
             return RedirectToAction("ListAllItems");
         }
