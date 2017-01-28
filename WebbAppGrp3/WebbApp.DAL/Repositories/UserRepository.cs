@@ -20,6 +20,11 @@ namespace WebbApp.DAL.Repositories
             }
         }
 
+        public void AddImage(Image entity)
+        {
+            throw new NotImplementedException();
+        }
+
         public bool Delete(Guid id)
         {
             using (var context = new ApplicationContext())

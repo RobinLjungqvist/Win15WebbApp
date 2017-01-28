@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using WebbApp.DAL.DB.Models;
 using WebbApp.DAL.Interfaces;
 using WebbApp.Mockup.Models;
 
@@ -17,6 +18,11 @@ namespace WebbApp.Mockup.Repo
 
         }
         public void Add(TestModel entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddImage(Image entity)
         {
             throw new NotImplementedException();
         }

@@ -3,7 +3,7 @@ namespace WebbApp.DAL.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class InitialCreate : DbMigration
+    public partial class FirstMigration : DbMigration
     {
         public override void Up()
         {
@@ -131,7 +131,7 @@ namespace WebbApp.DAL.Migrations
                 c => new
                     {
                         ImageId = c.Guid(nullable: false),
-                        Path = c.String(nullable: false),
+                        Path = c.String(),
                         ItemID = c.Guid(nullable: false),
                     })
                 .PrimaryKey(t => t.ImageId)

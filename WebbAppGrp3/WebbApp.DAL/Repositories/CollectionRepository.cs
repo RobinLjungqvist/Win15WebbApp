@@ -37,6 +37,11 @@ namespace WebbApp.DAL.Repositories
             }
         }
 
+        public void AddImage(Image entity)
+        {
+            throw new NotImplementedException();
+        }
+
         public bool Delete(Guid id)
         {
             using (var context = new ApplicationContext())
@@ -109,6 +114,11 @@ namespace WebbApp.DAL.Repositories
                 context.Cities.Add(entity);
                 context.SaveChanges();
             }
+        }
+
+        public void AddImage(Image entity)
+        {
+            throw new NotImplementedException();
         }
 
         public bool Delete(Guid id)
@@ -185,6 +195,11 @@ namespace WebbApp.DAL.Repositories
             }
         }
 
+        public void AddImage(Image entity)
+        {
+            throw new NotImplementedException();
+        }
+
         public bool Delete(Guid id)
         {
             using (var context = new ApplicationContext())
@@ -257,6 +272,11 @@ namespace WebbApp.DAL.Repositories
                 context.Conditions.Add(entity);
                 context.SaveChanges();
             }
+        }
+
+        public void AddImage(Image entity)
+        {
+            throw new NotImplementedException();
         }
 
         public bool Delete(Guid id)
