@@ -47,10 +47,12 @@ namespace WebbApp.DAL.Repositories
 
         public IQueryable<ApplicationUser> GetAll()
         {
+            var list = new List<ApplicationUser>();
             using (var context = new ApplicationContext())
             {
-                return context.Users.Select(s => s);
+                list = context.Users.Select(u => u).ToList();
             }
+            return list.AsQueryable();
         }
 
         public ApplicationUser GetById(Guid id)

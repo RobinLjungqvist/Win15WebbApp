@@ -14,8 +14,6 @@ namespace WebbApp.Controllers
     public class ItemController : Controller
     {
         private IRepository<Item> itemRepo;
-
-        //public static CategoryRepository categoryRepo;
         private IRepository<Category> categoryRepo;
         private IRepository<Region> regionRepo;
         private IRepository<City> cityRepo;
@@ -25,7 +23,6 @@ namespace WebbApp.Controllers
         {
             this.itemRepo = new ItemRepository();
             this.categoryRepo = new CategoryRepository();
-            //categoryRepo = CategoryRepository.getRepo();
             this.regionRepo = new RegionRepository();
             this.cityRepo = new CityRepository();
             this.conditionRepo = new ConditionRepository();

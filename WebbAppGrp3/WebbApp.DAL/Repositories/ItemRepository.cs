@@ -182,7 +182,5 @@ namespace WebbApp.DAL.Repositories
                 return items != null ? items.AsQueryable() : null;
             }
         }
-
-
     }
 }
