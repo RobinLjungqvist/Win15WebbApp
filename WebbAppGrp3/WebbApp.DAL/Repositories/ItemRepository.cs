@@ -32,14 +32,6 @@ namespace WebbApp.DAL.Repositories
                     context.SaveChanges();
                 }
             }
-            catch (DbUpdateException e)
-            {
-                //Add your code to inspect the inner exception and/or
-                //e.Entries here.
-                //Or just use the debugger.
-                //Added this catch (after the comments below) to make it more obvious 
-                //how this code might help this specific problem
-            }
             catch (Exception e)
             {
                 

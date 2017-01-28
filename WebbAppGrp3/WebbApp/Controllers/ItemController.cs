@@ -53,11 +53,10 @@ namespace WebbApp.Controllers
             string path = string.Empty;
             string pic = string.Empty;
 
-            //TODO: utforska varför går det in hela tiden och sätta tillbaka
-            //if (!ModelState.IsValid)
-            //{
-            //    return PartialView(model);
-            //}
+            if (!ModelState.IsValid)
+            {
+                return PartialView(model);
+            }
             if (file != null)
             {
                 // Additional information should be added to the filename here to specify the userID, UserIdentity
