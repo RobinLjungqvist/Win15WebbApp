@@ -21,15 +21,16 @@ namespace WebbApp.DAL.Repositories
         {
             this.ctx = new ApplicationContext();
         }
+
         public void AddImage(Image entity)
         {
             using (var context = new ApplicationContext())
             {
+                context.Items.Attach(entity.Item);
                 context.Images.Add(entity);
                 context.SaveChanges();
             }
         }
-
 
         public void Add(Item entity)
         {
@@ -43,7 +44,7 @@ namespace WebbApp.DAL.Repositories
             }
             catch (Exception e)
             {
-                
+
             }
         }
 
@@ -99,13 +100,13 @@ namespace WebbApp.DAL.Repositories
             var items = new List<Item>();
             using (var context = new ApplicationContext())
             {
-                    items = context.Items
-                    .Include(i => i.City)
-                    .Include(i => i.Condition)
-                    .Include(i => i.Region)
-                    .Include(i => i.Category)
-                    .Include(i => i.Images)
-                    .ToList();
+                items = context.Items
+                .Include(i => i.City)
+                .Include(i => i.Condition)
+                .Include(i => i.Region)
+                .Include(i => i.Category)
+                .Include(i => i.Images)
+                .ToList();
             }
             return items.AsQueryable();
         }
@@ -162,7 +163,8 @@ namespace WebbApp.DAL.Repositories
                         .Include(i => i.Category)
                         .Include(i => i.Images)
                         .ToList();
-                } else if (searchable.Category != null)
+                }
+                else if (searchable.Category != null)
                 {
                     items = context.Items.Where(p => p.Category.CategoryName.Contains(searchable.Category.CategoryName))
                         .Include(i => i.City)
@@ -176,6 +178,6 @@ namespace WebbApp.DAL.Repositories
             }
         }
 
-       
+
     }
 }

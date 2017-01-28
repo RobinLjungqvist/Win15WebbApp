@@ -36,6 +36,7 @@ namespace WebbApp.Controllers
 
             return PartialView();
         }
+
         [HttpGet]
         public ActionResult NewItem()
         {
@@ -46,39 +47,44 @@ namespace WebbApp.Controllers
             ivm.Cities = cityRepo.GetAll().ToList();
             return PartialView(ivm);
         }
+
         [HttpPost]
         public ActionResult NewItem(ItemViewModel model, IEnumerable<HttpPostedFileBase> files)
         {
             DateTime date = DateTime.Today;
-            Guid ItemID1 = Guid.NewGuid();
-            var item = new Item() { ItemID = ItemID1, Title = model.Title, CreateDate = date, ExpirationDate = date.AddDays(14), Description = model.Description };
-            item.CategoryId = model.Category.CategoryId;
-            item.CityId = model.City.CityId;
-            item.ConditionId = model.Condition.ConditionId;
-            item.RegionId = model.Region.RegionId;
+            Guid newItemId = Guid.NewGuid();
+            var newItem = new Item() { ItemID = newItemId, Title = model.Title, CreateDate = date, ExpirationDate = date.AddDays(14), Description = model.Description };
+            newItem.CategoryId = model.Category.CategoryId;
+            newItem.CityId = model.City.CityId;
+            newItem.ConditionId = model.Condition.ConditionId;
+            newItem.RegionId = model.Region.RegionId;
+            itemRepo.Add(newItem);
 
-            foreach (var file in files)
+            if (files != null && files.ElementAt(0) != null && files.ElementAt(0).ContentLength != 0)
             {
-                string newImg = System.IO.Path.GetFileName(file.FileName);
-                string path = System.IO.Path.Combine(Server.MapPath("~/Images"), newImg);
-                file.SaveAs(path);
-
-                using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
+                foreach (var file in files)
                 {
-                    file.InputStream.CopyTo(ms);
-                    byte[] array = ms.GetBuffer();
+                    string newImg = System.IO.Path.GetFileName(file.FileName);
+                    string path = System.IO.Path.Combine(Server.MapPath("~/Images"), newImg);
+                    file.SaveAs(path);
+
+                    using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
+                    {
+                        file.InputStream.CopyTo(ms);
+                        byte[] array = ms.GetBuffer();
+                    }
+                    Image newImage = new Image();
+                    newImage.ImageId = Guid.NewGuid();
+                    newImage.Path = "../Images/" + newImg;
+                    newImage.ItemID = newItemId;
+                    newImage.Item = newItem;
+                    itemRepo.AddImage(newImage);
                 }
-                Image newImage = new Image();
-                newImage.ImageId = Guid.NewGuid();
-                newImage.Path = "../Images/"+newImg;
-                newImage.ItemID = ItemID1;
-                newImage.Item = item;
-                itemRepo.AddImage(newImage);
             }
-            itemRepo.Add(item);
 
             return RedirectToAction("Index", "Home");
         }
+
         // GET: Item
         //[HttpPost]
         //public ActionResult NewItem(ItemViewModel model, HttpPostedFileBase file)
