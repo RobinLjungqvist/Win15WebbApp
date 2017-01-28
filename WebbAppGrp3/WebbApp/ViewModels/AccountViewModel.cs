@@ -85,8 +85,8 @@ namespace WebbApp.ViewModels
         [Display(Name = "Region")]
         public Regions Region { get; set; }
 
-        [Required]
-        [Display(Name = "Role")]
-        public UserRoles UserRole { get; set; }
+        //[Required]
+        //[Display(Name = "Role")]
+        //public UserRoles UserRole { get; set; }
     }
 }

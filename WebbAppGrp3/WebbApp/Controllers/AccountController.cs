@@ -21,41 +21,20 @@ namespace WebbApp.Controllers
 
         public ApplicationSignInManager SignInManager
         {
-            get
-            {
-                return signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
-            }
-
-            private set
-            {
-                signInManager = value;
-            }
+            get { return signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>(); }
+            private set { signInManager = value; }
         }
 
         public ApplicationUserManager UserManager
         {
-            get
-            {
-                return userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
-
-            private set
-            {
-                userManager = value;
-            }
+            get { return userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>(); }
+            private set { userManager = value; }
         }
 
         public ApplicationRoleManager RoleManager
         {
-            get
-            {
-                return roleManager ?? HttpContext.GetOwinContext().Get<ApplicationRoleManager>();
-            }
-
-            private set
-            {
-                roleManager = value;
-            }
+            get { return roleManager ?? HttpContext.GetOwinContext().Get<ApplicationRoleManager>(); }
+            private set { roleManager = value; }
         }
 
         // GET: Account
@@ -110,7 +89,6 @@ namespace WebbApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                //TODO: take away isAdmin and UserRole should set to 'user'
                 var user = new ApplicationUser
                 {
                     Id = Guid.NewGuid().ToString(),
@@ -120,8 +98,8 @@ namespace WebbApp.Controllers
                     UserName = model.UserName,
                     Email = model.Email,
                     City = model.City,
-                    IsAdmin = model.UserRole == RegisterViewModel.UserRoles.Admin,
-                    UserRole = model.UserRole.ToString(),
+                    //IsAdmin = model.UserRole == RegisterViewModel.UserRoles.Admin,
+                    UserRole = "User",
                     Region = model.Region.ToString()
                 };
 
@@ -131,19 +109,19 @@ namespace WebbApp.Controllers
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
-                    var rm = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationContext()));
+                    //var rm = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationContext()));
 
-                    string userString = model.UserRole == RegisterViewModel.UserRoles.User ? "User" : "Admin";
+                    //string userString = model.UserRole == RegisterViewModel.UserRoles.User ? "User" : "Admin";
 
-                    if (!rm.RoleExists(userString))
-                    {
-                        rm.Create(new IdentityRole(userString));
-                    }
+                    //if (!rm.RoleExists(userString))
+                    //{
+                    //    rm.Create(new IdentityRole(userString));
+                    //}
 
-                    if (!UserManager.IsInRole(user.Id, userString))
-                    {
-                        UserManager.AddToRole(user.Id, userString);
-                    }
+                    //if (!UserManager.IsInRole(user.Id, userString))
+                    //{
+                    //    UserManager.AddToRole(user.Id, userString);
+                    //}
 
                     return RedirectToAction("Index", "Home");
                 }
@@ -162,10 +140,7 @@ namespace WebbApp.Controllers
 
         private IAuthenticationManager AuthenticationManager
         {
-            get
-            {
-                return HttpContext.GetOwinContext().Authentication;
-            }
+            get { return HttpContext.GetOwinContext().Authentication; }
         }
 
         private void AddErrors(IdentityResult result)
