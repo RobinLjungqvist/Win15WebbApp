@@ -110,6 +110,7 @@ namespace WebbApp.Controllers
         {
             if (ModelState.IsValid)
             {
+                //TODO: take away isAdmin and UserRole should set to 'user'
                 var user = new ApplicationUser
                 {
                     Id = Guid.NewGuid().ToString(),
@@ -133,7 +134,7 @@ namespace WebbApp.Controllers
                     var rm = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationContext()));
 
                     string userString = model.UserRole == RegisterViewModel.UserRoles.User ? "User" : "Admin";
-                    
+
                     if (!rm.RoleExists(userString))
                     {
                         rm.Create(new IdentityRole(userString));
