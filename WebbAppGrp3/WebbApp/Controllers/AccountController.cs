@@ -80,10 +80,19 @@ namespace WebbApp.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+                    if (returnUrl == null)
+                    {
+                        returnUrl = (String) TempData["tmpReturnUrl"];
+                    }
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.Failure:
                 default:
                     ModelState.AddModelError("", "Invalid login attempt.");
+                    var tmp = TempData["tmpReturnUrl"];
+                    if (tmp == null)
+                        TempData["tmpReturnUrl"] = returnUrl;
+                    else
+                        TempData["tmpReturnUrl"] = tmp;
                     return View(model);
             }
         }

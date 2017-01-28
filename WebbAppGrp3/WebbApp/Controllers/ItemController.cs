@@ -11,7 +11,6 @@ using WebbApp.DAL.DB.Models;
 
 namespace WebbApp.Controllers
 {
-    [AllowAnonymous]
     public class ItemController : Controller
     {
         private IRepository<Item> itemRepo;
@@ -31,12 +30,15 @@ namespace WebbApp.Controllers
             this.cityRepo = new CityRepository();
             this.conditionRepo = new ConditionRepository();
         }
+
+        [AllowAnonymous]
         public ActionResult Index()
         {
 
             return PartialView();
         }
 
+        [Authorize]
         [HttpGet]
         public ActionResult NewItem()
         {
@@ -45,10 +47,12 @@ namespace WebbApp.Controllers
             ivm.Conditions = conditionRepo.GetAll().ToList();
             ivm.Regions = regionRepo.GetAll().ToList();
             ivm.Cities = cityRepo.GetAll().ToList();
-            return PartialView(ivm);
+            return View(ivm);
         }
 
+        [Authorize]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult NewItem(ItemViewModel model, IEnumerable<HttpPostedFileBase> files)
         {
             DateTime date = DateTime.Today;
@@ -68,7 +72,7 @@ namespace WebbApp.Controllers
                     string path = System.IO.Path.Combine(Server.MapPath("~/Images"), newImg);
                     file.SaveAs(path);
 
-                    using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
+                    using (MemoryStream ms = new MemoryStream())
                     {
                         file.InputStream.CopyTo(ms);
                         byte[] array = ms.GetBuffer();
@@ -81,52 +85,10 @@ namespace WebbApp.Controllers
                     itemRepo.AddImage(newImage);
                 }
             }
-
             return RedirectToAction("Index", "Home");
         }
 
-        // GET: Item
-        //[HttpPost]
-        //public ActionResult NewItem(ItemViewModel model, HttpPostedFileBase file)
-        //{
-        //    string path = string.Empty;
-        //    string pic = string.Empty;
-
-        //    //TODO: utforska varför går det in hela tiden och sätta tillbaka
-        //    //if (!ModelState.IsValid)
-        //    //{
-        //    //    var errors = ModelState.Select(x => x.Value.Errors).Where(y => y.Count > 0).ToList();
-        //    //    return PartialView(model);
-        //    //}
-        //    if (file != null)
-        //    {
-        //        // Additional information should be added to the filename here to specify the userID, UserIdentity
-        //        pic = System.IO.Path.GetFileName(file.FileName);
-        //        path = System.IO.Path.Combine(
-        //            Server.MapPath("~/Images"), pic);
-        //        // file is uploaded
-        //        file.SaveAs(path);
-        //    }
-        //    if (model != null)
-        //    {
-        //        DateTime date = DateTime.Today;
-        //        var item = new Item() { ItemID = Guid.NewGuid(), Title = model.Title, CreateDate = date, ExpirationDate = date.AddDays(14), Description = model.Description };
-        //        item.CategoryId = model.Category.CategoryId;
-        //        item.CityId = model.City.CityId;
-        //        item.ConditionId = model.Condition.ConditionId;
-        //        item.RegionId = model.Region.RegionId;
-        //        if (path != "")
-        //        {
-        //            //TODO
-        //            item.Image.ImageId = Guid.NewGuid();
-        //            item.Image.Path = "./Images/" + pic;
-        //        }
-
-        //        itemRepo.Add(item);
-        //    }
-        //    return RedirectToAction("Index", "Home");
-        //}
-
+        [AllowAnonymous]
         public ActionResult DisplaySingleItem(Guid itemID)
         {
             var repoItem = itemRepo.GetById(itemID);
@@ -134,6 +96,7 @@ namespace WebbApp.Controllers
             return PartialView(newViewModel);
         }
 
+        [AllowAnonymous]
         public ActionResult ListAllItems()
         {
             var ItemsFromRepo = itemRepo.GetAll();
@@ -152,12 +115,14 @@ namespace WebbApp.Controllers
             return PartialView(ViewModelItems);
         }
 
+        [Authorize]
         public ActionResult RemoveItem(Guid itemID)
         {
             itemRepo.Delete(itemID);
             return RedirectToAction("Index", "Home");
         }
 
+        [Authorize]
         [HttpGet]
         public ActionResult EditItem(Guid ItemID)
         {
@@ -171,6 +136,7 @@ namespace WebbApp.Controllers
             return View(ivm);
         }
 
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult EditItem(ItemViewModel viewItem, FormCollection formcollection)
@@ -202,6 +168,5 @@ namespace WebbApp.Controllers
             //}
             return RedirectToAction("ListAllItems");
         }
-
     }
 }

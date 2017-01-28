@@ -24,11 +24,17 @@ namespace WebbApp.DAL.Repositories
 
         public void AddImage(Image entity)
         {
-            using (var context = new ApplicationContext())
+            try
             {
-                context.Items.Attach(entity.Item);
-                context.Images.Add(entity);
-                context.SaveChanges();
+                using (var context = new ApplicationContext())
+                {
+                    context.Items.Attach(entity.Item);
+                    context.Images.Add(entity);
+                    context.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
             }
         }
 
@@ -42,9 +48,8 @@ namespace WebbApp.DAL.Repositories
                     context.SaveChanges();
                 }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-
             }
         }
 
