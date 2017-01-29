@@ -53,6 +53,10 @@
                             </ul>
                         </li>
                     }
+                    @if (HttpContext.Current.User.IsInRole("User"))
+                    {
+                        <li>@Html.ActionLink("My Account", "Index", "UserAccount", new { area = "User" }, null)</li>
+                    }
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
