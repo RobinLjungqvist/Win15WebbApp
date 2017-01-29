@@ -29,7 +29,8 @@
             @Html.LabelFor(model => model.City, "City", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownListFor(model => model.City.CityId, new SelectList(Model.Cities, "CityId", "CityName"), "- Please Select -")
-                @Html.ValidationMessageFor(model => model.City.CityId)
+                <br />
+                @Html.ValidationMessageFor(model => model.City.CityId, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -37,7 +38,8 @@
             @Html.LabelFor(model => model.Condition, "Condition", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownListFor(model => model.Condition.ConditionId, new SelectList(Model.Conditions, "ConditionId", "Status"), "- Please Select -")
-                @Html.ValidationMessageFor(model => model.Condition.ConditionId)
+                <br />
+                @Html.ValidationMessageFor(model => model.Condition.ConditionId, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -45,7 +47,8 @@
             @Html.LabelFor(model => model.Region, "Region", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownListFor(model => model.Region.RegionId, new SelectList(Model.Regions, "RegionId", "RegionName"), "- Please Select -")
-                @Html.ValidationMessageFor(model => model.Region.RegionId)
+                <br />
+                @Html.ValidationMessageFor(model => model.Region.RegionId, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -53,7 +56,8 @@
             @Html.LabelFor(model => model.Category, "Category", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownListFor(model => model.Category.CategoryId, new SelectList(Model.Categories, "CategoryId", "CategoryName"), "- Please Select -")
-                @Html.ValidationMessageFor(model => model.Category.CategoryId)
+                <br />
+                @Html.ValidationMessageFor(model => model.Category.CategoryId, "", new { @class = "text-danger" })
             </div>
         </div>
 

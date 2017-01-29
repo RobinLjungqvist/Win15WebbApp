@@ -67,19 +67,22 @@ namespace WebbApp.Controllers
                 {
                     string newImg = System.IO.Path.GetFileName(file.FileName);
                     string path = System.IO.Path.Combine(Server.MapPath("~/Images"), newImg);
-                    file.SaveAs(path);
-
-                    using (MemoryStream ms = new MemoryStream())
+                    if (path.ToLower().EndsWith(".jpg") || path.ToLower().EndsWith(".png"))
                     {
-                        file.InputStream.CopyTo(ms);
-                        byte[] array = ms.GetBuffer();
+                        file.SaveAs(path);
+
+                        using (MemoryStream ms = new MemoryStream())
+                        {
+                            file.InputStream.CopyTo(ms);
+                            byte[] array = ms.GetBuffer();
+                        }
+                        Image newImage = new Image();
+                        newImage.ImageId = Guid.NewGuid();
+                        newImage.Path = "../Images/" + newImg;
+                        newImage.ItemID = newItemId;
+                        newImage.Item = newItem;
+                        itemRepo.AddImage(newImage);
                     }
-                    Image newImage = new Image();
-                    newImage.ImageId = Guid.NewGuid();
-                    newImage.Path = "../Images/" + newImg;
-                    newImage.ItemID = newItemId;
-                    newImage.Item = newItem;
-                    itemRepo.AddImage(newImage);
                 }
             }
             return RedirectToAction("Index", "Home");
