@@ -16,7 +16,7 @@ namespace WebbApp.ViewModels
         public string Title { get; set; }
 
         [Required(ErrorMessage ="Must enter a description for the item")]
-        [RegularExpression(@"^[a-öA-Ö''-'\s]{1,40}$", ErrorMessage = "Must be letters between a-ö or A-Ö")]
+        //[RegularExpression(@"^[a-öA-Ö''-'\s]{1,40}$", ErrorMessage = "Must be letters between a-ö or A-Ö")]
         [StringLength(30, ErrorMessage="Must enter a description for the item", MinimumLength = 1)]
         public string Description { get; set; }
 

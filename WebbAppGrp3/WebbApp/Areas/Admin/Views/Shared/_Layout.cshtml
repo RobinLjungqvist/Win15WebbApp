@@ -21,9 +21,11 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>
-                        @Html.ActionLink("Home", "Index", "Home")
+                        @Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)
 
                     </li>
+                    @*//TODO KEVIN - fr SPA to MVC
+                    @Html.ActionLink("Items", "ListAllItems", "Item", new { area = "" }, null)*@
                     <li>
                         @Ajax.ActionLink("Items", "ListAllItems", "Item", null,
                         new AjaxOptions
@@ -34,7 +36,7 @@
                         })
                     </li>
                     <li>
-                        @Html.ActionLink("New Item", "NewItem", "Item")
+                        @Html.ActionLink("New Item", "NewItem", "Item", new { area = "" }, null)
                     </li>
                     @if (HttpContext.Current.User.IsInRole("Admin"))
                     {

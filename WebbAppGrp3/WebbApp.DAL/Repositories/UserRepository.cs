@@ -68,19 +68,25 @@ namespace WebbApp.DAL.Repositories
         {
             using (var context = new ApplicationContext())
             {
-                var user = context.Users.Where(p => p.Id == entity.Id).FirstOrDefault();
-                if (user != null)
+                try
                 {
-                    user.FirstName = entity.FirstName;
-                    user.LastName = entity.LastName;
-                    user.Email = entity.Email;
-                    user.Password = entity.Password;
-                    user.UserName = entity.UserName;
-                    user.IsAdmin = entity.IsAdmin;
-                    user.UserRole = entity.UserRole;
-                    user.Region = entity.Region;
-                    user.City = entity.City;
-                    context.SaveChanges();
+                    var user = context.Users.Where(p => p.Id == entity.Id).FirstOrDefault();
+                    if (user != null)
+                    {
+                        user.FirstName = entity.FirstName;
+                        user.LastName = entity.LastName;
+                        user.Email = entity.Email;
+                        user.Password = entity.Password;
+                        user.UserName = entity.UserName;
+                        user.IsAdmin = entity.IsAdmin;
+                        user.UserRole = entity.UserRole;
+                        user.Region = entity.Region;
+                        user.City = entity.City;
+                        context.SaveChanges();
+                    }
+                }
+                catch (Exception ex)
+                {
                 }
             }
         }

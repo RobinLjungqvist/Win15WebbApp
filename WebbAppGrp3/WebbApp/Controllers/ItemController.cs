@@ -67,7 +67,7 @@ namespace WebbApp.Controllers
                 {
                     string newImg = System.IO.Path.GetFileName(file.FileName);
                     string path = System.IO.Path.Combine(Server.MapPath("~/Images"), newImg);
-                    if (path.ToLower().EndsWith(".jpg") || path.ToLower().EndsWith(".png"))
+                    if (newImg.ToLower().EndsWith(".jpg") || newImg.ToLower().EndsWith(".png"))
                     {
                         file.SaveAs(path);
 
