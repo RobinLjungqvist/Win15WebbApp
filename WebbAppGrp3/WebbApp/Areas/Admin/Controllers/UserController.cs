@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -11,7 +10,6 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 using WebbApp.DAL;
-using System.Web.ModelBinding;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity.Owin;
 using static WebbApp.App_Start.IdentityConfig;
