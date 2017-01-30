@@ -1,5 +1,7 @@
 namespace WebbApp.DAL.Migrations
 {
+    using Microsoft.AspNet.Identity;
+    using Microsoft.AspNet.Identity.EntityFramework;
     using System;
     using System.Collections.Generic;
     using System.Data.Entity;
@@ -105,6 +107,27 @@ namespace WebbApp.DAL.Migrations
             context.Images.AddOrUpdate(x => x.ImageId, image2);
             var image3 = new Image() { ImageId = Guid.NewGuid(), Path = "../Images/PlaceholderImage.png", ItemID = ItemID3 };
             context.Images.AddOrUpdate(x => x.ImageId, image3);
+
+            if (!context.Roles.Any(r => r.Name == "Admin"))
+            {
+                var store = new RoleStore<IdentityRole>(context);
+                var manager = new RoleManager<IdentityRole>(store);
+                var role = new IdentityRole { Name = "Admin" };
+
+                manager.Create(role);
+            }
+
+            if (!context.Users.Any(u => u.UserName == "founder"))
+            {
+                var store = new UserStore<ApplicationUser>(context);
+                var manager = new UserManager<ApplicationUser>(store);
+                var user = new ApplicationUser { UserName = "Admin" };
+
+                user.UserRole = "Admin";
+
+                manager.Create(user, "password");
+                manager.AddToRole(user.Id, "Admin");
+            }
         }
     }
 }
