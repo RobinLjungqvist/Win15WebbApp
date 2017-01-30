@@ -8,6 +8,8 @@ using WebbApp.ViewModels;
 using WebbApp.DAL.Repositories;
 using WebbApp.DAL.Interfaces;
 using WebbApp.DAL.DB.Models;
+using System.Security.Claims;
+using Microsoft.AspNet.Identity;
 
 namespace WebbApp.Controllers
 {

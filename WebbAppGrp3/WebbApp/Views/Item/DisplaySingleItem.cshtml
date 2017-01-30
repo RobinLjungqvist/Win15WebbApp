@@ -1,40 +1,42 @@
 ﻿@model WebbApp.ViewModels.ItemViewModel
+@using Microsoft.AspNet.Identity;
 
 
+<div class="row">
+    <div class="col-md-6">
+        <img src="@Model.Images" class="SingleDisplayImage" />
+    </div>
     <div class="row">
-        <div class="col-md-6">
-            <img src="@Model.Images" class="SingleDisplayImage" />
+        <div class="col-md-3">
+            <h2>@Model.Title</h2>
+            @Html.DisplayFor(model => model.City.CityName)
+            @Html.DisplayFor(model => model.Region.RegionName)
+            @Html.DisplayFor(model => model.ExpirationDate)
         </div>
-        <div class="row">
-            <div class="col-md-3">
-                <h2>@Model.Title</h2>
-                @Html.DisplayFor(model => model.City.CityName)
-                @Html.DisplayFor(model => model.Region.RegionName)
-                @Html.DisplayFor(model => model.ExpirationDate)
-            </div>
-            <div class="col-md-3">
-                <h3>Description</h3>
-                <p>
-                    @Model.Description
-                </p>
-                @Ajax.ActionLink("Remove Item","RemoveItem","Item", new {itemID = Model.ItemID },
+        <div class="col-md-3">
+            <h3>Description</h3>
+            <p>
+                @Model.Description
+            </p>
+            @Ajax.ActionLink("Remove Item", "RemoveItem", "Item", new { itemID = Model.ItemID },
                new AjaxOptions
                {
                    UpdateTargetId = "PartialContainer",
                    InsertionMode = InsertionMode.Replace,
                    HttpMethod = "GET"
                })
-                @Html.ActionLink("Edit Item", "EditItem", "Item", new { itemID = Model.ItemID },null)
-               @*new AjaxOptions
-           {
-               UpdateTargetId = "PartialContainer",
-               InsertionMode = InsertionMode.Replace,
-               HttpMethod = "GET"
-           })*@
+            @Html.ActionLink("Edit Item", "EditItem", "Item", new { itemID = Model.ItemID }, null)
+    
 
+            @*För att visa bara om uploadern är inloggad eller Admin*@
 
-            </div>
-            
+            @*@if (User.Identity.GetUserId() == Model.UserID || User.IsInRole("Admin"))
+            {
+                //Visa Edit Knappen.
+            }*@
+
         </div>
+
+    </div>
 </div>
-  
+
