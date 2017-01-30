@@ -11,8 +11,7 @@ namespace WebbApp.DAL.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = true;
-            AutomaticMigrationDataLossAllowed = true;
+            AutomaticMigrationsEnabled = false;
         }
 
         protected override void Seed(WebbApp.DAL.ApplicationContext context)
@@ -103,7 +102,5 @@ namespace WebbApp.DAL.Migrations
             var image1 = new Image() { ImageId = ImageId1, Path = "../Images/PlaceholderImage.png", ItemID = ItemID1 };
             context.Images.AddOrUpdate(x => x.ImageId, image1);
         }
-
     }
 }
-

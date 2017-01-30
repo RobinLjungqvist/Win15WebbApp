@@ -11,7 +11,9 @@
 
 <div class="row listItem">
     <div class="col-md-3">
-        <img src="../Images/@Model.Image" class="ListItemImage" />
+        <img src="../Images/@Model.Image" class="ListItemImage" alt="Picture is missing." />
+        @*<img src="@Url.Content("~/Images/" + @Model.Image.Path)" class="ListItemImage" alt="Picture is missing." />*@
+        @*<img src="@Url.Content("~/Images/" + System.IO.Path.GetFileName(Model.Image.Path))" alt="Picture is missing." class="ListItemImage"/>*@
     </div>
     <div class="col-md-3">
         <h2>@Model.Title</h2>
