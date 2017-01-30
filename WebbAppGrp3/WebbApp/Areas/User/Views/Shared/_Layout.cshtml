@@ -24,9 +24,9 @@
                         @Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)
 
                     </li>
-                    @*//TODO KEVIN - fr SPA to MVC
-                    @Html.ActionLink("Items", "ListAllItems", "Item", new { area = "" }, null)*@
                     <li>
+                        @*//TODO KEVIN - fr SPA to MVC
+                            @Html.ActionLink("Items", "ListAllItems", "Item", new { area = "" }, null)*@
                         @Ajax.ActionLink("Items", "ListAllItems", "Item", null,
                         new AjaxOptions
                         {
@@ -37,7 +37,9 @@
                     </li>
                     <li>
                         @Html.ActionLink("New Item", "NewItem", "Item", new { area = "" }, null)
+                        @*@Html.ActionLink("New Item", "NewItem", "Item")*@
                     </li>
+
                     @if (HttpContext.Current.User.IsInRole("Admin"))
                     {
                         <li class="dropdown">
