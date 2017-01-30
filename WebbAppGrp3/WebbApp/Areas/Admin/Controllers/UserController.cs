@@ -66,7 +66,8 @@ namespace WebbApp.Areas.Admin.Controllers
             model.Password = user.Password;
             model.UserName = user.UserName;
             model.UserRole = (UserViewModel.UserRoles)Enum.Parse(typeof(UserViewModel.UserRoles), user.UserRole, true);
-            model.Region = (UserViewModel.Regions)Enum.Parse(typeof(UserViewModel.Regions), user.Region, true);
+            //model.Region = (UserViewModel.Regions)Enum.Parse(typeof(UserViewModel.Regions), user.Region, true);
+            model.Region = user.Region;
             return View(model);
         }
 
@@ -89,7 +90,7 @@ namespace WebbApp.Areas.Admin.Controllers
                 ApplicationUser user = new ApplicationUser();
                 user.Id = model.UserId;
                 user.UserRole = model.UserRole.ToString();
-                user.Region = model.Region.ToString();
+                user.Region = model.Region;
                 user.UserName = model.UserName;
                 user.Password = model.Password;
                 user.LastName = model.LastName;
@@ -131,7 +132,7 @@ namespace WebbApp.Areas.Admin.Controllers
                     Email = model.Email,
                     City = model.City,
                     UserRole = model.UserRole.ToString(),
-                    Region = model.Region.ToString()
+                    Region = model.Region
                 };
 
                 var result = await UserManager.CreateAsync(user, model.Password);

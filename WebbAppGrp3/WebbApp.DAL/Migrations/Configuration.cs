@@ -11,6 +11,7 @@ namespace WebbApp.DAL.Migrations
 
     internal sealed class Configuration : DbMigrationsConfiguration<WebbApp.DAL.ApplicationContext>
     {
+
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
@@ -18,6 +19,28 @@ namespace WebbApp.DAL.Migrations
 
         protected override void Seed(WebbApp.DAL.ApplicationContext context)
         {
+
+            if (!context.Roles.Any(r => r.Name == "Admin"))
+            {
+                var store = new RoleStore<IdentityRole>(context);
+                var manager = new RoleManager<IdentityRole>(store);
+                var role = new IdentityRole { Name = "Admin" };
+
+                manager.Create(role);
+            }
+
+            if (!context.Users.Any(u => u.UserName == "Admin"))
+            {
+                var store = new UserStore<ApplicationUser>(context);
+                var manager = new UserManager<ApplicationUser>(store);
+                var user = new ApplicationUser { UserName = "Admin" };
+
+                user.UserRole = "Admin";
+
+                manager.CreateAsync(user, "password");
+                manager.AddToRoleAsync(user.Id, "Admin");
+            }
+
             Guid CityId1 = Guid.NewGuid();
             Guid CityId2 = Guid.NewGuid();
             Guid CityId3 = Guid.NewGuid();
@@ -28,11 +51,13 @@ namespace WebbApp.DAL.Migrations
                     new City() { CityId = CityId3, CityName = "Malmö" },
              };
 
-            foreach (City i in cityList)
+            if (!context.Cities.Any())
             {
-                context.Cities.AddOrUpdate(x => x.CityId, i);
+                foreach (City i in cityList)
+                {
+                    context.Cities.AddOrUpdate(x => x.CityId, i);
+                }
             }
-
             Guid ConditionId1 = Guid.NewGuid();
             Guid ConditionId2 = Guid.NewGuid();
 
@@ -108,26 +133,7 @@ namespace WebbApp.DAL.Migrations
             var image3 = new Image() { ImageId = Guid.NewGuid(), Path = "../Images/PlaceholderImage.png", ItemID = ItemID3 };
             context.Images.AddOrUpdate(x => x.ImageId, image3);
 
-            if (!context.Roles.Any(r => r.Name == "Admin"))
-            {
-                var store = new RoleStore<IdentityRole>(context);
-                var manager = new RoleManager<IdentityRole>(store);
-                var role = new IdentityRole { Name = "Admin" };
 
-                manager.Create(role);
-            }
-
-            if (!context.Users.Any(u => u.UserName == "founder"))
-            {
-                var store = new UserStore<ApplicationUser>(context);
-                var manager = new UserManager<ApplicationUser>(store);
-                var user = new ApplicationUser { UserName = "Admin" };
-
-                user.UserRole = "Admin";
-
-                manager.Create(user, "password");
-                manager.AddToRole(user.Id, "Admin");
-            }
         }
     }
 }

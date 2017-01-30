@@ -101,7 +101,7 @@ namespace WebbApp.Controllers
                     City = model.City,
                     //IsAdmin = model.UserRole == RegisterViewModel.UserRoles.Admin,
                     UserRole = "User",
-                    Region = model.Region.ToString()
+                    Region = model.Region
                 };
 
                 var result = await UserManager.CreateAsync(user, model.Password);

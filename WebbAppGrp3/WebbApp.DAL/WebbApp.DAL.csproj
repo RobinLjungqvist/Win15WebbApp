@@ -71,6 +71,14 @@
     <Compile Include="Migrations\201701301325571_InitialMigration.Designer.cs">
       <DependentUpon>201701301325571_InitialMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701301516241_SecondMigration.cs" />
+    <Compile Include="Migrations\201701301516241_SecondMigration.Designer.cs">
+      <DependentUpon>201701301516241_SecondMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701301525135_ThirdMigration.cs" />
+    <Compile Include="Migrations\201701301525135_ThirdMigration.Designer.cs">
+      <DependentUpon>201701301525135_ThirdMigration.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Interfaces\ISearchableRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -88,6 +96,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201701301325571_InitialMigration.resx">
       <DependentUpon>201701301325571_InitialMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701301516241_SecondMigration.resx">
+      <DependentUpon>201701301516241_SecondMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701301525135_ThirdMigration.resx">
+      <DependentUpon>201701301525135_ThirdMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebbApp.DAL.DB.Models
 {
@@ -18,15 +19,15 @@ namespace WebbApp.DAL.DB.Models
         public string Password { get; set; }
         public bool IsAdmin { get; set; }
         public string UserRole { get; set; }
-        public string City { get; set; }
-        public string Region { get; set; }
+        //public string City { get; set; }
+        //public string Region { get; set; }
 
-        //[ForeignKey("City"), ScaffoldColumn(false)]
-        //public Image CityId { get; set; }
-        //[ForeignKey("Region"), ScaffoldColumn(false)]
-        //public Image RegionId { get; set; }
-        //public virtual Region Region { get; set; }
-        //public virtual City city { get; set; }
+        //[ForeignKey("CityID")]
+        public string CityID { get; set; }
+        //[ForeignKey("RegionId")]
+        public string RegionId { get; set; }
+        public virtual Region Region { get; set; }
+        public virtual City City { get; set; }
 
         public virtual ICollection<Item> Items { get; set; }
     }

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using WebbApp.DAL.DB.Models;
 
 namespace WebbApp.ViewModels
 {
@@ -62,11 +63,11 @@ namespace WebbApp.ViewModels
         public string LastName { get; set; }
 
         [Display(Name = "City")]
-        public string City { get; set; }
+        public City City { get; set; }
 
         [Required]
         [Display(Name = "Region")]
-        public Regions Region { get; set; }
+        public Region Region { get; set; }
 
         //[Required]
         //[Display(Name = "Role")]

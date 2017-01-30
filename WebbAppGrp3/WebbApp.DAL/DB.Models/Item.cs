@@ -39,8 +39,7 @@ namespace WebbApp.DAL.DB.Models
         //[ForeignKey("Image")]
         //public Guid ImageId { get; set; }
 
-        //[ForgnKey("ApplicationUser")]
-        //public ApplicationUser UserId { get; set; }
+        public string UserId { get; set; }
 
         //public virtual Image Image { get; set; }
 
