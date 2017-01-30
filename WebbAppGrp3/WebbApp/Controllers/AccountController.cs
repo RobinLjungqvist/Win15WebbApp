@@ -59,6 +59,7 @@ namespace WebbApp.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+
                     if (returnUrl == null)
                     {
                         returnUrl = (String) TempData["tmpReturnUrl"];
@@ -109,19 +110,19 @@ namespace WebbApp.Controllers
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
-                    //var rm = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationContext()));
+                    var rm = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationContext()));
 
-                    //string userString = model.UserRole == RegisterViewModel.UserRoles.User ? "User" : "Admin";
+                    string userString = user.UserRole;
 
-                    //if (!rm.RoleExists(userString))
-                    //{
-                    //    rm.Create(new IdentityRole(userString));
-                    //}
+                    if (!rm.RoleExists(userString))
+                    {
+                        rm.Create(new IdentityRole(userString));
+                    }
 
-                    //if (!UserManager.IsInRole(user.Id, userString))
-                    //{
-                    //    UserManager.AddToRole(user.Id, userString);
-                    //}
+                    if (!UserManager.IsInRole(user.Id, userString))
+                    {
+                        UserManager.AddToRole(user.Id, userString);
+                    }
 
                     return RedirectToAction("Index", "Home");
                 }

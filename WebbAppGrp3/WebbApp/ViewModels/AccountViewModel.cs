@@ -19,11 +19,11 @@ namespace WebbApp.ViewModels
 
     public class RegisterViewModel
     {
-        //public enum UserRoles
-        //{
-        //    Admin,
-        //    User
-        //}
+        public enum UserRoles
+        {
+            Admin,
+            User
+        }
 
         public enum Regions
         {
@@ -70,6 +70,6 @@ namespace WebbApp.ViewModels
 
         //[Required]
         //[Display(Name = "Role")]
-        //public UserRoles UserRole { get; set; }
+        public string UserRole { get; set; }
     }
 }
