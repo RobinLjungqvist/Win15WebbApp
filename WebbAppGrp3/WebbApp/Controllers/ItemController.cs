@@ -78,7 +78,8 @@ namespace WebbApp.Controllers
                         }
                         Image newImage = new Image();
                         newImage.ImageId = Guid.NewGuid();
-                        newImage.Path = "../Images/" + newImg;
+                        //newImage.Path = "../Images/" + newImg;
+                        newImage.Path = newImg;
                         newImage.ItemID = newItemId;
                         newImage.Item = newItem;
                         itemRepo.AddImage(newImage);

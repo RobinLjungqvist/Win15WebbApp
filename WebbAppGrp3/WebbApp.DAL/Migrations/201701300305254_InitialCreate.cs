@@ -3,7 +3,7 @@ namespace WebbApp.DAL.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class FirstMigration : DbMigration
+    public partial class InitialCreate : DbMigration
     {
         public override void Up()
         {
