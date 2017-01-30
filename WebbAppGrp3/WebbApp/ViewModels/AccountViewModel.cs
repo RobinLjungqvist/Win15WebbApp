@@ -19,35 +19,18 @@ namespace WebbApp.ViewModels
 
     public class RegisterViewModel
     {
-        public enum UserRoles
-        {
-            Admin,
-            User
-        }
+        //public enum UserRoles
+        //{
+        //    Admin,
+        //    User
+        //}
 
         public enum Regions
         {
-            Blekinge,
-            Dalarna,
-            Gotland,
-            Gävleborg,
-            Halland,
-            Jämtland,
-            Jönköping,
-            Kalmar,
-            Kronoberg,
-            Norrbotten,
-            Skåne,
-            Stockholm,
-            Södermanland,
-            Uppsala,
-            Värmland,
-            Västerbotten,
-            Västernorrland,
-            Västmanland,
-            Västra_Götaland,
-            Örebro,
-            Östergötland
+            Blekinge, Dalarna, Gotland, Gävleborg, Halland, Jämtland, Jönköping,
+            Kalmar, Kronoberg, Norrbotten, Skåne, Stockholm, Södermanland, Uppsala,
+            Värmland, Västerbotten, Västernorrland, Västmanland, Västra_Götaland,
+            Örebro, Östergötland
         }
 
         [Required]
@@ -85,8 +68,8 @@ namespace WebbApp.ViewModels
         [Display(Name = "Region")]
         public Regions Region { get; set; }
 
-        [Required]
-        [Display(Name = "Role")]
-        public UserRoles UserRole { get; set; }
+        //[Required]
+        //[Display(Name = "Role")]
+        //public UserRoles UserRole { get; set; }
     }
 }

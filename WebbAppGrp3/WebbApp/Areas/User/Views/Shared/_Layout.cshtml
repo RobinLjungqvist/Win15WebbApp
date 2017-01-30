@@ -25,15 +25,15 @@
 
                     </li>
                     <li>
-                        @*//TODO KEVIN - fr SPA to MVC*@
-                        @Html.ActionLink("Items", "ListAllItems", "Item", new { area = "" }, null)
-                        @*@Ajax.ActionLink("Items", "ListAllItems", "Item", null,
+                        @*//TODO KEVIN - fr SPA to MVC
+                            @Html.ActionLink("Items", "ListAllItems", "Item", new { area = "" }, null)*@
+                        @Ajax.ActionLink("Items", "ListAllItems", "Item", null,
                         new AjaxOptions
                         {
                             UpdateTargetId = "PartialContainer",
                             InsertionMode = InsertionMode.Replace,
                             HttpMethod = "GET"
-                        })*@
+                        })
                     </li>
                     <li>
                         @Html.ActionLink("New Item", "NewItem", "Item", new { area = "" }, null)
@@ -54,6 +54,10 @@
                                 <li>@Html.ActionLink("Condition", "Index", "Condition", new { area = "Admin" }, null)</li>
                             </ul>
                         </li>
+                    }
+                    @if (HttpContext.Current.User.IsInRole("User"))
+                    {
+                        <li>@Html.ActionLink("My Account", "Index", "UserAccount", new { area = "User" }, null)</li>
                     }
                 </ul>
                 @Html.Partial("_LoginPartial")

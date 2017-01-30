@@ -11,12 +11,9 @@ using WebbApp.DAL.DB.Models;
 
 namespace WebbApp.Controllers
 {
-    [AllowAnonymous]
     public class ItemController : Controller
     {
         private IRepository<Item> itemRepo;
-
-        //public static CategoryRepository categoryRepo;
         private IRepository<Category> categoryRepo;
         private IRepository<Region> regionRepo;
         private IRepository<City> cityRepo;
@@ -26,16 +23,19 @@ namespace WebbApp.Controllers
         {
             this.itemRepo = new ItemRepository();
             this.categoryRepo = new CategoryRepository();
-            //categoryRepo = CategoryRepository.getRepo();
             this.regionRepo = new RegionRepository();
             this.cityRepo = new CityRepository();
             this.conditionRepo = new ConditionRepository();
         }
+
+        [AllowAnonymous]
         public ActionResult Index()
         {
 
             return PartialView();
         }
+
+        [Authorize]
         [HttpGet]
         public ActionResult NewItem()
         {
@@ -44,83 +44,51 @@ namespace WebbApp.Controllers
             ivm.Conditions = conditionRepo.GetAll().ToList();
             ivm.Regions = regionRepo.GetAll().ToList();
             ivm.Cities = cityRepo.GetAll().ToList();
-            return PartialView(ivm);
+            return View(ivm);
         }
+
+        [Authorize]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult NewItem(ItemViewModel model, IEnumerable<HttpPostedFileBase> files)
         {
             DateTime date = DateTime.Today;
-            Guid ItemID1 = Guid.NewGuid();
-            var item = new Item() { ItemID = ItemID1, Title = model.Title, CreateDate = date, ExpirationDate = date.AddDays(14), Description = model.Description };
-            item.CategoryId = model.Category.CategoryId;
-            item.CityId = model.City.CityId;
-            item.ConditionId = model.Condition.ConditionId;
-            item.RegionId = model.Region.RegionId;
+            Guid newItemId = Guid.NewGuid();
+            var newItem = new Item() { ItemID = newItemId, Title = model.Title, CreateDate = date, ExpirationDate = date.AddDays(14), Description = model.Description };
+            newItem.CategoryId = model.Category.CategoryId;
+            newItem.CityId = model.City.CityId;
+            newItem.ConditionId = model.Condition.ConditionId;
+            newItem.RegionId = model.Region.RegionId;
+            itemRepo.Add(newItem);
 
-            foreach (var file in files)
+            if (files != null && files.ElementAt(0) != null && files.ElementAt(0).ContentLength != 0)
             {
-                string newImg = System.IO.Path.GetFileName(file.FileName);
-                string path = System.IO.Path.Combine(Server.MapPath("~/Images"), newImg);
-                file.SaveAs(path);
-
-                using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
+                foreach (var file in files)
                 {
-                    file.InputStream.CopyTo(ms);
-                    byte[] array = ms.GetBuffer();
-                }
-                Image newImage = new Image();
-                newImage.ImageId = Guid.NewGuid();
-                newImage.Path = "../Images/"+newImg;
-                newImage.ItemID = ItemID1;
-                newImage.Item = item;
-                itemRepo.AddImage(newImage);
-            }
-            itemRepo.Add(item);
+                    string newImg = System.IO.Path.GetFileName(file.FileName);
+                    string path = System.IO.Path.Combine(Server.MapPath("~/Images"), newImg);
+                    if (newImg.ToLower().EndsWith(".jpg") || newImg.ToLower().EndsWith(".png"))
+                    {
+                        file.SaveAs(path);
 
+                        using (MemoryStream ms = new MemoryStream())
+                        {
+                            file.InputStream.CopyTo(ms);
+                            byte[] array = ms.GetBuffer();
+                        }
+                        Image newImage = new Image();
+                        newImage.ImageId = Guid.NewGuid();
+                        newImage.Path = "../Images/" + newImg;
+                        newImage.ItemID = newItemId;
+                        newImage.Item = newItem;
+                        itemRepo.AddImage(newImage);
+                    }
+                }
+            }
             return RedirectToAction("Index", "Home");
         }
-        // GET: Item
-        //[HttpPost]
-        //public ActionResult NewItem(ItemViewModel model, HttpPostedFileBase file)
-        //{
-        //    string path = string.Empty;
-        //    string pic = string.Empty;
 
-        //    //TODO: utforska varför går det in hela tiden och sätta tillbaka
-        //    //if (!ModelState.IsValid)
-        //    //{
-        //    //    var errors = ModelState.Select(x => x.Value.Errors).Where(y => y.Count > 0).ToList();
-        //    //    return PartialView(model);
-        //    //}
-        //    if (file != null)
-        //    {
-        //        // Additional information should be added to the filename here to specify the userID, UserIdentity
-        //        pic = System.IO.Path.GetFileName(file.FileName);
-        //        path = System.IO.Path.Combine(
-        //            Server.MapPath("~/Images"), pic);
-        //        // file is uploaded
-        //        file.SaveAs(path);
-        //    }
-        //    if (model != null)
-        //    {
-        //        DateTime date = DateTime.Today;
-        //        var item = new Item() { ItemID = Guid.NewGuid(), Title = model.Title, CreateDate = date, ExpirationDate = date.AddDays(14), Description = model.Description };
-        //        item.CategoryId = model.Category.CategoryId;
-        //        item.CityId = model.City.CityId;
-        //        item.ConditionId = model.Condition.ConditionId;
-        //        item.RegionId = model.Region.RegionId;
-        //        if (path != "")
-        //        {
-        //            //TODO
-        //            item.Image.ImageId = Guid.NewGuid();
-        //            item.Image.Path = "./Images/" + pic;
-        //        }
-
-        //        itemRepo.Add(item);
-        //    }
-        //    return RedirectToAction("Index", "Home");
-        //}
-
+        [AllowAnonymous]
         public ActionResult DisplaySingleItem(Guid itemID)
         {
             var repoItem = itemRepo.GetById(itemID);
@@ -128,6 +96,7 @@ namespace WebbApp.Controllers
             return PartialView(newViewModel);
         }
 
+        [AllowAnonymous]
         public ActionResult ListAllItems()
         {
             var ItemsFromRepo = itemRepo.GetAll();
@@ -135,23 +104,21 @@ namespace WebbApp.Controllers
 
             foreach (var repoItem in ItemsFromRepo)
             {
-                var newViewModel = new ItemViewModel(repoItem.ItemID, repoItem.Title, repoItem.Description, repoItem.CreateDate, repoItem.ExpirationDate, repoItem.City, repoItem.Condition, repoItem.Region, repoItem.Category, null);
+                var newViewModel = new ItemViewModel(repoItem.ItemID, repoItem.Title, repoItem.Description, repoItem.CreateDate, repoItem.ExpirationDate, repoItem.City, repoItem.Condition, repoItem.Region, repoItem.Category, repoItem.Images);
                 ViewModelItems.Add(newViewModel);
             }
 
-            if (Request.IsAjaxRequest())
-            {
-                return PartialView("ListAllItems", ViewModelItems);
-            }
-            return PartialView(ViewModelItems);
+                return View(ViewModelItems);
         }
 
+        [Authorize]
         public ActionResult RemoveItem(Guid itemID)
         {
             itemRepo.Delete(itemID);
             return RedirectToAction("Index", "Home");
         }
 
+        [Authorize]
         [HttpGet]
         public ActionResult EditItem(Guid ItemID)
         {
@@ -165,6 +132,7 @@ namespace WebbApp.Controllers
             return View(ivm);
         }
 
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult EditItem(ItemViewModel viewItem, FormCollection formcollection)
@@ -196,6 +164,5 @@ namespace WebbApp.Controllers
             //}
             return RedirectToAction("ListAllItems");
         }
-
     }
 }

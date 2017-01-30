@@ -47,10 +47,12 @@ namespace WebbApp.DAL.Repositories
 
         public IQueryable<ApplicationUser> GetAll()
         {
+            var list = new List<ApplicationUser>();
             using (var context = new ApplicationContext())
             {
-                return context.Users.Select(s => s);
+                list = context.Users.Select(u => u).ToList();
             }
+            return list.AsQueryable();
         }
 
         public ApplicationUser GetById(Guid id)
@@ -66,19 +68,25 @@ namespace WebbApp.DAL.Repositories
         {
             using (var context = new ApplicationContext())
             {
-                var user = context.Users.Where(p => p.Id == entity.Id).FirstOrDefault();
-                if (user != null)
+                try
                 {
-                    user.FirstName = entity.FirstName;
-                    user.LastName = entity.LastName;
-                    user.Email = entity.Email;
-                    user.Password = entity.Password;
-                    user.UserName = entity.UserName;
-                    user.IsAdmin = entity.IsAdmin;
-                    user.UserRole = entity.UserRole;
-                    user.Region = entity.Region;
-                    user.City = entity.City;
-                    context.SaveChanges();
+                    var user = context.Users.Where(p => p.Id == entity.Id).FirstOrDefault();
+                    if (user != null)
+                    {
+                        user.FirstName = entity.FirstName;
+                        user.LastName = entity.LastName;
+                        user.Email = entity.Email;
+                        user.Password = entity.Password;
+                        user.UserName = entity.UserName;
+                        user.IsAdmin = entity.IsAdmin;
+                        user.UserRole = entity.UserRole;
+                        user.Region = entity.Region;
+                        user.City = entity.City;
+                        context.SaveChanges();
+                    }
+                }
+                catch (Exception ex)
+                {
                 }
             }
         }

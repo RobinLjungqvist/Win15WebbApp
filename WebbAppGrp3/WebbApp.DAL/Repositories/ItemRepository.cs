@@ -21,15 +21,22 @@ namespace WebbApp.DAL.Repositories
         {
             this.ctx = new ApplicationContext();
         }
+
         public void AddImage(Image entity)
         {
-            using (var context = new ApplicationContext())
+            try
             {
-                context.Images.Add(entity);
-                context.SaveChanges();
+                using (var context = new ApplicationContext())
+                {
+                    context.Items.Attach(entity.Item);
+                    context.Images.Add(entity);
+                    context.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
             }
         }
-
 
         public void Add(Item entity)
         {
@@ -41,17 +48,8 @@ namespace WebbApp.DAL.Repositories
                     context.SaveChanges();
                 }
             }
-            catch (DbUpdateException e)
+            catch (Exception ex)
             {
-                //Add your code to inspect the inner exception and/or
-                //e.Entries here.
-                //Or just use the debugger.
-                //Added this catch (after the comments below) to make it more obvious 
-                //how this code might help this specific problem
-            }
-            catch (Exception e)
-            {
-                
             }
         }
 
@@ -107,13 +105,13 @@ namespace WebbApp.DAL.Repositories
             var items = new List<Item>();
             using (var context = new ApplicationContext())
             {
-                    items = context.Items
-                    .Include(i => i.City)
-                    .Include(i => i.Condition)
-                    .Include(i => i.Region)
-                    .Include(i => i.Category)
-                    .Include(i => i.Images)
-                    .ToList();
+                items = context.Items
+                .Include(i => i.City)
+                .Include(i => i.Condition)
+                .Include(i => i.Region)
+                .Include(i => i.Category)
+                .Include(i => i.Images)
+                .ToList();
             }
             return items.AsQueryable();
         }
@@ -170,7 +168,8 @@ namespace WebbApp.DAL.Repositories
                         .Include(i => i.Category)
                         .Include(i => i.Images)
                         .ToList();
-                } else if (searchable.Category != null)
+                }
+                else if (searchable.Category != null)
                 {
                     items = context.Items.Where(p => p.Category.CategoryName.Contains(searchable.Category.CategoryName))
                         .Include(i => i.City)
@@ -183,7 +182,5 @@ namespace WebbApp.DAL.Repositories
                 return items != null ? items.AsQueryable() : null;
             }
         }
-
-       
     }
 }

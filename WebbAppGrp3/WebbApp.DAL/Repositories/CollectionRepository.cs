@@ -10,17 +10,6 @@ namespace WebbApp.DAL.Repositories
 {
     public class CategoryRepository : IRepository<Category>
     {
-        //public static CategoryRepository categoryRepo = null;
-
-        //public static CategoryRepository getRepo()
-        //{
-        //    if (categoryRepo == null)
-        //    {
-        //        categoryRepo = new CategoryRepository();
-        //    }
-        //    return categoryRepo;
-        //}
-
         private ApplicationContext ctx;
 
         public CategoryRepository()

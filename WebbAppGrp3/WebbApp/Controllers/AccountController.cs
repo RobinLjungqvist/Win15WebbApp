@@ -21,41 +21,20 @@ namespace WebbApp.Controllers
 
         public ApplicationSignInManager SignInManager
         {
-            get
-            {
-                return signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
-            }
-
-            private set
-            {
-                signInManager = value;
-            }
+            get { return signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>(); }
+            private set { signInManager = value; }
         }
 
         public ApplicationUserManager UserManager
         {
-            get
-            {
-                return userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
-
-            private set
-            {
-                userManager = value;
-            }
+            get { return userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>(); }
+            private set { userManager = value; }
         }
 
         public ApplicationRoleManager RoleManager
         {
-            get
-            {
-                return roleManager ?? HttpContext.GetOwinContext().Get<ApplicationRoleManager>();
-            }
-
-            private set
-            {
-                roleManager = value;
-            }
+            get { return roleManager ?? HttpContext.GetOwinContext().Get<ApplicationRoleManager>(); }
+            private set { roleManager = value; }
         }
 
         // GET: Account
@@ -80,10 +59,19 @@ namespace WebbApp.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+                    if (returnUrl == null)
+                    {
+                        returnUrl = (String) TempData["tmpReturnUrl"];
+                    }
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.Failure:
                 default:
                     ModelState.AddModelError("", "Invalid login attempt.");
+                    var tmp = TempData["tmpReturnUrl"];
+                    if (tmp == null)
+                        TempData["tmpReturnUrl"] = returnUrl;
+                    else
+                        TempData["tmpReturnUrl"] = tmp;
                     return View(model);
             }
         }
@@ -110,8 +98,8 @@ namespace WebbApp.Controllers
                     UserName = model.UserName,
                     Email = model.Email,
                     City = model.City,
-                    IsAdmin = model.UserRole == RegisterViewModel.UserRoles.Admin,
-                    UserRole = model.UserRole.ToString(),
+                    //IsAdmin = model.UserRole == RegisterViewModel.UserRoles.Admin,
+                    UserRole = "User",
                     Region = model.Region.ToString()
                 };
 
@@ -121,19 +109,19 @@ namespace WebbApp.Controllers
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
-                    var rm = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationContext()));
+                    //var rm = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationContext()));
 
-                    string userString = model.UserRole == RegisterViewModel.UserRoles.User ? "User" : "Admin";
-                    
-                    if (!rm.RoleExists(userString))
-                    {
-                        rm.Create(new IdentityRole(userString));
-                    }
+                    //string userString = model.UserRole == RegisterViewModel.UserRoles.User ? "User" : "Admin";
 
-                    if (!UserManager.IsInRole(user.Id, userString))
-                    {
-                        UserManager.AddToRole(user.Id, userString);
-                    }
+                    //if (!rm.RoleExists(userString))
+                    //{
+                    //    rm.Create(new IdentityRole(userString));
+                    //}
+
+                    //if (!UserManager.IsInRole(user.Id, userString))
+                    //{
+                    //    UserManager.AddToRole(user.Id, userString);
+                    //}
 
                     return RedirectToAction("Index", "Home");
                 }
@@ -152,10 +140,7 @@ namespace WebbApp.Controllers
 
         private IAuthenticationManager AuthenticationManager
         {
-            get
-            {
-                return HttpContext.GetOwinContext().Authentication;
-            }
+            get { return HttpContext.GetOwinContext().Authentication; }
         }
 
         private void AddErrors(IdentityResult result)
