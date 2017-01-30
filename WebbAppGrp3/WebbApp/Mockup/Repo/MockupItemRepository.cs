@@ -23,7 +23,7 @@ namespace WebbApp.Mockup.Repo
                 "CityLund", "ConditionNormal", "RegionSkåne", "CategoryBed", "../Images/PlaceholderImage.png"));
             }
         }
-         //
+         //sdsds
         public void CreateOrUpdateItem(MockupItem item)
         {
             var itemToCreateOrUpdate = ListOfItem.Find(x => x.ItemID == item.ItemID);
