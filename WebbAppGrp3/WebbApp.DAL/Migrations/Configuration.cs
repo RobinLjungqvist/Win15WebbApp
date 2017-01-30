@@ -101,6 +101,10 @@ namespace WebbApp.DAL.Migrations
 
             var image1 = new Image() { ImageId = ImageId1, Path = "../Images/PlaceholderImage.png", ItemID = ItemID1 };
             context.Images.AddOrUpdate(x => x.ImageId, image1);
+            var image2 = new Image() { ImageId = Guid.NewGuid(), Path = "../Images/PlaceholderImage.png", ItemID = ItemID2 };
+            context.Images.AddOrUpdate(x => x.ImageId, image2);
+            var image3 = new Image() { ImageId = Guid.NewGuid(), Path = "../Images/PlaceholderImage.png", ItemID = ItemID3 };
+            context.Images.AddOrUpdate(x => x.ImageId, image3);
         }
     }
 }

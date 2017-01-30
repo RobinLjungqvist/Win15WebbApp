@@ -1,19 +1,20 @@
-﻿ @model WebbApp.ViewModels.ItemViewModel
-     
-@{
-    var editItem = new AjaxOptions
-    {
-        UpdateTargetId = "PartialContainer",
-        InsertionMode = InsertionMode.Replace,
-        HttpMethod = "GET"
-    };
-}
+﻿@model WebbApp.ViewModels.ItemViewModel
+
+
 
 <div class="row listItem">
     <div class="col-md-3">
-        <img src="../Images/@Model.Image" class="ListItemImage" alt="Picture is missing." />
-        @*<img src="@Url.Content("~/Images/" + @Model.Image.Path)" class="ListItemImage" alt="Picture is missing." />*@
-        @*<img src="@Url.Content("~/Images/" + System.IO.Path.GetFileName(Model.Image.Path))" alt="Picture is missing." class="ListItemImage"/>*@
+        @if (Model.Images != null)
+        {
+            foreach (var image in Model.Images)
+            {
+                <img src="@image.Path" class="ListItemImage" />
+            }
+        }
+        else
+        {
+            <h3>No images for this item.</h3>
+        }
     </div>
     <div class="col-md-3">
         <h2>@Model.Title</h2>
@@ -30,6 +31,6 @@
     </div>
     <div class="col-md-3">
         <h3>Navigation</h3>
-        @Ajax.ActionLink("Show Item", "DisplaySingleItem", "Item", new { itemID = Model.ItemID }, editItem)
+        @Html.ActionLink("Show Item", "DisplaySingleItem", "Item", new { itemID = Model.ItemID }, null)
     </div>
 </div>
