@@ -99,6 +99,7 @@ namespace WebbApp.Controllers
         [AllowAnonymous]
         public ActionResult ListAllItems()
         {
+            HttpContext.GetOwinContext().Authentication.User.IsInRole("User");
             var ItemsFromRepo = itemRepo.GetAll();
             var ViewModelItems = new List<ItemViewModel>();
 
