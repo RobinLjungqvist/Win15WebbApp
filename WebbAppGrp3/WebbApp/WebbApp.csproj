@@ -175,6 +175,7 @@
     <Compile Include="Controllers\ErrorPageController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ItemController.cs" />
+    <Compile Include="Extensions\Extensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -200,9 +201,6 @@
   <ItemGroup>
     <Content Include="App_Data\GiveItAwayDB.mdf" />
     <Content Include="App_Data\GiveItAwayDB_log.ldf">
-      <DependentUpon>GiveItAwayDB.mdf</DependentUpon>
-    </Content>
-    <Content Include="App_Data\_log.ldf">
       <DependentUpon>GiveItAwayDB.mdf</DependentUpon>
     </Content>
     <Content Include="Content\bootstrap-theme.css" />

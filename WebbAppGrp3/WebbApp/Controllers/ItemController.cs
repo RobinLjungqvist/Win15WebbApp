@@ -104,15 +104,11 @@ namespace WebbApp.Controllers
 
             foreach (var repoItem in ItemsFromRepo)
             {
-                var newViewModel = new ItemViewModel(repoItem.ItemID, repoItem.Title, repoItem.Description, repoItem.CreateDate, repoItem.ExpirationDate, repoItem.City, repoItem.Condition, repoItem.Region, repoItem.Category, null);
+                var newViewModel = new ItemViewModel(repoItem.ItemID, repoItem.Title, repoItem.Description, repoItem.CreateDate, repoItem.ExpirationDate, repoItem.City, repoItem.Condition, repoItem.Region, repoItem.Category, repoItem.Images);
                 ViewModelItems.Add(newViewModel);
             }
 
-            if (Request.IsAjaxRequest())
-            {
-                return PartialView("ListAllItems", ViewModelItems);
-            }
-            return PartialView(ViewModelItems);
+                return View(ViewModelItems);
         }
 
         [Authorize]

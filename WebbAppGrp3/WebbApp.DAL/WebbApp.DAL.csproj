@@ -71,10 +71,6 @@
     <Compile Include="Migrations\201701271145444_First Migration.Designer.cs">
       <DependentUpon>201701271145444_First Migration.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201701271109224_InitialCreate2.cs" />
-    <Compile Include="Migrations\201701271109224_InitialCreate2.Designer.cs">
-      <DependentUpon>201701271109224_InitialCreate2.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Interfaces\ISearchableRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -92,9 +88,6 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201701271145444_First Migration.resx">
       <DependentUpon>201701271145444_First Migration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201701271109224_InitialCreate2.resx">
-      <DependentUpon>201701271109224_InitialCreate2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

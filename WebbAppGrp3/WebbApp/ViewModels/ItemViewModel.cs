@@ -44,11 +44,11 @@ namespace WebbApp.ViewModels
         public List<Category> Categories { get; set; }
 
         //[Required(ErrorMessage ="There is no image. Please select an image")]
-        public Image Image { get; set; }
+        public ICollection<Image> Images { get; set; }
         
         public ItemViewModel() { }
         public ItemViewModel(Guid id, string title, string description, DateTime createdate, DateTime expirationdate,
-            City city, Condition condition, Region region, Category category, Image image)
+            City city, Condition condition, Region region, Category category, ICollection<Image> images)
         {
             this.ItemID = id;
             this.Title = title;
@@ -59,7 +59,7 @@ namespace WebbApp.ViewModels
             this.Condition = condition;
             this.Region = region;
             this.Category = category;
-            this.Image = image;
+            this.Images = images;
         }
     }
 }
