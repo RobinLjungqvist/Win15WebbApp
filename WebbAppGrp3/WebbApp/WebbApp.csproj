@@ -191,13 +191,6 @@
     <Compile Include="ViewModels\UserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\GiveItAwayDB.mdf" />
-    <Content Include="App_Data\GiveItAwayDB_log.ldf">
-      <DependentUpon>GiveItAwayDB.mdf</DependentUpon>
-    </Content>
-    <Content Include="App_Data\_log.ldf">
-      <DependentUpon>GiveItAwayDB.mdf</DependentUpon>
-    </Content>
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -264,6 +257,7 @@
     <Content Include="Views\ErrorPage\InternalError.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Data\" />
     <Folder Include="Utilities\" />
   </ItemGroup>
   <ItemGroup>
