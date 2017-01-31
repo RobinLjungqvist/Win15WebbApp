@@ -15,30 +15,30 @@ namespace WebbApp.Areas.Admin.ViewModels
             User
         }
 
-        public enum Regions
-        {
-            Blekinge,
-            Dalarna,
-            Gotland,
-            Gävleborg,
-            Halland,
-            Jämtland,
-            Jönköping,
-            Kalmar,
-            Kronoberg,
-            Norrbotten,
-            Skåne,
-            Stockholm,
-            Södermanland,
-            Uppsala,
-            Värmland,
-            Västerbotten,
-            Västernorrland,
-            Västmanland,
-            Västra_Götaland,
-            Örebro,
-            Östergötland
-        }
+        //public enum Regions
+        //{
+        //    Blekinge,
+        //    Dalarna,
+        //    Gotland,
+        //    Gävleborg,
+        //    Halland,
+        //    Jämtland,
+        //    Jönköping,
+        //    Kalmar,
+        //    Kronoberg,
+        //    Norrbotten,
+        //    Skåne,
+        //    Stockholm,
+        //    Södermanland,
+        //    Uppsala,
+        //    Värmland,
+        //    Västerbotten,
+        //    Västernorrland,
+        //    Västmanland,
+        //    Västra_Götaland,
+        //    Örebro,
+        //    Östergötland
+        //}
 
         public string UserId { get; set; }
 
@@ -70,15 +70,25 @@ namespace WebbApp.Areas.Admin.ViewModels
         [Display(Name = "Last name")]
         public string LastName { get; set; }
 
-        [Display(Name = "City")]
-        public City City { get; set; }
+        //[Display(Name = "City")]
+        //public City City { get; set; }
 
-        [Required]
-        [Display(Name = "Region")]
-        public Region Region { get; set; }
+        //[Required]
+        //[Display(Name = "Region")]
+        //public Region Region { get; set; }
 
         [Required]
         [Display(Name = "Role")]
         public UserRoles UserRole { get; set; }
+
+        [Required(ErrorMessage = "Please, enter the city.")]
+        public City City { get; set; }
+        public int SelectedCityId { get; set; }
+        public List<City> Cities { get; set; }
+
+        [Required(ErrorMessage = "Please, enter region.")]
+        public Region Region { get; set; }
+        public int SelectedRegionId { get; set; }
+        public List<Region> Regions { get; set; }
     }
 }

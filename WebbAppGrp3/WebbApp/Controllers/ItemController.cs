@@ -20,6 +20,7 @@ namespace WebbApp.Controllers
         private IRepository<Region> regionRepo;
         private IRepository<City> cityRepo;
         private IRepository<Condition> conditionRepo;
+        private IRepository<ApplicationUser> userRepo;
 
         public ItemController()
         {
@@ -28,6 +29,7 @@ namespace WebbApp.Controllers
             this.regionRepo = new RegionRepository();
             this.cityRepo = new CityRepository();
             this.conditionRepo = new ConditionRepository();
+            this.userRepo = new UserRepository();
         }
 
         [AllowAnonymous]
@@ -44,8 +46,8 @@ namespace WebbApp.Controllers
             var ivm = new ItemViewModel();
             ivm.Categories = categoryRepo.GetAll().ToList();
             ivm.Conditions = conditionRepo.GetAll().ToList();
-            ivm.Regions = regionRepo.GetAll().ToList();
-            ivm.Cities = cityRepo.GetAll().ToList();
+            //ivm.Regions = regionRepo.GetAll().ToList();
+            //ivm.Cities = cityRepo.GetAll().ToList();
             return View(ivm);
         }
 
@@ -58,9 +60,12 @@ namespace WebbApp.Controllers
             Guid newItemId = Guid.NewGuid();
             var newItem = new Item() { ItemID = newItemId, Title = model.Title, CreateDate = date, ExpirationDate = date.AddDays(14), Description = model.Description };
             newItem.CategoryId = model.Category.CategoryId;
-            newItem.CityId = model.City.CityId;
             newItem.ConditionId = model.Condition.ConditionId;
-            newItem.RegionId = model.Region.RegionId;
+            //newItem.CityId = model.City.CityId;
+            //newItem.RegionId = model.Region.RegionId;
+            Guid userId = new Guid(User.Identity.GetUserId());
+            newItem.RegionId = userRepo.GetById(userId).Region.RegionId;
+            newItem.CityId = userRepo.GetById(userId).City.CityId;
             itemRepo.Add(newItem);
 
             if (files != null && files.ElementAt(0) != null && files.ElementAt(0).ContentLength != 0)
@@ -127,7 +132,7 @@ namespace WebbApp.Controllers
         {
             var item = itemRepo.GetById(ItemID);
             // var ivm = new ItemViewModel(item.ItemID, item.Title, item.Description, item.CreateDate, item.ExpirationDate, item.City, item.Condition, item.Region, item.Category, item.Image);
-            var ivm = new ItemViewModel() { ItemID = item.ItemID, Title = item.Title, Description = item.Description, CreateDate=DateTime.Now,ExpirationDate=DateTime.Now.AddDays(7) };
+            var ivm = new ItemViewModel() { ItemID = item.ItemID, Title = item.Title, Description = item.Description, };
             ivm.Categories = categoryRepo.GetAll().ToList();
             ivm.Conditions = conditionRepo.GetAll().ToList();
             ivm.Regions = regionRepo.GetAll().ToList();
@@ -138,14 +143,13 @@ namespace WebbApp.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditItem(ItemViewModel viewItem, IEnumerable<HttpPostedFileBase> files)
+        public ActionResult EditItem(ItemViewModel viewItem, FormCollection formcollection)
         {
             //MockupItem edit=null;
             Item edit = null;
             ModelState.Remove("Image");
             //if (ModelState.IsValid)
             //{
-
             edit = new Item()
             {
                 ItemID = viewItem.ItemID,
@@ -153,45 +157,17 @@ namespace WebbApp.Controllers
                 Description = viewItem.Description,
                 CreateDate = viewItem.CreateDate,
                 ExpirationDate = viewItem.ExpirationDate,
-                Category = viewItem.Category,
-                //Category = categoryRepo.GetById(viewItem.Category.CategoryId),
-                City = cityRepo.GetById(viewItem.City.CityId),
+                //Category = viewItem.Category.CategoryId,
+                Category = categoryRepo.GetById(viewItem.Category.CategoryId),
                 Condition = conditionRepo.GetById(viewItem.Condition.ConditionId),
-                Region = regionRepo.GetById(viewItem.Region.RegionId),
+                City = cityRepo.GetById(viewItem.City.CityId),
+                Region = regionRepo.GetById(viewItem.Region.RegionId)
                 //City = viewitem.City,
                 //Condition = viewitem.Condition,
                 //Region = viewitem.Region,
                 //Category = viewitem.Category,
                 //Image = viewItem.Image
             };
-           
-
-            if (files != null && files.ElementAt(0) != null && files.ElementAt(0).ContentLength != 0)
-            {
-                foreach (var file in files)
-                {
-                    string newImg = System.IO.Path.GetFileName(file.FileName);
-                    string path = System.IO.Path.Combine(Server.MapPath("~/Images"), newImg);
-                    if (newImg.ToLower().EndsWith(".jpg") || newImg.ToLower().EndsWith(".png"))
-                    {
-                        file.SaveAs(path);
-
-                        using (MemoryStream ms = new MemoryStream())
-                        {
-                            file.InputStream.CopyTo(ms);
-                            byte[] array = ms.GetBuffer();
-                        }
-                        Image newImage = new Image();
-                        newImage.ImageId = Guid.NewGuid();
-                        //newImage.Path = "../Images/" + newImg;
-                        newImage.Path = newImg;
-                        newImage.ItemID = edit.ItemID;
-                        newImage.Item = edit;
-                        //itemRepo.AddImage(newImage);
-                        edit.Images.Add(newImage);
-                    }
-                }
-            }
             itemRepo.Update(edit);
             //}
             return RedirectToAction("ListAllItems");

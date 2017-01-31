@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using WebbApp.DAL.DB.Models;
 
 namespace WebbApp.ViewModels
@@ -20,19 +21,19 @@ namespace WebbApp.ViewModels
 
     public class RegisterViewModel
     {
-        public enum UserRoles
-        {
-            Admin,
-            User
-        }
+        //public enum UserRoles
+        //{
+        //    Admin,
+        //    User
+        //}
 
-        public enum Regions
-        {
-            Blekinge, Dalarna, Gotland, Gävleborg, Halland, Jämtland, Jönköping,
-            Kalmar, Kronoberg, Norrbotten, Skåne, Stockholm, Södermanland, Uppsala,
-            Värmland, Västerbotten, Västernorrland, Västmanland, Västra_Götaland,
-            Örebro, Östergötland
-        }
+        //public enum Regions
+        //{
+        //    Blekinge, Dalarna, Gotland, Gävleborg, Halland, Jämtland, Jönköping,
+        //    Kalmar, Kronoberg, Norrbotten, Skåne, Stockholm, Södermanland, Uppsala,
+        //    Värmland, Västerbotten, Västernorrland, Västmanland, Västra_Götaland,
+        //    Örebro, Östergötland
+        //}
 
         [Required]
         [EmailAddress]
@@ -62,12 +63,22 @@ namespace WebbApp.ViewModels
         [Display(Name = "Last name")]
         public string LastName { get; set; }
 
-        [Display(Name = "City")]
+        [Required(ErrorMessage = "Must enter the city")]
         public City City { get; set; }
+        public int SelectedCityId { get; set; }
+        public List<City> Cities { get; set; }
 
-        [Required]
-        [Display(Name = "Region")]
+        [Required(ErrorMessage = "Must enter the region")]
         public Region Region { get; set; }
+        public int SelectedRegionId { get; set; }
+        public List<Region> Regions { get; set; }
+
+        //[Display(Name = "City")]
+        //public City City { get; set; }
+
+        //[Required]
+        //[Display(Name = "Region")]
+        //public Region Region { get; set; }
 
         //[Required]
         //[Display(Name = "Role")]

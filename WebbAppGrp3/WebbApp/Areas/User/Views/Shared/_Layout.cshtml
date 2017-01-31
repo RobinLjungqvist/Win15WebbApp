@@ -35,10 +35,13 @@
                             HttpMethod = "GET"
                         })
                     </li>
-                    <li>
-                        @Html.ActionLink("New Item", "NewItem", "Item", new { area = "" }, null)
-                        @*@Html.ActionLink("New Item", "NewItem", "Item")*@
-                    </li>
+                    
+                    @if (User.IsInRole("Admin") || User.IsInRole("User"))
+                    {
+                        <li>
+                            @Html.ActionLink("New Item", "NewItem", "Item", new { area = "" }, null)
+                        </li>
+                    }
 
                     @if (HttpContext.Current.User.IsInRole("Admin"))
                     {
