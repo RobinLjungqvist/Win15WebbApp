@@ -36,13 +36,6 @@ namespace WebbApp.DAL.DB.Models
         [ForeignKey("Category")]
         public Guid CategoryId { get; set; }
 
-        //[ForeignKey("Image")]
-        //public Guid ImageId { get; set; }
-
-        public string UserId { get; set; }
-
-        //public virtual Image Image { get; set; }
-
         public virtual City City { get; set; }
 
         public virtual Condition Condition { get; set; }
