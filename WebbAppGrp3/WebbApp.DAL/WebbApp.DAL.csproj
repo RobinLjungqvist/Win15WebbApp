@@ -71,17 +71,9 @@
     <Compile Include="Migrations\201701301325571_InitialMigration.Designer.cs">
       <DependentUpon>201701301325571_InitialMigration.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201701301516241_SecondMigration.cs" />
-    <Compile Include="Migrations\201701301516241_SecondMigration.Designer.cs">
-      <DependentUpon>201701301516241_SecondMigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201701301525135_ThirdMigration.cs" />
-    <Compile Include="Migrations\201701301525135_ThirdMigration.Designer.cs">
-      <DependentUpon>201701301525135_ThirdMigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201701310856399_fourthMigration.cs" />
-    <Compile Include="Migrations\201701310856399_fourthMigration.Designer.cs">
-      <DependentUpon>201701310856399_fourthMigration.cs</DependentUpon>
+    <Compile Include="Migrations\201701311008185_testing.cs" />
+    <Compile Include="Migrations\201701311008185_testing.Designer.cs">
+      <DependentUpon>201701311008185_testing.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\201701311609319_UserIDonItem.cs" />
     <Compile Include="Migrations\201701311609319_UserIDonItem.Designer.cs">
@@ -105,14 +97,8 @@
     <EmbeddedResource Include="Migrations\201701301325571_InitialMigration.resx">
       <DependentUpon>201701301325571_InitialMigration.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201701301516241_SecondMigration.resx">
-      <DependentUpon>201701301516241_SecondMigration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201701301525135_ThirdMigration.resx">
-      <DependentUpon>201701301525135_ThirdMigration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201701310856399_fourthMigration.resx">
-      <DependentUpon>201701310856399_fourthMigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201701311008185_testing.resx">
+      <DependentUpon>201701311008185_testing.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701311609319_UserIDonItem.resx">
       <DependentUpon>201701311609319_UserIDonItem.cs</DependentUpon>

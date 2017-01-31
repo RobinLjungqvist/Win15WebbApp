@@ -54,6 +54,8 @@ namespace WebbApp.DAL.Repositories
         {
             using (var context = new ApplicationContext())
             {
+                //attach
+                context.Items.Attach(entity);
                 //var item = context.Items.Where(p => p.ItemID == entity.ItemID).FirstOrDefault();
                 //if (item != null)
                 //{
@@ -66,10 +68,9 @@ namespace WebbApp.DAL.Repositories
                 //    item.City = entity.City;
                 //    item.Condition = entity.Condition;
                 //    item.Category = entity.Category;
-                   
-                    
+
+
                 //}
-                context.Items.AddOrUpdate(entity);
                 context.SaveChanges();
             }
         }

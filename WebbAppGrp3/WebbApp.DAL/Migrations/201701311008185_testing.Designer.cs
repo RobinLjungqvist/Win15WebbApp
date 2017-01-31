@@ -7,13 +7,13 @@ namespace WebbApp.DAL.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class ThirdMigration : IMigrationMetadata
+    public sealed partial class testing : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(ThirdMigration));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(testing));
         
         string IMigrationMetadata.Id
         {
-            get { return "201701301525135_ThirdMigration"; }
+            get { return "201701311008185_testing"; }
         }
         
         string IMigrationMetadata.Source
