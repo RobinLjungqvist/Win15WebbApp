@@ -195,7 +195,6 @@
     <Compile Include="Mockup\Repo\TestRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="startup.cs" />
-    <Compile Include="obj\Utilities\CreateUser.cs" />
     <Compile Include="ViewModels\AccountViewModel.cs" />
     <Compile Include="ViewModels\ItemViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
@@ -296,6 +295,7 @@
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\User\Models\" />
     <Folder Include="Areas\User\Views\UserAccount\" />
+    <Folder Include="obj\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
