@@ -4,7 +4,11 @@
 
 <div class="row">
     <div class="col-md-6">
-        <img src="@Model.Images" class="SingleDisplayImage" />
+        @foreach (var img in Model.Images)
+        {
+            <img src="@img.Path" class="SingleDisplayImage" />
+        }
+        @*<img src="@Model.Images" class="SingleDisplayImage" />*@
     </div>
     <div class="row">
         <div class="col-md-3">
@@ -26,14 +30,14 @@
                    HttpMethod = "GET"
                })
             @Html.ActionLink("Edit Item", "EditItem", "Item", new { itemID = Model.ItemID }, null)
-    
+
 
             @*För att visa bara om uploadern är inloggad eller Admin*@
 
             @*@if (User.Identity.GetUserId() == Model.UserID || User.IsInRole("Admin"))
-            {
-                //Visa Edit Knappen.
-            }*@
+                {
+                    //Visa Edit Knappen.
+                }*@
 
         </div>
 

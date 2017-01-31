@@ -100,8 +100,8 @@ namespace WebbApp.Controllers
         public ActionResult DisplaySingleItem(Guid itemID)
         {
             var repoItem = itemRepo.GetById(itemID);
-            var newViewModel = new ItemViewModel(repoItem.ItemID, repoItem.Title, repoItem.Description, repoItem.CreateDate, repoItem.ExpirationDate, repoItem.City, repoItem.Condition, repoItem.Region, repoItem.Category, null);
-            return PartialView(newViewModel);
+            var newViewModel = new ItemViewModel(repoItem.ItemID, repoItem.Title, repoItem.Description, repoItem.CreateDate, repoItem.ExpirationDate, repoItem.City, repoItem.Condition, repoItem.Region, repoItem.Category, repoItem.Images);
+            return View(newViewModel);
         }
 
         [AllowAnonymous]
