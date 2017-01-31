@@ -4,7 +4,9 @@
 
 <div class="row">
     <div class="col-md-6">
-        <img src="@Model.Images" class="SingleDisplayImage" />
+        @foreach(var image in Model.Images) {
+        <img src="@image.Path" class="SingleDisplayImage" />
+        }
     </div>
     <div class="row">
         <div class="col-md-3">
@@ -18,25 +20,23 @@
             <p>
                 @Model.Description
             </p>
-            @Ajax.ActionLink("Remove Item", "RemoveItem", "Item", new { itemID = Model.ItemID },
-               new AjaxOptions
-               {
-                   UpdateTargetId = "PartialContainer",
-                   InsertionMode = InsertionMode.Replace,
-                   HttpMethod = "GET"
-               })
+            
             @Html.ActionLink("Edit Item", "EditItem", "Item", new { itemID = Model.ItemID }, null)
     
 
             @*För att visa bara om uploadern är inloggad eller Admin*@
 
-            @*@if (User.Identity.GetUserId() == Model.UserID || User.IsInRole("Admin"))
+            @if (User.Identity.GetUserId() == Model.UploaderID || User.IsInRole("Admin"))
             {
-                //Visa Edit Knappen.
-            }*@
+                @Html.ActionLink("Remove Item", "RemoveItem", "Item", new { itemID = Model.ItemID }, new { id = "removelink" , ItemID = Model.ItemID })
+             
+            }
+            
 
         </div>
-
     </div>
 </div>
 
+@section scripts{
+<script src="~/myScripts/removeconfirmdialog.js"></script>
+    }

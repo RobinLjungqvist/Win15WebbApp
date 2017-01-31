@@ -41,17 +41,13 @@ namespace WebbApp.DAL.Repositories
 
         public void Add(Item entity)
         {
-            try
-            {
+
                 using (var context = new ApplicationContext())
                 {
                     context.Items.Add(entity);
                     context.SaveChanges();
                 }
-            }
-            catch (Exception ex)
-            {
-            }
+
         }
 
         public void Update(Item entity)
@@ -126,6 +122,7 @@ namespace WebbApp.DAL.Repositories
             using (var context = new ApplicationContext())
             {
                 item = context.Items.Where(p => p.ItemID == id)
+                    .Include(i => i.ApplicationUser)
                     .Include(i => i.City)
                     .Include(i => i.Condition)
                     .Include(i => i.Region)

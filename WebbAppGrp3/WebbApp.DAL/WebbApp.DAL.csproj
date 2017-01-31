@@ -83,6 +83,10 @@
     <Compile Include="Migrations\201701310856399_fourthMigration.Designer.cs">
       <DependentUpon>201701310856399_fourthMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701311609319_UserIDonItem.cs" />
+    <Compile Include="Migrations\201701311609319_UserIDonItem.Designer.cs">
+      <DependentUpon>201701311609319_UserIDonItem.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Interfaces\ISearchableRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -109,6 +113,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701310856399_fourthMigration.resx">
       <DependentUpon>201701310856399_fourthMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701311609319_UserIDonItem.resx">
+      <DependentUpon>201701311609319_UserIDonItem.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
