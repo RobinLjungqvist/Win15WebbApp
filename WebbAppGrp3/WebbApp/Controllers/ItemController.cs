@@ -157,16 +157,11 @@ namespace WebbApp.Controllers
                 Description = viewItem.Description,
                 CreateDate = viewItem.CreateDate,
                 ExpirationDate = viewItem.ExpirationDate,
-                //Category = viewItem.Category.CategoryId,
-                CategoryId = categoryRepo.GetById(viewItem.Category.CategoryId).CategoryId,
-                ConditionId = conditionRepo.GetById(viewItem.Condition.ConditionId).ConditionId,
-                CityId = cityRepo.GetById(viewItem.City.CityId).CityId,
-                RegionId = regionRepo.GetById(viewItem.Region.RegionId).RegionId
-                //City = viewitem.City,
-                //Condition = viewitem.Condition,
-                //Region = viewitem.Region,
-                //Category = viewitem.Category,
-                //Image = viewItem.Image
+                CategoryId = viewItem.Category.CategoryId,
+                ConditionId = viewItem.Condition.ConditionId,
+                CityId = viewItem.City.CityId,
+                RegionId = viewItem.Region.RegionId
+                
             };
             itemRepo.Update(edit);
             //}
