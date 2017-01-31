@@ -10,6 +10,7 @@ using System.IO;
 using System.Data.Entity.Validation;
 using System.Diagnostics;
 using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Migrations;
 
 namespace WebbApp.DAL.Repositories
 {
@@ -57,20 +58,23 @@ namespace WebbApp.DAL.Repositories
         {
             using (var context = new ApplicationContext())
             {
-                var item = context.Items.Where(p => p.ItemID == entity.ItemID).FirstOrDefault();
-                if (item != null)
-                {
-                    item.Title = entity.Title;
-                    item.Region = entity.Region;
-                    item.Images = entity.Images;
-                    item.Description = entity.Description;
-                    item.CreateDate = entity.CreateDate;
-                    item.ExpirationDate = entity.ExpirationDate;
-                    item.City = entity.City;
-                    item.Condition = entity.Condition;
-                    item.Category = entity.Category;
-                    context.SaveChanges();
-                }
+                //var item = context.Items.Where(p => p.ItemID == entity.ItemID).FirstOrDefault();
+                //if (item != null)
+                //{
+                //    item.Title = entity.Title;
+                //    item.Region = entity.Region;
+                //    //item.Images = entity.Images;
+                //    item.Description = entity.Description;
+                //    item.CreateDate = entity.CreateDate;
+                //    item.ExpirationDate = entity.ExpirationDate;
+                //    item.City = entity.City;
+                //    item.Condition = entity.Condition;
+                //    item.Category = entity.Category;
+                   
+                    
+                //}
+                context.Items.AddOrUpdate(entity);
+                context.SaveChanges();
             }
         }
 
