@@ -122,13 +122,18 @@ namespace WebbApp.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            return View();
+            UserViewModel uvm = new UserViewModel();
+            uvm.Regions = regionRepo.GetAll().ToList();
+            uvm.Cities = cityRepo.GetAll().ToList();
+            return View(uvm);
         }
             
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(UserViewModel model)
         {
+            ModelState.Remove("City.CityName");
+            ModelState.Remove("Region.RegionName");
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser
@@ -139,9 +144,11 @@ namespace WebbApp.Areas.Admin.Controllers
                     LastName = model.LastName,
                     UserName = model.UserName,
                     Email = model.Email,
-                    City = model.City,
+                    //City = model.City,
                     UserRole = model.UserRole.ToString(),
-                    Region = model.Region
+                    //Region = model.Region
+                    RegionId = model.Region.RegionId.ToString(),
+                    CityID = model.City.CityId.ToString()
                 };
 
                 var result = await UserManager.CreateAsync(user, model.Password);
@@ -164,7 +171,7 @@ namespace WebbApp.Areas.Admin.Controllers
                     //    UserManager.AddToRole(user.Id, userString);
                     //}
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Home", new { area = "" });
                 }
                 AddErrors(result);
             }
@@ -176,7 +183,7 @@ namespace WebbApp.Areas.Admin.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Home", new { area = "" });
         }
 
         private IAuthenticationManager AuthenticationManager
@@ -201,7 +208,7 @@ namespace WebbApp.Areas.Admin.Controllers
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Home", new { area = "" });
         }
     }
 }

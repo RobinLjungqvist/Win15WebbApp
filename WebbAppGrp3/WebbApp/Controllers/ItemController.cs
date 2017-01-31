@@ -64,8 +64,8 @@ namespace WebbApp.Controllers
             //newItem.CityId = model.City.CityId;
             //newItem.RegionId = model.Region.RegionId;
             Guid userId = new Guid(User.Identity.GetUserId());
-            newItem.RegionId = userRepo.GetById(userId).Region.RegionId;
-            newItem.CityId = userRepo.GetById(userId).City.CityId;
+            newItem.RegionId = new Guid((userRepo.GetById(userId)).RegionId);
+            newItem.CityId = new Guid((userRepo.GetById(userId)).CityID);
             itemRepo.Add(newItem);
 
             if (files != null && files.ElementAt(0) != null && files.ElementAt(0).ContentLength != 0)
@@ -86,7 +86,7 @@ namespace WebbApp.Controllers
                         Image newImage = new Image();
                         newImage.ImageId = Guid.NewGuid();
                         //newImage.Path = "../Images/" + newImg;
-                        newImage.Path = newImg;
+                        newImage.Path = "../Images/" + newImg;
                         newImage.ItemID = newItemId;
                         newImage.Item = newItem;
                         itemRepo.AddImage(newImage);

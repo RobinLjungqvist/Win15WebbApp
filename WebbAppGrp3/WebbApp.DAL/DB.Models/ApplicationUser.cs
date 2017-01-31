@@ -26,7 +26,9 @@ namespace WebbApp.DAL.DB.Models
         public string CityID { get; set; }
         //[ForeignKey("RegionId")]
         public string RegionId { get; set; }
+
         public virtual Region Region { get; set; }
+
         public virtual City City { get; set; }
 
         public virtual ICollection<Item> Items { get; set; }

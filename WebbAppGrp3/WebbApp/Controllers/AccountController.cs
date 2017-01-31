@@ -14,7 +14,7 @@ using WebbApp.DAL.Interfaces;
 using WebbApp.DAL.Repositories;
 using System.Collections.Generic;
 
-namespace WebbApp.Controllers   
+namespace WebbApp.Controllers
 {
     public class AccountController : Controller
     {
@@ -75,7 +75,7 @@ namespace WebbApp.Controllers
 
                     if (returnUrl == null)
                     {
-                        returnUrl = (String) TempData["tmpReturnUrl"];
+                        returnUrl = (String)TempData["tmpReturnUrl"];
                     }
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.Failure:
@@ -104,10 +104,14 @@ namespace WebbApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
-            //TODO - plocka bort ModelState
+            ModelState.Remove("Cities");
+            ModelState.Remove("Regions");
+            ModelState.Remove("UserRole");
+            ModelState.Remove("City.CityName");
+            ModelState.Remove("Region.RegionName");
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser
+                var user = new ApplicationUser()
                 {
                     Id = Guid.NewGuid().ToString(),
                     Password = model.Password,
@@ -116,12 +120,9 @@ namespace WebbApp.Controllers
                     UserName = model.UserName,
                     Email = model.Email,
                     UserRole = "User",
-                    //IsAdmin = model.UserRole == RegisterViewModel.UserRoles.Admin,
-                    //Region = model.Region,
-                    //City = model.City
-                    Region = regionRepo.GetById(model.Region.RegionId),
-                    City = cityRepo.GetById(model.City.CityId)
-            };
+                    RegionId = model.Region.RegionId.ToString(),
+                    CityID = model.City.CityId.ToString()
+                };
 
                 var result = await UserManager.CreateAsync(user, model.Password);
 

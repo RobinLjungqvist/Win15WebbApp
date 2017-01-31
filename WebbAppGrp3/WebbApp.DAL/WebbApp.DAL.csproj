@@ -71,17 +71,13 @@
     <Compile Include="Migrations\201701301325571_InitialMigration.Designer.cs">
       <DependentUpon>201701301325571_InitialMigration.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201701301516241_SecondMigration.cs" />
-    <Compile Include="Migrations\201701301516241_SecondMigration.Designer.cs">
-      <DependentUpon>201701301516241_SecondMigration.cs</DependentUpon>
+    <Compile Include="Migrations\201701310907527_KrisztasMigration.cs" />
+    <Compile Include="Migrations\201701310907527_KrisztasMigration.Designer.cs">
+      <DependentUpon>201701310907527_KrisztasMigration.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201701301525135_ThirdMigration.cs" />
-    <Compile Include="Migrations\201701301525135_ThirdMigration.Designer.cs">
-      <DependentUpon>201701301525135_ThirdMigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201701310856399_fourthMigration.cs" />
-    <Compile Include="Migrations\201701310856399_fourthMigration.Designer.cs">
-      <DependentUpon>201701310856399_fourthMigration.cs</DependentUpon>
+    <Compile Include="Migrations\201701311032221_InitialKriszta.cs" />
+    <Compile Include="Migrations\201701311032221_InitialKriszta.Designer.cs">
+      <DependentUpon>201701311032221_InitialKriszta.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Interfaces\ISearchableRepository.cs" />
@@ -101,14 +97,11 @@
     <EmbeddedResource Include="Migrations\201701301325571_InitialMigration.resx">
       <DependentUpon>201701301325571_InitialMigration.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201701301516241_SecondMigration.resx">
-      <DependentUpon>201701301516241_SecondMigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201701310907527_KrisztasMigration.resx">
+      <DependentUpon>201701310907527_KrisztasMigration.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201701301525135_ThirdMigration.resx">
-      <DependentUpon>201701301525135_ThirdMigration.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201701310856399_fourthMigration.resx">
-      <DependentUpon>201701310856399_fourthMigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201701311032221_InitialKriszta.resx">
+      <DependentUpon>201701311032221_InitialKriszta.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
