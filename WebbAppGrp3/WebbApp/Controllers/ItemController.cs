@@ -143,7 +143,7 @@ namespace WebbApp.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditItem(ItemViewModel viewItem, FormCollection formcollection)
+        public ActionResult EditItem(ItemViewModel viewItem, IEnumerable<HttpPostedFileBase> files)
         {
             //MockupItem edit=null;
             Item edit = null;
@@ -158,10 +158,10 @@ namespace WebbApp.Controllers
                 CreateDate = viewItem.CreateDate,
                 ExpirationDate = viewItem.ExpirationDate,
                 //Category = viewItem.Category.CategoryId,
-                Category = categoryRepo.GetById(viewItem.Category.CategoryId),
-                Condition = conditionRepo.GetById(viewItem.Condition.ConditionId),
-                City = cityRepo.GetById(viewItem.City.CityId),
-                Region = regionRepo.GetById(viewItem.Region.RegionId)
+                CategoryId = categoryRepo.GetById(viewItem.Category.CategoryId).CategoryId,
+                ConditionId = conditionRepo.GetById(viewItem.Condition.ConditionId).ConditionId,
+                CityId = cityRepo.GetById(viewItem.City.CityId).CityId,
+                RegionId = regionRepo.GetById(viewItem.Region.RegionId).RegionId
                 //City = viewitem.City,
                 //Condition = viewitem.Condition,
                 //Region = viewitem.Region,
@@ -170,6 +170,31 @@ namespace WebbApp.Controllers
             };
             itemRepo.Update(edit);
             //}
+            if (files != null && files.ElementAt(0) != null && files.ElementAt(0).ContentLength != 0)
+            {
+                foreach (var file in files)
+                {
+                    string newImg = System.IO.Path.GetFileName(file.FileName);
+                    string path = System.IO.Path.Combine(Server.MapPath("~/Images"), newImg);
+                    if (newImg.ToLower().EndsWith(".jpg") || newImg.ToLower().EndsWith(".png"))
+                    {
+                        file.SaveAs(path);
+
+                        using (MemoryStream ms = new MemoryStream())
+                        {
+                            file.InputStream.CopyTo(ms);
+                            byte[] array = ms.GetBuffer();
+                        }
+                        Image newImage = new Image();
+                        newImage.ImageId = Guid.NewGuid();
+                        //newImage.Path = "../Images/" + newImg;
+                        newImage.Path = "../Images/"+newImg;
+                        newImage.ItemID = edit.ItemID;
+                        newImage.Item = edit;
+                        itemRepo.AddImage(newImage);
+                    }
+                }
+            }
             return RedirectToAction("ListAllItems");
         }
     }
