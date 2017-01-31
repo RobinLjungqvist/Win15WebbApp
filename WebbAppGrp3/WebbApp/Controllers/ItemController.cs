@@ -20,6 +20,7 @@ namespace WebbApp.Controllers
         private IRepository<Region> regionRepo;
         private IRepository<City> cityRepo;
         private IRepository<Condition> conditionRepo;
+        private IRepository<ApplicationUser> userRepo;
 
         public ItemController()
         {
@@ -28,6 +29,7 @@ namespace WebbApp.Controllers
             this.regionRepo = new RegionRepository();
             this.cityRepo = new CityRepository();
             this.conditionRepo = new ConditionRepository();
+            this.userRepo = new UserRepository();
         }
 
         [AllowAnonymous]
@@ -44,8 +46,8 @@ namespace WebbApp.Controllers
             var ivm = new ItemViewModel();
             ivm.Categories = categoryRepo.GetAll().ToList();
             ivm.Conditions = conditionRepo.GetAll().ToList();
-            ivm.Regions = regionRepo.GetAll().ToList();
-            ivm.Cities = cityRepo.GetAll().ToList();
+            //ivm.Regions = regionRepo.GetAll().ToList();
+            //ivm.Cities = cityRepo.GetAll().ToList();
             return View(ivm);
         }
 
@@ -58,9 +60,12 @@ namespace WebbApp.Controllers
             Guid newItemId = Guid.NewGuid();
             var newItem = new Item() { ItemID = newItemId, Title = model.Title, CreateDate = date, ExpirationDate = date.AddDays(14), Description = model.Description };
             newItem.CategoryId = model.Category.CategoryId;
-            newItem.CityId = model.City.CityId;
             newItem.ConditionId = model.Condition.ConditionId;
-            newItem.RegionId = model.Region.RegionId;
+            //newItem.CityId = model.City.CityId;
+            //newItem.RegionId = model.Region.RegionId;
+            Guid userId = new Guid(User.Identity.GetUserId());
+            newItem.RegionId = userRepo.GetById(userId).Region.RegionId;
+            newItem.CityId = userRepo.GetById(userId).City.CityId;
             itemRepo.Add(newItem);
 
             if (files != null && files.ElementAt(0) != null && files.ElementAt(0).ContentLength != 0)
@@ -154,9 +159,9 @@ namespace WebbApp.Controllers
                 ExpirationDate = viewItem.ExpirationDate,
                 //Category = viewItem.Category.CategoryId,
                 Category = categoryRepo.GetById(viewItem.Category.CategoryId),
-                City = cityRepo.GetById(viewItem.City.CityId),
                 Condition = conditionRepo.GetById(viewItem.Condition.ConditionId),
-                Region = regionRepo.GetById(viewItem.Region.RegionId),
+                City = cityRepo.GetById(viewItem.City.CityId),
+                Region = regionRepo.GetById(viewItem.Region.RegionId)
                 //City = viewitem.City,
                 //Condition = viewitem.Condition,
                 //Region = viewitem.Region,

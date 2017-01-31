@@ -35,9 +35,12 @@
                             HttpMethod = "GET"
                         })
                     </li>
-                    <li>
-                        @Html.ActionLink("New Item", "NewItem", "Item", new { area = "" }, null)
-                    </li>
+                    @if (User.IsInRole("Admin") || User.IsInRole("User"))
+                    {
+                        <li>
+                            @Html.ActionLink("New Item", "NewItem", "Item", new { area = "" }, null)
+                        </li>
+                    }
                     @if (HttpContext.Current.User.IsInRole("Admin"))
                     {
                         <li class="dropdown">

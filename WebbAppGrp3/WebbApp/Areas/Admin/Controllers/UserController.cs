@@ -20,6 +20,9 @@ namespace WebbApp.Areas.Admin.Controllers
     public class UserController : Controller
     {
         private IRepository<ApplicationUser> userRepo;
+        private IRepository<Region> regionRepo;
+        private IRepository<City> cityRepo;
+
         private ApplicationSignInManager signInManager;
         private ApplicationUserManager userManager;
         private ApplicationRoleManager roleManager;
@@ -45,6 +48,8 @@ namespace WebbApp.Areas.Admin.Controllers
         public UserController()
         {
             this.userRepo = new UserRepository();
+            this.regionRepo = new RegionRepository();
+            this.cityRepo = new CityRepository();
         }
 
         // GET: Admin/User
@@ -59,15 +64,17 @@ namespace WebbApp.Areas.Admin.Controllers
             ApplicationUser user = userRepo.GetById(userId);
             UserViewModel model = new UserViewModel();
             model.UserId = user.Id;
-            model.City = user.City;
             model.Email = user.Email;
             model.FirstName = user.FirstName;
             model.LastName = user.LastName;
             model.Password = user.Password;
             model.UserName = user.UserName;
             model.UserRole = (UserViewModel.UserRoles)Enum.Parse(typeof(UserViewModel.UserRoles), user.UserRole, true);
+            model.Cities = cityRepo.GetAll().ToList();
+            model.Regions = regionRepo.GetAll().ToList();
             //model.Region = (UserViewModel.Regions)Enum.Parse(typeof(UserViewModel.Regions), user.Region, true);
-            model.Region = user.Region;
+            //model.Region = user.Region;
+            //model.City = user.City;
             return View(model);
         }
 
@@ -90,13 +97,15 @@ namespace WebbApp.Areas.Admin.Controllers
                 ApplicationUser user = new ApplicationUser();
                 user.Id = model.UserId;
                 user.UserRole = model.UserRole.ToString();
-                user.Region = model.Region;
                 user.UserName = model.UserName;
                 user.Password = model.Password;
                 user.LastName = model.LastName;
                 user.FirstName = model.FirstName;
                 user.Email = model.Email;
-                user.City = model.City;
+                user.City = cityRepo.GetById(model.City.CityId);
+                user.Region = regionRepo.GetById(model.Region.RegionId);
+                //user.City = model.City;
+                //user.Region = model.Region;
 
                 userRepo.Update(user);
             }

@@ -10,6 +10,9 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using WebbApp.ViewModels;
 using WebbApp.DAL.DB.Models;
 using WebbApp.DAL;
+using WebbApp.DAL.Interfaces;
+using WebbApp.DAL.Repositories;
+using System.Collections.Generic;
 
 namespace WebbApp.Controllers   
 {
@@ -18,6 +21,15 @@ namespace WebbApp.Controllers
         private ApplicationSignInManager signInManager;
         private ApplicationUserManager userManager;
         private ApplicationRoleManager roleManager;
+
+        private IRepository<Region> regionRepo;
+        private IRepository<City> cityRepo;
+
+        public AccountController()
+        {
+            this.regionRepo = new RegionRepository();
+            this.cityRepo = new CityRepository();
+        }
 
         public ApplicationSignInManager SignInManager
         {
@@ -55,6 +67,7 @@ namespace WebbApp.Controllers
             {
                 return View(model);
             }
+
             var result = await SignInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
@@ -80,7 +93,10 @@ namespace WebbApp.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-            return View();
+            RegisterViewModel rvm = new RegisterViewModel();
+            rvm.Cities = new List<City>(cityRepo.GetAll());
+            rvm.Regions = new List<Region>(regionRepo.GetAll());
+            return View(rvm);
         }
 
         [HttpPost]
@@ -88,6 +104,7 @@ namespace WebbApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
+            //TODO - plocka bort ModelState
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser
@@ -98,11 +115,13 @@ namespace WebbApp.Controllers
                     LastName = model.LastName,
                     UserName = model.UserName,
                     Email = model.Email,
-                    City = model.City,
-                    //IsAdmin = model.UserRole == RegisterViewModel.UserRoles.Admin,
                     UserRole = "User",
-                    Region = model.Region
-                };
+                    //IsAdmin = model.UserRole == RegisterViewModel.UserRoles.Admin,
+                    //Region = model.Region,
+                    //City = model.City
+                    Region = regionRepo.GetById(model.Region.RegionId),
+                    City = cityRepo.GetById(model.City.CityId)
+            };
 
                 var result = await UserManager.CreateAsync(user, model.Password);
 

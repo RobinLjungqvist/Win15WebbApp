@@ -25,21 +25,15 @@
 
                     </li>
                     <li>
-                        @*//TODO KEVIN - fr SPA to MVC*@
                         @Html.ActionLink("Items", "ListAllItems", "Item", new { area = "" }, null)
-                        @*@Ajax.ActionLink("Items", "ListAllItems", "Item", null,
-                        new AjaxOptions
-                        {
-                            UpdateTargetId = "PartialContainer",
-                            InsertionMode = InsertionMode.Replace,
-                            HttpMethod = "GET"
-                        })*@
                     </li>
-                    <li>
-                        @Html.ActionLink("New Item", "NewItem", "Item", new { area = "" }, null)
-                        @*@Html.ActionLink("New Item", "NewItem", "Item")*@
-                    </li>
-
+                    @if (User.IsInRole("Admin") || User.IsInRole("User"))
+                    {
+                        <li>
+                            @Html.ActionLink("New Item", "NewItem", "Item", new { area = "" }, null)
+                            @*@Html.ActionLink("New Item", "NewItem", "Item")*@
+                        </li>
+                    }
                     @if (User.IsInRole("Admin"))
                     {
                         <li class="dropdown">

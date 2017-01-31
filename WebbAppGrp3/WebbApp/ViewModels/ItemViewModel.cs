@@ -22,18 +22,20 @@ namespace WebbApp.ViewModels
 
         public DateTime CreateDate { get; set; }
         public DateTime ExpirationDate { get; set; }
-
-        [Required(ErrorMessage ="Must enter the city")]
-        public City City { get; set; }
-        public int SelectedCityId { get; set; }
-        public List<City> Cities { get; set; }
+        //public City City { get; set; }
+        //public Region Region { get; set; }
 
         [Required(ErrorMessage ="Must enter the condition of the item")]
         public Condition Condition { get; set; }
         public int SelectedConditionId { get; set; }
         public List<Condition> Conditions { get; set; }
 
-        [Required(ErrorMessage ="Must enter the region")]
+        [Required(ErrorMessage = "Must enter the city")]
+        public City City { get; set; }
+        public int SelectedCityId { get; set; }
+        public List<City> Cities { get; set; }
+
+        [Required(ErrorMessage = "Must enter the region")]
         public Region Region { get; set; }
         public int SelectedRegionId { get; set; }
         public List<Region> Regions { get; set; }
