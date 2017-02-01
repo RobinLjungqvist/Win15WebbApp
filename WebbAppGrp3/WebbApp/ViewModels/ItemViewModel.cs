@@ -27,22 +27,22 @@ namespace WebbApp.ViewModels
 
         [Required(ErrorMessage ="Must enter the condition of the item")]
         public Condition Condition { get; set; }
-        public int SelectedConditionId { get; set; }
+        public Guid SelectedConditionId { get; set; }
         public List<Condition> Conditions { get; set; }
 
         [Required(ErrorMessage = "Must enter the city")]
         public City City { get; set; }
-        public int SelectedCityId { get; set; }
+        public Guid SelectedCityId { get; set; }
         public List<City> Cities { get; set; }
 
         [Required(ErrorMessage = "Must enter the region")]
         public Region Region { get; set; }
-        public int SelectedRegionId { get; set; }
+        public Guid SelectedRegionId { get; set; }
         public List<Region> Regions { get; set; }
 
         [Required(ErrorMessage ="Must enter the category of the item")]
         public Category Category { get; set; }
-        public int SelectedCategoryId { get; set; }
+        public Guid SelectedCategoryId { get; set; }
         public List<Category> Categories { get; set; }
 
         public string UploaderID { get; set; }
