@@ -43,7 +43,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.City, "City", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.City.CityId, new SelectList(Model.Cities, "CityId", "CityName"), "- Please Select -")
+                @Html.DropDownListFor(model => model.City.CityId, new SelectList(Model.Cities, "CityId", "CityName"), Model.SelectedCityId)
                 @Html.ValidationMessageFor(model => model.City.CityId)
             </div>
         </div>
@@ -51,7 +51,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Condition, "Condition", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.Condition.ConditionId, new SelectList(Model.Conditions, "ConditionId", "Status"), "- Please Select -")
+                @Html.DropDownListFor(model => model.Condition.ConditionId, new SelectList(Model.Conditions, "ConditionId", "Status"), Model.SelectedConditionId)
                 @Html.ValidationMessageFor(model => model.Condition.ConditionId)
             </div>
         </div>
@@ -59,7 +59,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Region, "Region", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.Region.RegionId, new SelectList(Model.Regions, "RegionId", "RegionName"), "- Please Select -")
+                @Html.DropDownListFor(model => model.Region.RegionId, new SelectList(Model.Regions, "RegionId", "RegionName"), Model.SelectedRegionId)
                 @Html.ValidationMessageFor(model => model.Region.RegionId)
             </div>
         </div>
@@ -67,7 +67,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Category, "Category", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.Category.CategoryId, new SelectList(Model.Categories, "CategoryId", "CategoryName"), "- Please Select -")
+                @Html.DropDownListFor(model => model.Category.CategoryId, new SelectList(Model.Categories, "CategoryId", "CategoryName"), Model.SelectedCategoryId)
                 @Html.ValidationMessageFor(model => model.Category.CategoryId)
             </div>
         </div>

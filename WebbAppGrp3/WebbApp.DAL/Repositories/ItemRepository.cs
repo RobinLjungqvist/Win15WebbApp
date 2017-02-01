@@ -42,11 +42,11 @@ namespace WebbApp.DAL.Repositories
         public void Add(Item entity)
         {
 
-                using (var context = new ApplicationContext())
-                {
-                    context.Items.Add(entity);
-                    context.SaveChanges();
-                }
+            using (var context = new ApplicationContext())
+            {
+                context.Items.Add(entity);
+                context.SaveChanges();
+            }
 
         }
 
@@ -55,22 +55,22 @@ namespace WebbApp.DAL.Repositories
             using (var context = new ApplicationContext())
             {
                 //attach
-                context.Items.Attach(entity);
-                //var item = context.Items.Where(p => p.ItemID == entity.ItemID).FirstOrDefault();
-                //if (item != null)
-                //{
-                //    item.Title = entity.Title;
-                //    item.Region = entity.Region;
-                //    //item.Images = entity.Images;
-                //    item.Description = entity.Description;
-                //    item.CreateDate = entity.CreateDate;
-                //    item.ExpirationDate = entity.ExpirationDate;
-                //    item.City = entity.City;
-                //    item.Condition = entity.Condition;
-                //    item.Category = entity.Category;
+                //context.Items.Attach(entity);
+                var item = context.Items.Where(p => p.ItemID == entity.ItemID).FirstOrDefault();
+                if (item != null)
+                {
+                    item.Title = entity.Title;
+                    item.RegionId = entity.RegionId;
+                    //item.Images = entity.Images;
+                    item.Description = entity.Description;
+                    item.CreateDate = entity.CreateDate;
+                    item.ExpirationDate = entity.ExpirationDate;
+                    item.CityId = entity.CityId;
+                    item.ConditionId = entity.ConditionId;
+                    item.CategoryId = entity.CategoryId;
 
 
-                //}
+                }
                 context.SaveChanges();
             }
         }

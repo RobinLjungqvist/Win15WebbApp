@@ -159,9 +159,15 @@ namespace WebbApp.Controllers
             var item = itemRepo.GetById(ItemID);
             var ivm = new ItemViewModel() { ItemID = item.ItemID, Title = item.Title, Description = item.Description, };
             ivm.Categories = categoryRepo.GetAll().ToList();
+            ivm.SelectedCategoryId = item.CategoryId;
             ivm.Conditions = conditionRepo.GetAll().ToList();
+            ivm.SelectedConditionId = item.ConditionId;
             ivm.Regions = regionRepo.GetAll().ToList();
+            ivm.SelectedRegionId = item.RegionId;
             ivm.Cities = cityRepo.GetAll().ToList();
+            ivm.SelectedCityId = item.CityId;
+            ivm.CreateDate = DateTime.Now;
+            ivm.ExpirationDate = DateTime.Now.AddDays(7);
             return View(ivm);
         }
 
