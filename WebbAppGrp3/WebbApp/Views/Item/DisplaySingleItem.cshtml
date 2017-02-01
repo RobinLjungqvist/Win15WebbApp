@@ -25,13 +25,13 @@
                 @Model.Description
             </p>
             
-            @Html.ActionLink("Edit Item", "EditItem", "Item", new { itemID = Model.ItemID }, null)
     
 
             @*För att visa bara om uploadern är inloggad eller Admin*@
 
             @if (User.Identity.GetUserId() == Model.UploaderID || User.IsInRole("Admin"))
             {
+                @Html.ActionLink("Edit Item", "EditItem", "Item", new { itemID = Model.ItemID }, null)
                 @Html.ActionLink("Remove Item", "RemoveItem", "Item", new { itemID = Model.ItemID }, new { id = "removelink" , ItemID = Model.ItemID })
              
             }
