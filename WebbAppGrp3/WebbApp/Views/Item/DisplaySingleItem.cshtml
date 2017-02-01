@@ -11,9 +11,13 @@
     <div class="row">
         <div class="col-md-3">
             <h2>@Model.Title</h2>
-            @Html.DisplayFor(model => model.City.CityName)
-            @Html.DisplayFor(model => model.Region.RegionName)
-            @Html.DisplayFor(model => model.ExpirationDate)
+            
+            @Html.DisplayFor(model => model.City.CityName)<br />
+            <label>Region: </label>
+            @Html.DisplayFor(model => model.Region.RegionName)<br />
+            <label>Expiration Date: </label>
+            @Html.DisplayFor(model => model.ExpirationDate)<br />
+            <div class="btn btn-default" id="emailbtn" userID="@Model.UploaderID">Show Email</div>
         </div>
         <div class="col-md-3">
             <h3>Description</h3>
@@ -38,5 +42,7 @@
 </div>
 
 @section scripts{
+
 <script src="~/myScripts/removeconfirmdialog.js"></script>
+<script src="~/myScripts/ShowEmail.js"></script>
     }

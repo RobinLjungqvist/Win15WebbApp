@@ -219,6 +219,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Images\PlaceholderImage.png" />
     <Content Include="myScripts\removeconfirmdialog.js" />
+    <Content Include="myScripts\ShowEmail.js" />
     <Content Include="Scripts\alertify\alertify.js" />
     <Content Include="Scripts\alertify\alertify.min.js" />
     <Content Include="Scripts\bootstrap.js" />

@@ -126,7 +126,7 @@ namespace WebbApp.Controllers
                 ViewModelItems.Add(newViewModel);
             }
 
-                return View(ViewModelItems);
+            return View(ViewModelItems);
         }
 
         [Authorize]
@@ -187,7 +187,7 @@ namespace WebbApp.Controllers
                 ConditionId = viewItem.Condition.ConditionId,
                 CityId = viewItem.City.CityId,
                 RegionId = viewItem.Region.RegionId
-                
+
             };
             itemRepo.Update(edit);
             //}
@@ -209,7 +209,7 @@ namespace WebbApp.Controllers
                         Image newImage = new Image();
                         newImage.ImageId = Guid.NewGuid();
                         //newImage.Path = "../Images/" + newImg;
-                        newImage.Path = "../Images/"+newImg;
+                        newImage.Path = "../Images/" + newImg;
                         newImage.ItemID = edit.ItemID;
                         newImage.Item = edit;
                         itemRepo.AddImage(newImage);
@@ -218,5 +218,26 @@ namespace WebbApp.Controllers
             }
             return RedirectToAction("ListAllItems");
         }
+
+        public ActionResult GetUploaderEmail(Guid UserID)
+        {
+            var user = userRepo.GetById(UserID);
+            var email = string.Empty;
+
+            if(user != null)
+            {
+                email = user.Email;
+            }
+
+            if(email != string.Empty)
+            {
+                return Content(email);
+            }
+            else
+            {
+                return Content("Couldn't find email.");
+            }
+        }
+
     }
 }
