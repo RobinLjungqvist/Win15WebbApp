@@ -18,9 +18,12 @@
     </div>
     <div class="col-md-3">
         <h2>@Model.Title</h2>
-        @Html.DisplayFor(model => model.City.CityName)
-        @Html.DisplayFor(model => model.Region.RegionName)
-        @Html.DisplayFor(model => model.ExpirationDate)
+        <label>City: </label>
+        @Html.DisplayFor(model => model.City.CityName)<br />
+        <label>Region: </label>
+        @Html.DisplayFor(model => model.Region.RegionName)<br />
+        <label>Expiration Date: </label>
+        @Html.DisplayFor(model => model.ExpirationDate)<br />
     </div>
     <div class="col-md-3">
         <h3>Description</h3>
