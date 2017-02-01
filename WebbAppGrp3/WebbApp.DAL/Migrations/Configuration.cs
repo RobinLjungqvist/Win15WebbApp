@@ -19,71 +19,9 @@ namespace WebbApp.DAL.Migrations
 
         protected override void Seed(WebbApp.DAL.ApplicationContext context)
         {
-
-            if (!context.Roles.Any(r => r.Name == "Admin"))
-            {
-                var store = new RoleStore<IdentityRole>(context);
-                var manager = new RoleManager<IdentityRole>(store);
-                var role = new IdentityRole { Name = "Admin" };
-
-                manager.Create(role);
-            }
-
-            if (!context.Users.Any(u => u.UserName == "Admin"))
-            {
-                var store = new UserStore<ApplicationUser>(context);
-                var manager = new UserManager<ApplicationUser>(store);
-                var user = new ApplicationUser { UserName = "Admin" };
-
-                user.UserRole = "Admin";
-
-                manager.CreateAsync(user, "password");
-                manager.AddToRoleAsync(user.Id, "Admin");
-            }
-
-            Guid CityId1 = Guid.NewGuid();
-            Guid CityId2 = Guid.NewGuid();
-            Guid CityId3 = Guid.NewGuid();
-
-            List<City> cityList = new List<City> {
-                    new City() { CityId = CityId1, CityName = "Helsingborg" },
-                    new City() { CityId = CityId2, CityName = "Lund" },
-                    new City() { CityId = CityId3, CityName = "Malmö" },
-             };
-
-            if (!context.Cities.Any())
-            {
-                foreach (City i in cityList)
-                {
-                    context.Cities.AddOrUpdate(x => x.CityId, i);
-                }
-            }
-            Guid ConditionId1 = Guid.NewGuid();
-            Guid ConditionId2 = Guid.NewGuid();
-
-            var condition1 = new Condition() { ConditionId = ConditionId1, Status = "Worn" };
-            var condition2 = new Condition() { ConditionId = ConditionId2, Status = "Hardly used" };
-            if (!context.Conditions.Any())
-            {
-                context.Conditions.AddOrUpdate(x => x.ConditionId, condition1, condition2);
-            }
-
-            Guid CategoryId1 = Guid.NewGuid();
-            Guid CategoryId2 = Guid.NewGuid();
-
-            var category1 = new Category() { CategoryId = CategoryId1, CategoryName = "Furniture" };
-            var category2 = new Category() { CategoryId = CategoryId2, CategoryName = "Books" };
-            if (!context.Categories.Any())
-            {
-                context.Categories.AddOrUpdate(x => x.CategoryId, category1, category2);
-            }
-            Guid RegionId1 = Guid.NewGuid();
-            Guid RegionId2 = Guid.NewGuid();
-
-
             List<Region> regionList = new List<Region> {
-                   new Region() { RegionId = RegionId1, RegionName = "Blekinge" },
-                   new Region() { RegionId = RegionId2, RegionName = "Dalarna" },
+                   new Region() { RegionId = Guid.NewGuid(), RegionName = "Blekinge" },
+                   new Region() { RegionId = Guid.NewGuid(), RegionName = "Dalarna" },
                    new Region() { RegionId = Guid.NewGuid(), RegionName = "Gotland" },
                    new Region() { RegionId = Guid.NewGuid(), RegionName = "Gävleborg" },
                    new Region() { RegionId = Guid.NewGuid(), RegionName = "Halland" },
@@ -103,6 +41,75 @@ namespace WebbApp.DAL.Migrations
                    new Region() { RegionId = Guid.NewGuid(), RegionName = "Örebro" },
                    new Region() { RegionId = Guid.NewGuid(), RegionName = "Östergötland" }
             };
+
+
+            Guid CityId1 = Guid.NewGuid();
+            Guid CityId2 = Guid.NewGuid();
+            Guid CityId3 = Guid.NewGuid();
+
+            List<City> cityList = new List<City> {
+                    new City() { CityId = CityId1, CityName = "Helsingborg" },
+                    new City() { CityId = CityId2, CityName = "Lund" },
+                    new City() { CityId = CityId3, CityName = "Malmö" },
+             };
+
+            if (!context.Cities.Any())
+            {
+                foreach (City i in cityList)
+                {
+                    context.Cities.AddOrUpdate(x => x.CityId, i);
+                }
+            }
+
+            if (!context.Roles.Any(r => r.Name == "Admin"))
+            {
+                var store = new RoleStore<IdentityRole>(context);
+                var manager = new RoleManager<IdentityRole>(store);
+                var role = new IdentityRole { Name = "Admin" };
+
+                manager.Create(role);
+            }
+
+            if (!context.Users.Any(u => u.UserName == "Admin"))
+            {
+                var store = new UserStore<ApplicationUser>(context);
+                var manager = new UserManager<ApplicationUser>(store);
+                var user = new ApplicationUser { UserName = "Admin" };
+                user.UserRole = "Admin";
+                user.CityID = cityList.FirstOrDefault(c => c.CityName == "Helsingborg").CityId.ToString();
+                user.RegionId = regionList.FirstOrDefault(c => c.RegionName == "Skåne").RegionId.ToString();
+
+                manager.CreateAsync(user, "password");
+                manager.AddToRoleAsync(user.Id, "Admin");
+            }
+
+
+
+
+
+
+            Guid ConditionId1 = Guid.NewGuid();
+            Guid ConditionId2 = Guid.NewGuid();
+
+            var condition1 = new Condition() { ConditionId = ConditionId1, Status = "Worn" };
+            var condition2 = new Condition() { ConditionId = ConditionId2, Status = "Hardly used" };
+            if (!context.Conditions.Any())
+            {
+                context.Conditions.AddOrUpdate(x => x.ConditionId, condition1, condition2);
+            }
+
+            Guid CategoryId1 = Guid.NewGuid();
+            Guid CategoryId2 = Guid.NewGuid();
+
+            var category1 = new Category() { CategoryId = CategoryId1, CategoryName = "Furniture" };
+            var category2 = new Category() { CategoryId = CategoryId2, CategoryName = "Books" };
+            if (!context.Categories.Any())
+            {
+                context.Categories.AddOrUpdate(x => x.CategoryId, category1, category2);
+            }
+
+
+            
             if (!context.Regions.Any())
             {
                 foreach (Region i in regionList)
