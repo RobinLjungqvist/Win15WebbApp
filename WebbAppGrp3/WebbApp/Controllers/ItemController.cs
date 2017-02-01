@@ -46,6 +46,8 @@ namespace WebbApp.Controllers
             var ivm = new ItemViewModel();
             ivm.Categories = categoryRepo.GetAll().ToList();
             ivm.Conditions = conditionRepo.GetAll().ToList();
+            ivm.Regions = regionRepo.GetAll().ToList();
+            ivm.Cities = cityRepo.GetAll().ToList();
             return View(ivm);
         }
 
@@ -59,10 +61,11 @@ namespace WebbApp.Controllers
             var newItem = new Item() { ItemID = newItemId, Title = model.Title, CreateDate = date, ExpirationDate = date.AddDays(14), Description = model.Description };
             newItem.CategoryId = model.Category.CategoryId;
             newItem.ConditionId = model.Condition.ConditionId;
-            Guid userId = new Guid(User.Identity.GetUserId());
-            newItem.RegionId = new Guid((userRepo.GetById(userId)).RegionId);
-            newItem.CityId = new Guid((userRepo.GetById(userId)).CityID);
-            //newItem.ApplicationUser.Id = userId.ToString(); --- TODO: Kolla ApplicationUSer is null
+            //newItem.CityId = model.City.CityId;
+            //newItem.RegionId = model.Region.RegionId;
+            newItem.ApplicationUserId = Guid.Parse(User.Identity.GetUserId());
+            newItem.RegionId = model.Region.RegionId;
+            newItem.CityId = model.City.CityId;
             itemRepo.Add(newItem);
 
             if (files != null && files.ElementAt(0) != null && files.ElementAt(0).ContentLength != 0)
@@ -82,8 +85,8 @@ namespace WebbApp.Controllers
                         }
                         Image newImage = new Image();
                         newImage.ImageId = Guid.NewGuid();
-                        //newImage.Path = "../Images/" + newImg;
                         newImage.Path = "../Images/" + newImg;
+                        //newImage.Path = newImg;
                         newImage.ItemID = newItemId;
                         newImage.Item = newItem;
                         itemRepo.AddImage(newImage);
@@ -97,7 +100,17 @@ namespace WebbApp.Controllers
         public ActionResult DisplaySingleItem(Guid itemID)
         {
             var repoItem = itemRepo.GetById(itemID);
-            var newViewModel = new ItemViewModel(repoItem.ItemID, repoItem.Title, repoItem.Description, repoItem.CreateDate, repoItem.ExpirationDate, repoItem.City, repoItem.Condition, repoItem.Region, repoItem.Category, repoItem.Images);
+            var newViewModel = new ItemViewModel(repoItem.ItemID,
+                repoItem.Title,
+                repoItem.Description,
+                repoItem.CreateDate,
+                repoItem.ExpirationDate,
+                repoItem.City,
+                repoItem.Condition,
+                repoItem.Region,
+                repoItem.Category,
+                repoItem.Images);
+            newViewModel.UploaderID = repoItem.ApplicationUserId.ToString();
             return View(newViewModel);
         }
 
@@ -117,9 +130,25 @@ namespace WebbApp.Controllers
         }
 
         [Authorize]
+        [HttpPost]
         public ActionResult RemoveItem(Guid itemID)
         {
+            var itemToDelete = itemRepo.GetById(itemID);
+
+            foreach (var image in itemToDelete.Images)
+            {
+                var filePath = Server.MapPath(image.Path);
+                if (System.IO.File.Exists(filePath))
+                {
+                    System.IO.File.Delete(filePath);
+                }
+            }
+
             itemRepo.Delete(itemID);
+            if (Request.IsAjaxRequest())
+            {
+                return Content("/Item/ListAllItems");
+            }
             return RedirectToAction("Index", "Home");
         }
 

@@ -45,6 +45,9 @@ namespace WebbApp.ViewModels
         public int SelectedCategoryId { get; set; }
         public List<Category> Categories { get; set; }
 
+        public string UploaderID { get; set; }
+        
+
         //[Required(ErrorMessage ="There is no image. Please select an image")]
         public ICollection<Image> Images { get; set; }
         

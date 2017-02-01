@@ -44,6 +44,8 @@ namespace WebbApp.DAL.DB.Models
 
         public virtual Category Category { get; set; }
 
+        public Guid ApplicationUserId { get; set; }
+
         public virtual ApplicationUser ApplicationUser { get; set; }
 
        public virtual ICollection<Image> Images { get; set; }

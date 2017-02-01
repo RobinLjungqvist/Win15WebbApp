@@ -10,6 +10,7 @@ using System.IO;
 using System.Data.Entity.Validation;
 using System.Diagnostics;
 using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Migrations;
 
 namespace WebbApp.DAL.Repositories
 {
@@ -40,37 +41,37 @@ namespace WebbApp.DAL.Repositories
 
         public void Add(Item entity)
         {
-            try
-            {
+
                 using (var context = new ApplicationContext())
                 {
                     context.Items.Add(entity);
                     context.SaveChanges();
                 }
-            }
-            catch (Exception ex)
-            {
-            }
+
         }
 
         public void Update(Item entity)
         {
             using (var context = new ApplicationContext())
             {
-                var item = context.Items.Where(p => p.ItemID == entity.ItemID).FirstOrDefault();
-                if (item != null)
-                {
-                    item.Title = entity.Title;
-                    item.Region = entity.Region;
-                    item.Images = entity.Images;
-                    item.Description = entity.Description;
-                    item.CreateDate = entity.CreateDate;
-                    item.ExpirationDate = entity.ExpirationDate;
-                    item.City = entity.City;
-                    item.Condition = entity.Condition;
-                    item.Category = entity.Category;
-                    context.SaveChanges();
-                }
+                //attach
+                context.Items.Attach(entity);
+                //var item = context.Items.Where(p => p.ItemID == entity.ItemID).FirstOrDefault();
+                //if (item != null)
+                //{
+                //    item.Title = entity.Title;
+                //    item.Region = entity.Region;
+                //    //item.Images = entity.Images;
+                //    item.Description = entity.Description;
+                //    item.CreateDate = entity.CreateDate;
+                //    item.ExpirationDate = entity.ExpirationDate;
+                //    item.City = entity.City;
+                //    item.Condition = entity.Condition;
+                //    item.Category = entity.Category;
+
+
+                //}
+                context.SaveChanges();
             }
         }
 
@@ -122,6 +123,7 @@ namespace WebbApp.DAL.Repositories
             using (var context = new ApplicationContext())
             {
                 item = context.Items.Where(p => p.ItemID == id)
+                    .Include(i => i.ApplicationUser)
                     .Include(i => i.City)
                     .Include(i => i.Condition)
                     .Include(i => i.Region)

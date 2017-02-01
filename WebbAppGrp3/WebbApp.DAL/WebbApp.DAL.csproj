@@ -75,9 +75,9 @@
     <Compile Include="Migrations\201701310907527_KrisztasMigration.Designer.cs">
       <DependentUpon>201701310907527_KrisztasMigration.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201701311032221_InitialKriszta.cs" />
-    <Compile Include="Migrations\201701311032221_InitialKriszta.Designer.cs">
-      <DependentUpon>201701311032221_InitialKriszta.cs</DependentUpon>
+    <Compile Include="Migrations\201701311609319_UserIDonItem.cs" />
+    <Compile Include="Migrations\201701311609319_UserIDonItem.Designer.cs">
+      <DependentUpon>201701311609319_UserIDonItem.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Interfaces\ISearchableRepository.cs" />
@@ -100,8 +100,8 @@
     <EmbeddedResource Include="Migrations\201701310907527_KrisztasMigration.resx">
       <DependentUpon>201701310907527_KrisztasMigration.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201701311032221_InitialKriszta.resx">
-      <DependentUpon>201701311032221_InitialKriszta.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201701311609319_UserIDonItem.resx">
+      <DependentUpon>201701311609319_UserIDonItem.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
