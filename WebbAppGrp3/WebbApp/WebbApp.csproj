@@ -169,6 +169,7 @@
     <Compile Include="Areas\Admin\Controllers\CategoryController.cs" />
     <Compile Include="Areas\Admin\Controllers\CityController.cs" />
     <Compile Include="Areas\Admin\Controllers\ConditionController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ExpiredController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
     <Compile Include="Areas\Admin\ViewModels\UserViewModel.cs" />
     <Compile Include="Areas\User\Controllers\UserAccountController.cs" />
@@ -301,6 +302,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="Areas\Admin\Views\Expired\" />
     <Folder Include="Areas\User\Models\" />
   </ItemGroup>
   <ItemGroup>
