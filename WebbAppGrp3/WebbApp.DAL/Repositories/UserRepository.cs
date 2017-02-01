@@ -80,8 +80,8 @@ namespace WebbApp.DAL.Repositories
                         user.UserName = entity.UserName;
                         user.IsAdmin = entity.IsAdmin;
                         user.UserRole = entity.UserRole;
-                        user.Region = entity.Region;
-                        user.City = entity.City;
+                        user.RegionId = entity.RegionId;
+                        user.CityID = entity.CityID;
                         context.SaveChanges();
                     }
                 }

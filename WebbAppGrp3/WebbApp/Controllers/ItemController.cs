@@ -46,8 +46,6 @@ namespace WebbApp.Controllers
             var ivm = new ItemViewModel();
             ivm.Categories = categoryRepo.GetAll().ToList();
             ivm.Conditions = conditionRepo.GetAll().ToList();
-            //ivm.Regions = regionRepo.GetAll().ToList();
-            //ivm.Cities = cityRepo.GetAll().ToList();
             return View(ivm);
         }
 
@@ -61,11 +59,10 @@ namespace WebbApp.Controllers
             var newItem = new Item() { ItemID = newItemId, Title = model.Title, CreateDate = date, ExpirationDate = date.AddDays(14), Description = model.Description };
             newItem.CategoryId = model.Category.CategoryId;
             newItem.ConditionId = model.Condition.ConditionId;
-            //newItem.CityId = model.City.CityId;
-            //newItem.RegionId = model.Region.RegionId;
             Guid userId = new Guid(User.Identity.GetUserId());
             newItem.RegionId = new Guid((userRepo.GetById(userId)).RegionId);
             newItem.CityId = new Guid((userRepo.GetById(userId)).CityID);
+            //newItem.ApplicationUser.Id = userId.ToString(); --- TODO: Kolla ApplicationUSer is null
             itemRepo.Add(newItem);
 
             if (files != null && files.ElementAt(0) != null && files.ElementAt(0).ContentLength != 0)
@@ -100,8 +97,8 @@ namespace WebbApp.Controllers
         public ActionResult DisplaySingleItem(Guid itemID)
         {
             var repoItem = itemRepo.GetById(itemID);
-            var newViewModel = new ItemViewModel(repoItem.ItemID, repoItem.Title, repoItem.Description, repoItem.CreateDate, repoItem.ExpirationDate, repoItem.City, repoItem.Condition, repoItem.Region, repoItem.Category, null);
-            return PartialView(newViewModel);
+            var newViewModel = new ItemViewModel(repoItem.ItemID, repoItem.Title, repoItem.Description, repoItem.CreateDate, repoItem.ExpirationDate, repoItem.City, repoItem.Condition, repoItem.Region, repoItem.Category, repoItem.Images);
+            return View(newViewModel);
         }
 
         [AllowAnonymous]
@@ -143,7 +140,7 @@ namespace WebbApp.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditItem(ItemViewModel viewItem, FormCollection formcollection)
+        public ActionResult EditItem(ItemViewModel viewItem, IEnumerable<HttpPostedFileBase> files)
         {
             //MockupItem edit=null;
             Item edit = null;
@@ -157,19 +154,39 @@ namespace WebbApp.Controllers
                 Description = viewItem.Description,
                 CreateDate = viewItem.CreateDate,
                 ExpirationDate = viewItem.ExpirationDate,
-                //Category = viewItem.Category.CategoryId,
-                Category = categoryRepo.GetById(viewItem.Category.CategoryId),
-                Condition = conditionRepo.GetById(viewItem.Condition.ConditionId),
-                City = cityRepo.GetById(viewItem.City.CityId),
-                Region = regionRepo.GetById(viewItem.Region.RegionId)
-                //City = viewitem.City,
-                //Condition = viewitem.Condition,
-                //Region = viewitem.Region,
-                //Category = viewitem.Category,
-                //Image = viewItem.Image
+                CategoryId = viewItem.Category.CategoryId,
+                ConditionId = viewItem.Condition.ConditionId,
+                CityId = viewItem.City.CityId,
+                RegionId = viewItem.Region.RegionId
+                
             };
             itemRepo.Update(edit);
             //}
+            if (files != null && files.ElementAt(0) != null && files.ElementAt(0).ContentLength != 0)
+            {
+                foreach (var file in files)
+                {
+                    string newImg = System.IO.Path.GetFileName(file.FileName);
+                    string path = System.IO.Path.Combine(Server.MapPath("~/Images"), newImg);
+                    if (newImg.ToLower().EndsWith(".jpg") || newImg.ToLower().EndsWith(".png"))
+                    {
+                        file.SaveAs(path);
+
+                        using (MemoryStream ms = new MemoryStream())
+                        {
+                            file.InputStream.CopyTo(ms);
+                            byte[] array = ms.GetBuffer();
+                        }
+                        Image newImage = new Image();
+                        newImage.ImageId = Guid.NewGuid();
+                        //newImage.Path = "../Images/" + newImg;
+                        newImage.Path = "../Images/"+newImg;
+                        newImage.ItemID = edit.ItemID;
+                        newImage.Item = edit;
+                        itemRepo.AddImage(newImage);
+                    }
+                }
+            }
             return RedirectToAction("ListAllItems");
         }
     }

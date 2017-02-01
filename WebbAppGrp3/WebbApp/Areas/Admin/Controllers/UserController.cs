@@ -71,10 +71,9 @@ namespace WebbApp.Areas.Admin.Controllers
             model.UserName = user.UserName;
             model.UserRole = (UserViewModel.UserRoles)Enum.Parse(typeof(UserViewModel.UserRoles), user.UserRole, true);
             model.Cities = cityRepo.GetAll().ToList();
+            model.SelectedCityId = new Guid(user.CityID);
             model.Regions = regionRepo.GetAll().ToList();
-            //model.Region = (UserViewModel.Regions)Enum.Parse(typeof(UserViewModel.Regions), user.Region, true);
-            //model.Region = user.Region;
-            //model.City = user.City;
+            model.SelectedRegionId = new Guid(user.RegionId);
             return View(model);
         }
 
@@ -82,6 +81,8 @@ namespace WebbApp.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(UserViewModel model)
         {
+            ModelState.Remove("City.CityName");
+            ModelState.Remove("Region.RegionName");
             if (ModelState.IsValid)
             {
                 if (string.IsNullOrWhiteSpace(model.UserName) || 
@@ -102,10 +103,8 @@ namespace WebbApp.Areas.Admin.Controllers
                 user.LastName = model.LastName;
                 user.FirstName = model.FirstName;
                 user.Email = model.Email;
-                user.City = cityRepo.GetById(model.City.CityId);
-                user.Region = regionRepo.GetById(model.Region.RegionId);
-                //user.City = model.City;
-                //user.Region = model.Region;
+                user.CityID = model.City.CityId.ToString();
+                user.RegionId = model.Region.RegionId.ToString();
 
                 userRepo.Update(user);
             }
@@ -161,16 +160,15 @@ namespace WebbApp.Areas.Admin.Controllers
 
                     string userString = model.UserRole == UserViewModel.UserRoles.User ? "User" : "Admin";
 
-                    //if (!rm.RoleExists(userString))
-                    //{
-                    //    rm.Create(new IdentityRole(userString));
-                    //}
+                    if (!rm.RoleExists(userString))
+                    {
+                        rm.Create(new IdentityRole(userString));
+                    }
 
-                    //if (!UserManager.IsInRole(user.Id, userString))
-                    //{
-                    //    UserManager.AddToRole(user.Id, userString);
-                    //}
-
+                    if (!UserManager.IsInRole(user.Id, userString))
+                    {
+                        UserManager.AddToRole(user.Id, userString);
+                    }
                     return RedirectToAction("Index", "Home", new { area = "" });
                 }
                 AddErrors(result);

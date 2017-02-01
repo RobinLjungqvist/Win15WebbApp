@@ -83,12 +83,12 @@ namespace WebbApp.Areas.Admin.ViewModels
 
         [Required(ErrorMessage = "Please, enter the city.")]
         public City City { get; set; }
-        public int SelectedCityId { get; set; }
+        public Guid SelectedCityId { get; set; }
         public List<City> Cities { get; set; }
 
         [Required(ErrorMessage = "Please, enter region.")]
         public Region Region { get; set; }
-        public int SelectedRegionId { get; set; }
+        public Guid SelectedRegionId { get; set; }
         public List<Region> Regions { get; set; }
     }
 }
