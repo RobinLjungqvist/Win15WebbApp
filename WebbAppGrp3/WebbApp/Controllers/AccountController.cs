@@ -128,7 +128,6 @@ namespace WebbApp.Controllers
 
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
                     var rm = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationContext()));
 
@@ -143,6 +142,10 @@ namespace WebbApp.Controllers
                     {
                         UserManager.AddToRole(user.Id, userString);
                     }
+
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+
 
                     return RedirectToAction("Index", "Home");
                 }

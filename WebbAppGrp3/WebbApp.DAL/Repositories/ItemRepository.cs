@@ -29,7 +29,7 @@ namespace WebbApp.DAL.Repositories
             {
                 using (var context = new ApplicationContext())
                 {
-                    context.Items.Attach(entity.Item);
+                     context.Items.Attach(entity.Item);
                     context.Images.Add(entity);
                     context.SaveChanges();
                 }
