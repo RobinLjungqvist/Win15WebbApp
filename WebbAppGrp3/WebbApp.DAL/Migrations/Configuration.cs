@@ -19,28 +19,28 @@ namespace WebbApp.DAL.Migrations
 
         protected override void Seed(WebbApp.DAL.ApplicationContext context)
         {
-            List<Region> regionList = new List<Region> {
-                   new Region() { RegionId = Guid.NewGuid(), RegionName = "Blekinge" },
-                   new Region() { RegionId = Guid.NewGuid(), RegionName = "Dalarna" },
-                   new Region() { RegionId = Guid.NewGuid(), RegionName = "Gotland" },
-                   new Region() { RegionId = Guid.NewGuid(), RegionName = "Gävleborg" },
-                   new Region() { RegionId = Guid.NewGuid(), RegionName = "Halland" },
-                   new Region() { RegionId = Guid.NewGuid(), RegionName = "Jämtland" },
-                   new Region() { RegionId = Guid.NewGuid(), RegionName = "Jönköping" },
-                   new Region() { RegionId = Guid.NewGuid(), RegionName = "Kalmar" },
-                   new Region() { RegionId = Guid.NewGuid(), RegionName = "Kronoberg" },
-                   new Region() { RegionId = Guid.NewGuid(), RegionName = "Norrbotten" },
-                   new Region() { RegionId = Guid.NewGuid(), RegionName = "Skåne" },
-                   new Region() { RegionId = Guid.NewGuid(), RegionName = "Stockholm" },
-                   new Region() { RegionId = Guid.NewGuid(), RegionName = "Södermanland" },
-                   new Region() { RegionId = Guid.NewGuid(), RegionName = "Uppsala" },
-                   new Region() { RegionId = Guid.NewGuid(), RegionName = "Värmland" },
-                   new Region() { RegionId = Guid.NewGuid(), RegionName = "Västerbotten" },
-                   new Region() { RegionId = Guid.NewGuid(), RegionName = "Västmanland" },
-                   new Region() { RegionId = Guid.NewGuid(), RegionName = "Västra Götaland" },
-                   new Region() { RegionId = Guid.NewGuid(), RegionName = "Örebro" },
-                   new Region() { RegionId = Guid.NewGuid(), RegionName = "Östergötland" }
-            };
+            if (!context.Roles.Any(r => r.Name == "Admin"))
+            {
+                var store = new RoleStore<IdentityRole>(context);
+                var manager = new RoleManager<IdentityRole>(store);
+                var role = new IdentityRole { Name = "Admin" };
+
+                manager.Create(role);
+            }
+
+            if (!context.Users.Any(u => u.UserName == "Admin"))
+            {
+                var store = new UserStore<ApplicationUser>(context);
+                var manager = new UserManager<ApplicationUser>(store);
+                var user = new ApplicationUser { UserName = "Admin" };
+                user.UserRole = "Admin";
+                user.Email = "Admin@Admin.com";
+
+                manager.Create(user, "password");
+                manager.AddToRole(user.Id, "Admin");
+            }
+
+
 
 
             Guid CityId1 = Guid.NewGuid();
@@ -61,27 +61,7 @@ namespace WebbApp.DAL.Migrations
                 }
             }
 
-            if (!context.Roles.Any(r => r.Name == "Admin"))
-            {
-                var store = new RoleStore<IdentityRole>(context);
-                var manager = new RoleManager<IdentityRole>(store);
-                var role = new IdentityRole { Name = "Admin" };
 
-                manager.Create(role);
-            }
-
-            if (!context.Users.Any(u => u.UserName == "Admin"))
-            {
-                var store = new UserStore<ApplicationUser>(context);
-                var manager = new UserManager<ApplicationUser>(store);
-                var user = new ApplicationUser { UserName = "Admin" };
-                user.UserRole = "Admin";
-                user.CityID = cityList.FirstOrDefault(c => c.CityName == "Helsingborg").CityId.ToString();
-                user.RegionId = regionList.FirstOrDefault(c => c.RegionName == "Skåne").RegionId.ToString();
-
-                manager.CreateAsync(user, "password");
-                manager.AddToRoleAsync(user.Id, "Admin");
-            }
 
 
 
@@ -109,7 +89,31 @@ namespace WebbApp.DAL.Migrations
             }
 
 
-            
+            Guid RegionId1 = Guid.NewGuid();
+            Guid RegionId2 = Guid.NewGuid();
+            List<Region> regionList = new List<Region> {
+                   new Region() { RegionId = RegionId1, RegionName = "Blekinge" },
+                   new Region() { RegionId = RegionId2, RegionName = "Dalarna" },
+                   new Region() { RegionId = Guid.NewGuid(), RegionName = "Gotland" },
+                   new Region() { RegionId = Guid.NewGuid(), RegionName = "Gävleborg" },
+                   new Region() { RegionId = Guid.NewGuid(), RegionName = "Halland" },
+                   new Region() { RegionId = Guid.NewGuid(), RegionName = "Jämtland" },
+                   new Region() { RegionId = Guid.NewGuid(), RegionName = "Jönköping" },
+                   new Region() { RegionId = Guid.NewGuid(), RegionName = "Kalmar" },
+                   new Region() { RegionId = Guid.NewGuid(), RegionName = "Kronoberg" },
+                   new Region() { RegionId = Guid.NewGuid(), RegionName = "Norrbotten" },
+                   new Region() { RegionId = Guid.NewGuid(), RegionName = "Skåne" },
+                   new Region() { RegionId = Guid.NewGuid(), RegionName = "Stockholm" },
+                   new Region() { RegionId = Guid.NewGuid(), RegionName = "Södermanland" },
+                   new Region() { RegionId = Guid.NewGuid(), RegionName = "Uppsala" },
+                   new Region() { RegionId = Guid.NewGuid(), RegionName = "Värmland" },
+                   new Region() { RegionId = Guid.NewGuid(), RegionName = "Västerbotten" },
+                   new Region() { RegionId = Guid.NewGuid(), RegionName = "Västmanland" },
+                   new Region() { RegionId = Guid.NewGuid(), RegionName = "Västra Götaland" },
+                   new Region() { RegionId = Guid.NewGuid(), RegionName = "Örebro" },
+                   new Region() { RegionId = Guid.NewGuid(), RegionName = "Östergötland" }
+            };
+
             if (!context.Regions.Any())
             {
                 foreach (Region i in regionList)
@@ -128,11 +132,11 @@ namespace WebbApp.DAL.Migrations
             List<Item> itemList = new List<Item> {
                                 new Item() { ItemID = ItemID1, Title = "Bord", Description = "",
                                     CreateDate = date, ExpirationDate = date.AddDays(7),
-                                    CategoryId = CategoryId1, ConditionId = ConditionId1, RegionId = RegionId1, CityId = CityId1, ApplicationUser = itemUser } ,
+                                    CategoryId = CategoryId1, ConditionId = ConditionId1, RegionId = RegionId1, CityId = CityId1, ApplicationUser = itemUser, ApplicationUserId = Guid.Parse(itemUser.Id) } ,
                                 new Item() { ItemID = ItemID2, Title = "Chair", Description = "", CreateDate = date.AddDays(-1), ExpirationDate = date.AddDays(6),
-                                    CategoryId = CategoryId2, ConditionId = ConditionId2, RegionId = RegionId1, CityId = CityId1, ApplicationUser = itemUser} ,
+                                    CategoryId = CategoryId2, ConditionId = ConditionId2, RegionId = RegionId1, CityId = CityId1, ApplicationUser = itemUser, ApplicationUserId = Guid.Parse(itemUser.Id)} ,
                                 new Item() { ItemID = ItemID3, Title = "Cupboard", Description = "", CreateDate = date.AddDays(-3), ExpirationDate = date.AddDays(4),
-                                    CategoryId = CategoryId2, ConditionId = ConditionId1, RegionId = RegionId2, CityId = CityId2, ApplicationUser = itemUser}
+                                    CategoryId = CategoryId2, ConditionId = ConditionId1, RegionId = RegionId2, CityId = CityId2, ApplicationUser = itemUser, ApplicationUserId = Guid.Parse(itemUser.Id)}
                 };
 
             if (!context.Items.Any())
