@@ -13,15 +13,17 @@ using WebbApp.DAL;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity.Owin;
 using static WebbApp.App_Start.IdentityConfig;
+using System.Collections.Generic;
 
 namespace WebbApp.Areas.Admin.Controllers
 {
-    [Authorize (Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public class UserController : Controller
     {
         private IRepository<ApplicationUser> userRepo;
         private IRepository<Region> regionRepo;
         private IRepository<City> cityRepo;
+        private IRepository<Item> itemRepo;
 
         private ApplicationSignInManager signInManager;
         private ApplicationUserManager userManager;
@@ -50,12 +52,23 @@ namespace WebbApp.Areas.Admin.Controllers
             this.userRepo = new UserRepository();
             this.regionRepo = new RegionRepository();
             this.cityRepo = new CityRepository();
+            this.itemRepo = new ItemRepository();
         }
 
         // GET: Admin/User
         public ActionResult Index()
         {
-            return View(userRepo.GetAll().ToList());
+            List<ApplicationUser> au = new List<ApplicationUser>();
+            foreach (var item in userRepo.GetAll().ToList())
+            {
+                if (item.CityID != null && item.RegionId != null)
+                {
+                    item.Region = regionRepo.GetById(new Guid(item.RegionId));
+                    item.City = cityRepo.GetById(new Guid(item.CityID));
+                }
+                au.Add(item);
+            }
+            return View(au);
         }
 
         [HttpGet]
@@ -85,10 +98,10 @@ namespace WebbApp.Areas.Admin.Controllers
             ModelState.Remove("Region.RegionName");
             if (ModelState.IsValid)
             {
-                if (string.IsNullOrWhiteSpace(model.UserName) || 
-                    string.IsNullOrWhiteSpace(model.Password) || 
-                    string.IsNullOrWhiteSpace(model.Email)    || 
-                    string.IsNullOrWhiteSpace(model.FirstName)||
+                if (string.IsNullOrWhiteSpace(model.UserName) ||
+                    string.IsNullOrWhiteSpace(model.Password) ||
+                    string.IsNullOrWhiteSpace(model.Email) ||
+                    string.IsNullOrWhiteSpace(model.FirstName) ||
                     string.IsNullOrWhiteSpace(model.LastName))
                 {
                     ModelState.AddModelError("error", "Error: username, password or name is empty!");
@@ -114,6 +127,19 @@ namespace WebbApp.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult Delete(Guid userId)
         {
+            List<Item> items = itemRepo.GetByUserId(userId);
+            foreach (var item in items)
+            {
+                foreach (var image in item.Images)
+                {
+                    var filePath = Server.MapPath(image.Path);
+                    if (System.IO.File.Exists(filePath))
+                    {
+                        System.IO.File.Delete(filePath);
+                    }
+                }
+                itemRepo.Delete(item.ItemID);
+            }
             userRepo.Delete(userId);
             return RedirectToAction("Index");
         }
@@ -126,7 +152,7 @@ namespace WebbApp.Areas.Admin.Controllers
             uvm.Cities = cityRepo.GetAll().ToList();
             return View(uvm);
         }
-            
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(UserViewModel model)
@@ -143,9 +169,7 @@ namespace WebbApp.Areas.Admin.Controllers
                     LastName = model.LastName,
                     UserName = model.UserName,
                     Email = model.Email,
-                    //City = model.City,
                     UserRole = model.UserRole.ToString(),
-                    //Region = model.Region
                     RegionId = model.Region.RegionId.ToString(),
                     CityID = model.City.CityId.ToString()
                 };
@@ -169,7 +193,7 @@ namespace WebbApp.Areas.Admin.Controllers
                     {
                         UserManager.AddToRole(user.Id, userString);
                     }
-                    return RedirectToAction("Index", "Home", new { area = "" });
+                    return RedirectToAction("Index", "User", new { area = "Admin" });
                 }
                 AddErrors(result);
             }

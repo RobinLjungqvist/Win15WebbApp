@@ -55,6 +55,11 @@ namespace WebbApp.Mockup.Repo
             return model;
         }
 
+        public List<Item> GetByUserId(Guid userId)
+        {
+            throw new NotImplementedException();
+        }
+
         public IQueryable<TestModel> Search(string searchTerm)
         {
             throw new NotImplementedException();

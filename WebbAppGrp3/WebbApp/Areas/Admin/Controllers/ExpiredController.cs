@@ -42,9 +42,7 @@ namespace WebbApp.Areas.Admin.Controllers
                         }
                     }
                     itemRepo.Delete(item);
-
                 }
-
                 return Content("OK!");
             }
         }

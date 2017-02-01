@@ -26,7 +26,7 @@ namespace WebbApp.DAL.Repositories
         }
 
         public bool Delete(Guid id)
-        {
+        {   
             using (var context = new ApplicationContext())
             {
                 var user = context.Users.Where<ApplicationUser>(p => p.Id == id.ToString()).FirstOrDefault();
@@ -62,6 +62,11 @@ namespace WebbApp.DAL.Repositories
                 var user = context.Users.Where(p => p.Id == id.ToString()).FirstOrDefault();
                 return user;
             }
+        }
+
+        public List<Item> GetByUserId(Guid userId)
+        {
+            throw new NotImplementedException();
         }
 
         public void Update(ApplicationUser entity)

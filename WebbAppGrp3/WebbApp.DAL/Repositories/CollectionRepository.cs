@@ -71,6 +71,11 @@ namespace WebbApp.DAL.Repositories
             return item;
         }
 
+        public List<Item> GetByUserId(Guid userId)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Update(Category entity)
         {
             using (var context = new ApplicationContext())
@@ -148,6 +153,11 @@ namespace WebbApp.DAL.Repositories
                 item = context.Cities.Where(c => c.CityId == id).FirstOrDefault();
             }
             return item;
+        }
+
+        public List<Item> GetByUserId(Guid userId)
+        {
+            throw new NotImplementedException();
         }
 
         public void Update(City entity)
@@ -229,6 +239,11 @@ namespace WebbApp.DAL.Repositories
             return item;
         }
 
+        public List<Item> GetByUserId(Guid userId)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Update(Region entity)
         {
             using (var context = new ApplicationContext())
@@ -306,6 +321,11 @@ namespace WebbApp.DAL.Repositories
                 item = context.Conditions.Where(c => c.ConditionId == id).FirstOrDefault();
             }
             return item;
+        }
+
+        public List<Item> GetByUserId(Guid userId)
+        {
+            throw new NotImplementedException();
         }
 
         public void Update(Condition entity)
