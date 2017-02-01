@@ -58,7 +58,7 @@ namespace WebbApp.Controllers
         {
             DateTime date = DateTime.Today;
             Guid newItemId = Guid.NewGuid();
-            var newItem = new Item() { ItemID = newItemId, Title = model.Title, CreateDate = date, ExpirationDate = date.AddDays(14), Description = model.Description };
+            var newItem = new Item() { ItemID = newItemId, Title = model.Title, CreateDate = date, ExpirationDate = date.AddDays(7), Description = model.Description };
             newItem.CategoryId = model.Category.CategoryId;
             newItem.ConditionId = model.Condition.ConditionId;
             //newItem.CityId = model.City.CityId;

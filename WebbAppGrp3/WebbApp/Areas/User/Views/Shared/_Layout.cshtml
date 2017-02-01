@@ -35,7 +35,7 @@
                             HttpMethod = "GET"
                         })
                     </li>
-                    
+
                     @if (User.IsInRole("Admin") || User.IsInRole("User"))
                     {
                         <li>
@@ -51,10 +51,10 @@
                                 <li>@Html.ActionLink("User", "Index", "User", new { area = "Admin" }, null)</li>
                                 <li class="divider"></li>
                                 <li>@Html.ActionLink("Category", "Index", "Category", new { area = "Admin" }, null)</li>
-                                <li class="divider"></li>
                                 <li>@Html.ActionLink("City", "Index", "City", new { area = "Admin" }, null)</li>
-                                <li class="divider"></li>
                                 <li>@Html.ActionLink("Condition", "Index", "Condition", new { area = "Admin" }, null)</li>
+                                <li class="divider"></li>
+                                <li>@Html.ActionLink("Remove expired posts", "Index", "Expired", new { area = "Admin" }, null)</li>
                             </ul>
                         </li>
                     }
