@@ -25,7 +25,7 @@ namespace WebbApp.Areas.Admin.Controllers
             DateTime expDate = DateTime.Now;
             List<Item> deleteItems = list.FindAll(x => x.ExpirationDate < expDate);
 
-            if (deleteItems == null)
+            if (deleteItems == null || deleteItems.Count == 0)
             {
                 return Content("No item to remove");
             }
@@ -33,8 +33,18 @@ namespace WebbApp.Areas.Admin.Controllers
             {
                 foreach (var item in deleteItems)
                 {
+                    foreach (var image in item.Images)
+                    {
+                        var filePath = Server.MapPath(image.Path);
+                        if (System.IO.File.Exists(filePath))
+                        {
+                            System.IO.File.Delete(filePath);
+                        }
+                    }
                     itemRepo.Delete(item);
+
                 }
+
                 return Content("OK!");
             }
         }
