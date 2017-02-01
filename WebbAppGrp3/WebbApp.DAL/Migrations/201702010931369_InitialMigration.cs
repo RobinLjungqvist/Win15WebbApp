@@ -29,6 +29,7 @@ namespace WebbApp.DAL.Migrations
                         ConditionId = c.Guid(nullable: false),
                         RegionId = c.Guid(nullable: false),
                         CategoryId = c.Guid(nullable: false),
+                        ApplicationUserId = c.Guid(nullable: false),
                         ApplicationUser_Id = c.String(maxLength: 128),
                     })
                 .PrimaryKey(t => t.ItemID)
@@ -53,8 +54,8 @@ namespace WebbApp.DAL.Migrations
                         Password = c.String(),
                         IsAdmin = c.Boolean(nullable: false),
                         UserRole = c.String(),
-                        City = c.String(),
-                        Region = c.String(),
+                        CityID = c.String(),
+                        RegionId = c.String(),
                         Email = c.String(maxLength: 256),
                         EmailConfirmed = c.Boolean(nullable: false),
                         PasswordHash = c.String(),
@@ -66,9 +67,24 @@ namespace WebbApp.DAL.Migrations
                         LockoutEnabled = c.Boolean(nullable: false),
                         AccessFailedCount = c.Int(nullable: false),
                         UserName = c.String(nullable: false, maxLength: 256),
+                        City_CityId = c.Guid(),
+                        Region_RegionId = c.Guid(),
                     })
                 .PrimaryKey(t => t.Id)
-                .Index(t => t.UserName, unique: true, name: "UserNameIndex");
+                .ForeignKey("dbo.City", t => t.City_CityId)
+                .ForeignKey("dbo.Region", t => t.Region_RegionId)
+                .Index(t => t.UserName, unique: true, name: "UserNameIndex")
+                .Index(t => t.City_CityId)
+                .Index(t => t.Region_RegionId);
+            
+            CreateTable(
+                "dbo.City",
+                c => new
+                    {
+                        CityId = c.Guid(nullable: false),
+                        CityName = c.String(nullable: false),
+                    })
+                .PrimaryKey(t => t.CityId);
             
             CreateTable(
                 "dbo.AspNetUserClaims",
@@ -96,6 +112,15 @@ namespace WebbApp.DAL.Migrations
                 .Index(t => t.UserId);
             
             CreateTable(
+                "dbo.Region",
+                c => new
+                    {
+                        RegionId = c.Guid(nullable: false),
+                        RegionName = c.String(nullable: false),
+                    })
+                .PrimaryKey(t => t.RegionId);
+            
+            CreateTable(
                 "dbo.AspNetUserRoles",
                 c => new
                     {
@@ -107,15 +132,6 @@ namespace WebbApp.DAL.Migrations
                 .ForeignKey("dbo.AspNetRoles", t => t.RoleId, cascadeDelete: true)
                 .Index(t => t.UserId)
                 .Index(t => t.RoleId);
-            
-            CreateTable(
-                "dbo.City",
-                c => new
-                    {
-                        CityId = c.Guid(nullable: false),
-                        CityName = c.String(nullable: false),
-                    })
-                .PrimaryKey(t => t.CityId);
             
             CreateTable(
                 "dbo.Condition",
@@ -139,15 +155,6 @@ namespace WebbApp.DAL.Migrations
                 .Index(t => t.ItemID);
             
             CreateTable(
-                "dbo.Region",
-                c => new
-                    {
-                        RegionId = c.Guid(nullable: false),
-                        RegionName = c.String(nullable: false),
-                    })
-                .PrimaryKey(t => t.RegionId);
-            
-            CreateTable(
                 "dbo.AspNetRoles",
                 c => new
                     {
@@ -168,15 +175,19 @@ namespace WebbApp.DAL.Migrations
             DropForeignKey("dbo.Item", "CityId", "dbo.City");
             DropForeignKey("dbo.Item", "CategoryId", "dbo.Category");
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
+            DropForeignKey("dbo.AspNetUsers", "Region_RegionId", "dbo.Region");
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.Item", "ApplicationUser_Id", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
+            DropForeignKey("dbo.AspNetUsers", "City_CityId", "dbo.City");
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
             DropIndex("dbo.Image", new[] { "ItemID" });
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
+            DropIndex("dbo.AspNetUsers", new[] { "Region_RegionId" });
+            DropIndex("dbo.AspNetUsers", new[] { "City_CityId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
             DropIndex("dbo.Item", new[] { "ApplicationUser_Id" });
             DropIndex("dbo.Item", new[] { "CategoryId" });
@@ -184,13 +195,13 @@ namespace WebbApp.DAL.Migrations
             DropIndex("dbo.Item", new[] { "ConditionId" });
             DropIndex("dbo.Item", new[] { "CityId" });
             DropTable("dbo.AspNetRoles");
-            DropTable("dbo.Region");
             DropTable("dbo.Image");
             DropTable("dbo.Condition");
-            DropTable("dbo.City");
             DropTable("dbo.AspNetUserRoles");
+            DropTable("dbo.Region");
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
+            DropTable("dbo.City");
             DropTable("dbo.AspNetUsers");
             DropTable("dbo.Item");
             DropTable("dbo.Category");

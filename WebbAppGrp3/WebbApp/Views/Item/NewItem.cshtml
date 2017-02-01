@@ -25,14 +25,14 @@
             </div>
         </div>
 
-        @*<div class="form-group">
+        <div class="form-group">
             @Html.LabelFor(model => model.City, "City", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownListFor(model => model.City.CityId, new SelectList(Model.Cities, "CityId", "CityName"), "- Please Select -")
                 <br />
                 @Html.ValidationMessageFor(model => model.City.CityId, "", new { @class = "text-danger" })
             </div>
-        </div>*@
+        </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.Condition, "Condition", new { @class = "control-label col-md-2" })
@@ -43,14 +43,14 @@
             </div>
         </div>
 
-        @*<div class="form-group">
+        <div class="form-group">
             @Html.LabelFor(model => model.Region, "Region", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownListFor(model => model.Region.RegionId, new SelectList(Model.Regions, "RegionId", "RegionName"), "- Please Select -")
                 <br />
                 @Html.ValidationMessageFor(model => model.Region.RegionId, "", new { @class = "text-danger" })
             </div>
-        </div>*@
+        </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.Category, "Category", new { @class = "control-label col-md-2" })
