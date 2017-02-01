@@ -54,7 +54,7 @@
                                 <li>@Html.ActionLink("City", "Index", "City", new { area = "Admin" }, null)</li>
                                 <li>@Html.ActionLink("Condition", "Index", "Condition", new { area = "Admin" }, null)</li>
                                 <li class="divider"></li>
-                                <li>@Html.ActionLink("Remove expired posts", "Index", "Expired", new { area = "Admin" }, null)</li>
+                                <li>@Html.ActionLink("Remove expired posts", "Index", "Expired", new { area = "Admin" }, new { id = "removeexpired" })</li>
                             </ul>
                         </li>
                     }
@@ -78,6 +78,8 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/alertify")
+    @Scripts.Render("~/bundles/expired")
     @RenderSection("scripts", required: false)
 </body>
 </html>
