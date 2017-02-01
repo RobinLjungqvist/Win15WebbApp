@@ -31,7 +31,7 @@
 
             @if (User.Identity.GetUserId() == Model.UploaderID || User.IsInRole("Admin"))
             {
-                @Html.ActionLink("Edit Item", "EditItem", "Item", new { itemID = Model.ItemID }, null)
+                @Html.ActionLink("Edit Item", "EditItem", "Item", new { itemID = Model.ItemID }, null) <br />
                 @Html.ActionLink("Remove Item", "RemoveItem", "Item", new { itemID = Model.ItemID }, new { id = "removelink" , ItemID = Model.ItemID })
              
             }
