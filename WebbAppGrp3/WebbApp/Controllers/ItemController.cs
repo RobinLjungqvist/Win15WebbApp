@@ -157,7 +157,6 @@ namespace WebbApp.Controllers
         public ActionResult EditItem(Guid ItemID)
         {
             var item = itemRepo.GetById(ItemID);
-            // var ivm = new ItemViewModel(item.ItemID, item.Title, item.Description, item.CreateDate, item.ExpirationDate, item.City, item.Condition, item.Region, item.Category, item.Image);
             var ivm = new ItemViewModel() { ItemID = item.ItemID, Title = item.Title, Description = item.Description, };
             ivm.Categories = categoryRepo.GetAll().ToList();
             ivm.SelectedCategoryId = item.CategoryId;
@@ -177,7 +176,6 @@ namespace WebbApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EditItem(ItemViewModel viewItem, IEnumerable<HttpPostedFileBase> files)
         {
-            //MockupItem edit=null;
             Item edit = null;
             ModelState.Remove("Image");
             //if (ModelState.IsValid)
@@ -214,7 +212,6 @@ namespace WebbApp.Controllers
                         }
                         Image newImage = new Image();
                         newImage.ImageId = Guid.NewGuid();
-                        //newImage.Path = "../Images/" + newImg;
                         newImage.Path = "../Images/" + newImg;
                         newImage.ItemID = edit.ItemID;
                         newImage.Item = edit;

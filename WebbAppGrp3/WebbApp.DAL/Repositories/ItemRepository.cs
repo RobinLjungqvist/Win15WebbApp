@@ -25,18 +25,18 @@ namespace WebbApp.DAL.Repositories
 
         public void AddImage(Image entity)
         {
-            try
-            {
+            //try
+            //{
                 using (var context = new ApplicationContext())
                 {
                     context.Items.Attach(entity.Item);
                     context.Images.Add(entity);
                     context.SaveChanges();
                 }
-            }
-            catch (Exception ex)
-            {
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //}
         }
 
         public void Add(Item entity)
@@ -132,6 +132,21 @@ namespace WebbApp.DAL.Repositories
                     .FirstOrDefault();
             }
             return item;
+        }
+
+        public List<Item> GetByUserId(Guid userId)
+        {
+            List<Item> items; 
+            using (var context = new ApplicationContext())
+            {
+                items = context.Items.Where(p => p.ApplicationUserId == userId)
+                    .Include(i => i.City)
+                    .Include(i => i.Condition)
+                    .Include(i => i.Region)
+                    .Include(i => i.Category)
+                    .Include(i => i.Images).ToList();
+            }
+            return items;
         }
 
         public IQueryable<Item> Search(string freeText)

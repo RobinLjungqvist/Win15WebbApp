@@ -16,5 +16,6 @@ namespace WebbApp.DAL.Interfaces
         bool Delete(T entity);
         bool Delete(Guid id);
         void AddImage(Image entity);
+        List<Item> GetByUserId(Guid userId);
     }
 }
