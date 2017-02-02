@@ -24,7 +24,27 @@
                 @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
             </div>
         </div>
-
+        <div class="form-group">
+            @Html.LabelFor(model => model.Category, "Category", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Category.CategoryId, new SelectList(Model.Categories, "CategoryId", "CategoryName"), "- Please Select -", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Category.CategoryId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Condition, "Condition", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Condition.ConditionId, new SelectList(Model.Conditions, "ConditionId", "Status"), "- Please Select -", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Condition.ConditionId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Region, "Region", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Region.RegionId, new SelectList(Model.Regions, "RegionId", "RegionName"), "- Please Select -", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Region.RegionId, "", new { @class = "text-danger" })
+            </div>
+        </div>
         <div class="form-group">
             @Html.LabelFor(model => model.City, "City", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -33,29 +53,11 @@
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Condition, "Condition", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.Condition.ConditionId, new SelectList(Model.Conditions, "ConditionId", "Status"), "- Please Select -", new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Condition.ConditionId, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Region, "Region", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.Region.RegionId, new SelectList(Model.Regions, "RegionId", "RegionName"), "- Please Select -", new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Region.RegionId, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Category, "Category", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.Category.CategoryId, new SelectList(Model.Categories, "CategoryId", "CategoryName"), "- Please Select -", new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Category.CategoryId, "", new { @class = "text-danger" })
-            </div>
-        </div>
+
+
+
 
         <div class="form-group">
             @*@Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2" })*@

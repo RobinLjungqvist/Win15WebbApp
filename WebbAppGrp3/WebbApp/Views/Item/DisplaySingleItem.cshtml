@@ -3,47 +3,58 @@
 
 
 <div class="row">
-    <div class="col-md-6">
-        @foreach(var image in Model.Images) {
-        <img src="@image.Path" class="SingleDisplayImage" />
+    <div class="col-md-6 imageContainer">
+        @foreach (var image in Model.Images)
+        {
+            <img src="@image.Path" class="SingleDisplayImage" />
         }
     </div>
-    <div class="row">
         <div class="col-md-3">
             <h2>@Model.Title</h2>
-            
+            <label>Category: </label>
+            @Html.DisplayFor(m => m.Category.CategoryName)<br />
+            <label>Condition: </label>
+            @Html.DisplayFor(m => m.Condition.Status)<br />
+            <label>City: </label>
             @Html.DisplayFor(model => model.City.CityName)<br />
             <label>Region: </label>
             @Html.DisplayFor(model => model.Region.RegionName)<br />
             <label>Expiration Date: </label>
-            @Model.ExpirationDate.ToShortDateString()
+            @Model.ExpirationDate.ToShortDateString()<br />
             @*@Html.DisplayFor(model => model.ExpirationDate)<br />*@
-            <div class="btn btn-default" id="emailbtn" userID="@Model.UploaderID">Show Email</div>
+
+            @if (User.Identity.IsAuthenticated)
+            {
+                <div class="btn btn-default" id="emailbtn" userID="@Model.UploaderID">Show Email</div>
+            }
+            else
+            {
+                <span>@Html.ActionLink("Login", "Login", "Account") to see uploaders email.</span>
+            }
         </div>
         <div class="col-md-3">
             <h3>Description</h3>
             <p>
                 @Model.Description
             </p>
-            
-    
+
+
 
             @*För att visa bara om uploadern är inloggad eller Admin*@
 
             @if (User.Identity.GetUserId() == Model.UploaderID || User.IsInRole("Admin"))
             {
                 @Html.ActionLink("Edit Item", "EditItem", "Item", new { itemID = Model.ItemID }, null) <br />
-                @Html.ActionLink("Remove Item", "RemoveItem", "Item", new { itemID = Model.ItemID }, new { id = "removelink" , ItemID = Model.ItemID })
-             
+                @Html.ActionLink("Remove Item", "RemoveItem", "Item", new { itemID = Model.ItemID }, new { id = "removelink", ItemID = Model.ItemID })
+
             }
-            
+
 
         </div>
-    </div>
 </div>
 
 @section scripts{
 
-<script src="~/myScripts/removeconfirmdialog.js"></script>
-<script src="~/myScripts/ShowEmail.js"></script>
-    }
+    <script src="~/myScripts/removeconfirmdialog.js"></script>
+    <script src="~/myScripts/ShowEmail.js"></script>
+}

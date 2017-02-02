@@ -213,7 +213,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Images\PlaceholderImage.png" />
+    <Content Include="Images\bokhylla.jpg" />
+    <Content Include="Images\book.png" />
+    <Content Include="Images\soffa.jpg" />
     <Content Include="myScripts\removeconfirmdialog.js" />
     <Content Include="myScripts\removeexpired.js" />
     <Content Include="myScripts\ShowEmail.js" />

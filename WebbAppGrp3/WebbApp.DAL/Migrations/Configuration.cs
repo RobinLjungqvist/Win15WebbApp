@@ -130,13 +130,13 @@ namespace WebbApp.DAL.Migrations
 
             DateTime date = DateTime.Today;
             List<Item> itemList = new List<Item> {
-                                new Item() { ItemID = ItemID1, Title = "Bord", Description = "",
+                                new Item() { ItemID = ItemID1, Title = "Bokhylla", Description = "En redigt fin bokhylla",
                                     CreateDate = date, ExpirationDate = date.AddDays(7),
                                     CategoryId = CategoryId1, ConditionId = ConditionId1, RegionId = RegionId1, CityId = CityId1, ApplicationUser = itemUser, ApplicationUserId = Guid.Parse(itemUser.Id) } ,
-                                new Item() { ItemID = ItemID2, Title = "Chair", Description = "", CreateDate = date.AddDays(-1), ExpirationDate = date.AddDays(6),
+                                new Item() { ItemID = ItemID2, Title = "Bok", Description = "En mysig bok till kvällen", CreateDate = date.AddDays(-1), ExpirationDate = date.AddDays(6),
                                     CategoryId = CategoryId2, ConditionId = ConditionId2, RegionId = RegionId1, CityId = CityId1, ApplicationUser = itemUser, ApplicationUserId = Guid.Parse(itemUser.Id)} ,
-                                new Item() { ItemID = ItemID3, Title = "Cupboard", Description = "", CreateDate = date.AddDays(-3), ExpirationDate = date.AddDays(4),
-                                    CategoryId = CategoryId2, ConditionId = ConditionId1, RegionId = RegionId2, CityId = CityId2, ApplicationUser = itemUser, ApplicationUserId = Guid.Parse(itemUser.Id)}
+                                new Item() { ItemID = ItemID3, Title = "Soffa", Description = "Myssoffa deluxe", CreateDate = date.AddDays(-3), ExpirationDate = date.AddDays(4),
+                                    CategoryId = CategoryId1, ConditionId = ConditionId1, RegionId = RegionId2, CityId = CityId2, ApplicationUser = itemUser, ApplicationUserId = Guid.Parse(itemUser.Id)}
                 };
 
             if (!context.Items.Any())
@@ -150,11 +150,11 @@ namespace WebbApp.DAL.Migrations
             if (!context.Images.Any())
             {
 
-                var image1 = new Image() { ImageId = Guid.NewGuid(), Path = "../Images/PlaceholderImage.png", ItemID = ItemID1 };
+                var image1 = new Image() { ImageId = Guid.NewGuid(), Path = "../Images/bokhylla.jpg", ItemID = ItemID1 };
                 context.Images.AddOrUpdate(x => x.ImageId, image1);
-                var image2 = new Image() { ImageId = Guid.NewGuid(), Path = "../Images/PlaceholderImage.png", ItemID = ItemID2 };
+                var image2 = new Image() { ImageId = Guid.NewGuid(), Path = "../Images/book.png", ItemID = ItemID2 };
                 context.Images.AddOrUpdate(x => x.ImageId, image2);
-                var image3 = new Image() { ImageId = Guid.NewGuid(), Path = "../Images/PlaceholderImage.png", ItemID = ItemID3 };
+                var image3 = new Image() { ImageId = Guid.NewGuid(), Path = "../Images/soffa.jpg", ItemID = ItemID3 };
                 context.Images.AddOrUpdate(x => x.ImageId, image3);
 
             }
