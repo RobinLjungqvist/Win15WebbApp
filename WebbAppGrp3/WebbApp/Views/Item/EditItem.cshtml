@@ -32,14 +32,14 @@
                 @Html.ValidationMessageFor(x => x.Description, "", new { @class = "text-danger" })
             </div>
         </div>
-
         <div class="form-group">
-            @Html.LabelFor(model => model.City, "City", new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Category, "Category", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.City.CityId, new SelectList(Model.Cities, "CityId", "CityName", Model.SelectedCityId), new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.City.CityId)
+                @Html.DropDownListFor(model => model.Category.CategoryId, new SelectList(Model.Categories, "CategoryId", "CategoryName", Model.SelectedCategoryId), new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Category.CategoryId)
             </div>
         </div>
+        
 
         <div class="form-group">
             @Html.LabelFor(model => model.Condition, "Condition", new { @class = "control-label col-md-2" })
@@ -56,14 +56,15 @@
                 @Html.ValidationMessageFor(model => model.Region.RegionId)
             </div>
         </div>
-
         <div class="form-group">
-            @Html.LabelFor(model => model.Category, "Category", new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.City, "City", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.Category.CategoryId, new SelectList(Model.Categories, "CategoryId", "CategoryName", Model.SelectedCategoryId), new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Category.CategoryId)
+                @Html.DropDownListFor(model => model.City.CityId, new SelectList(Model.Cities, "CityId", "CityName", Model.SelectedCityId), new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.City.CityId)
             </div>
         </div>
+
+        
 
         <div class="form-group">
             @Html.LabelFor(model => model.Images, htmlAttributes: new { @class = "control-label col-md-2" })
