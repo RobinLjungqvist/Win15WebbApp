@@ -201,10 +201,6 @@
     <Compile Include="ViewModels\UserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\GiveItAwayDB.mdf" />
-    <Content Include="App_Data\GiveItAwayDB_log.ldf">
-      <DependentUpon>GiveItAwayDB.mdf</DependentUpon>
-    </Content>
     <Content Include="Content\alertify\alertify.bootstrap.css" />
     <Content Include="Content\alertify\alertify.core.css" />
     <Content Include="Content\alertify\alertify.default.css" />
@@ -217,7 +213,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Images\PlaceholderImage.png" />
+    <Content Include="Images\bokhylla.jpg" />
+    <Content Include="Images\book.png" />
+    <Content Include="Images\soffa.jpg" />
     <Content Include="myScripts\removeconfirmdialog.js" />
     <Content Include="myScripts\removeexpired.js" />
     <Content Include="myScripts\ShowEmail.js" />
@@ -303,6 +301,7 @@
     <Content Include="Views\ErrorPage\InternalError.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Admin\Views\Expired\" />
     <Folder Include="Areas\User\Models\" />
