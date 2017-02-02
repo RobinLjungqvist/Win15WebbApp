@@ -131,7 +131,7 @@ namespace WebbApp.DAL.Migrations
             DateTime date = DateTime.Today;
             List<Item> itemList = new List<Item> {
                                 new Item() { ItemID = ItemID1, Title = "Bokhylla", Description = "En redigt fin bokhylla",
-                                    CreateDate = date, ExpirationDate = date.AddDays(7),
+                                    CreateDate = date, ExpirationDate = date.AddDays(-14),
                                     CategoryId = CategoryId1, ConditionId = ConditionId1, RegionId = RegionId1, CityId = CityId1, ApplicationUser = itemUser, ApplicationUserId = Guid.Parse(itemUser.Id) } ,
                                 new Item() { ItemID = ItemID2, Title = "Bok", Description = "En mysig bok till kvällen", CreateDate = date.AddDays(-1), ExpirationDate = date.AddDays(6),
                                     CategoryId = CategoryId2, ConditionId = ConditionId2, RegionId = RegionId1, CityId = CityId1, ApplicationUser = itemUser, ApplicationUserId = Guid.Parse(itemUser.Id)} ,
